@@ -37,6 +37,7 @@ public class SiteController {
     @DoValid
     public Result doEdit(@Valid CmsSiteDto cmsSiteDto, BindingResult result){
         cmsSiteService.update(cmsSiteDto);
+        System.out.println("提交测试");
         return Result.success();
     }
 
