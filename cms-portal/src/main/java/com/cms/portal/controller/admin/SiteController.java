@@ -29,7 +29,7 @@ public class SiteController {
     @GetMapping("index.do")
     public String toIndex(Model model){
         model.addAttribute("data",cmsSiteService.get());
-        return UtilsTemplate.adminTemplate("site","index");
+        return UtilsTemplate.adminTemplate("index","index");
     }
 
     @PostMapping("edit.do")
