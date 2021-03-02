@@ -34,7 +34,6 @@
   <listener>
     <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
-
   <!--配置springMvc的utf-8转码-->
   <filter>
     <filter-name>characterEncodingFilter</filter-name>
@@ -68,7 +67,6 @@
     <servlet-name>frontServlet</servlet-name>
     <url-pattern>*.jspx</url-pattern>
   </servlet-mapping>
-
   <!--springMvc配置 后台servlet-->
   <servlet>
     <servlet-name>adminServlet</servlet-name>

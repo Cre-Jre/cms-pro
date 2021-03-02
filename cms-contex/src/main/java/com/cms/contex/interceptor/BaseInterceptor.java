@@ -1,7 +1,6 @@
 package com.cms.contex.interceptor;
 
 import com.cms.core.foundation.BaseEntity;
-import lombok.Singular;
 import org.apache.ibatis.javassist.bytecode.analysis.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
@@ -9,7 +8,6 @@ import org.apache.ibatis.plugin.*;
 
 import java.time.LocalDateTime;
 import java.util.Properties;
-import java.util.concurrent.Executors;
 
 /**
  * mybatis插件

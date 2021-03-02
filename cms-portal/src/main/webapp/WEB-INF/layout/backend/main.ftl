@@ -9,6 +9,9 @@
         <script src="${basePath}/admin/layui/layui.js" charset="utf-8"></script>
         <script src="${basePath}/admin/js/core.js"></script>
         <link rel="stylesheet" href="${basePath}/admin/css/admin.css" media="all">
+        <script type="application/javascript">
+            let BASE_PATH = "${basePath!''}";
+        </script>
     </head>
     <body>
     <div>
@@ -16,7 +19,7 @@
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-body">
-                        <div class="layui-row" style="margin: 20px 0;">
+                        <div class="layui-row" style="margin:20px 0;">
                             <#nested>
                         </div>
                     </div>

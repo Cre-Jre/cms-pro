@@ -40,7 +40,7 @@ let core={
                                 core.prompt.alert(res.restInfo);
                                 break;
                             case CONSTANT.HTTP.SUCCESS:
-                                if(that.autocomplete){
+                                if(that.autoComplete){
                                     core.prompt.msg(res.restInfo,{shade:0.3,time:1200});
                                 }
                                 break;
@@ -91,9 +91,18 @@ const  CONSTANT = {
 
 
 // layui工具类
-function LayUtil(){
+function LayUtil(){}
 
+//树形表格属性
+LayUtil.treeTableOption={
+    treeColIndex: 1,
+    treeSpid: -1,
+    treeIdName: 'authorityId',
+    treePidName: 'parentId',
+    elem: '#treeTable',
+    page: false
 }
+
 
 
 LayUtil.prototype = {
@@ -124,8 +133,9 @@ LayUtil.prototype = {
             closeLoading:function(){
                 this.layer.closeAll('loading');
             },
+            //信息框
             msg:function(content,option,callback){
-                console.log(layer.msg(content,option,callback));
+                return layer.msg(content,option,callback);
             }
         }
         LayUtil.layer = new Inner();
@@ -163,9 +173,24 @@ LayUtil.prototype = {
             }
         }
         LayUtil.form = new Inner();
+    })(LayUtil),
+    //树形表格
+    treeTable:(function(LayUtil){
+        function Inner(){}
+        Inner.prototype={
+            construct:Inner,
+            init:function(config,callback){
+                let that = this, option = $.extend({},LayUtil.treeTableOption,config);
+                layui.extend({
+                    treetable:'{/}'+ BASE_PATH +'/admin/layui/lay/modules/treetable'
+                }).use('treetable',function(){
+                    that.treetable = layui.treetable;
+                    that.treetable.render(option);
+                    (callback instanceof Function) && callback(that,that.treetable);
+                });
+                return this;
+            }
+        }
+        LayUtil.treeTable = new Inner();
     })(LayUtil)
-
-
-
-
 }
