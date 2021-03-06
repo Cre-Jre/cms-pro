@@ -13,9 +13,9 @@
 </#macro>
 
 <#--    item中左右两边的inline-->
-<#macro inline label="">
+<#macro inline required=false label="">
     <div class="layui-inline cms-inline-50">
-        <label class="layui-form-label layui-col-md6" style="width:197px;">${label}</label>
+        <label class="layui-form-label layui-col-md6 <#if required>cms-label-required</#if>" style="width:197px;">${label}</label>
         <div class="layui-input-block layui-col-md6 cms-inline-block">
             <#nested>
         </div>
@@ -35,7 +35,7 @@
             <div class="layui-input-block layui-col-md6 cms-inline-block">
                 <p class="cms-flex-end cms-pt50">
                     <button class="layui-btn layui-btn-sm layui-btn-primary">重置</button>
-                    <button class="layui-btn layui-btn-sm layui-btn-normal">提交</button>
+                    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit lay-filter="go">提交</button>
                 </p>
             </div>
         </div>

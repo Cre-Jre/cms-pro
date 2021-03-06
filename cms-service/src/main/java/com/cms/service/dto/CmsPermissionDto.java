@@ -13,4 +13,5 @@ public class CmsPermissionDto extends BaseDto<Integer> {
     private String name;
     private String url;
     private String action;
+    private Integer priority;
 }

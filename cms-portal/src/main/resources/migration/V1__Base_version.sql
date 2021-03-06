@@ -110,6 +110,7 @@ CREATE TABLE cms_permission
     icon        varchar(30)          default '' comment '菜单图标',
     name        varchar(25) not null comment '权限名称',
     url         varchar(50)          default '' comment '链接地址',
-    action      varchar(100)         default '' comment '权限码'
+    action      varchar(100)         default '' comment '权限码',
+    priority    int(11)     not null comment '排序'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
