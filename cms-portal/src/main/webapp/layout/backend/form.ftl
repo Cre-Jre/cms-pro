@@ -22,6 +22,7 @@
     </div>
 </#macro>
 
+<#--提交按钮-->
 <#macro submit>
     <div class="layui-form-item">
         <div class="layui-inline cms-inline-50">
@@ -40,4 +41,11 @@
             </div>
         </div>
     </div>
+</#macro>
+
+<#--单选框    -->
+<#macro radio list name value="">
+    <#list list as item>
+        <input type="radio" name="${name}" title="${item.label}" <#if value=="${item.getOrdinal()}">checked</#if> value="${item.getOrdinal()}">
+    </#list>
 </#macro>
