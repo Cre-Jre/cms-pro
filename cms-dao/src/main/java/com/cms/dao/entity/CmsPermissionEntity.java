@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class CmsPermissionEntity extends BaseEntity<Integer> {
     private Integer parentId;
-    private Boolean imenu;
+    private Boolean menu;
     private String icon;
     private String name;
     private String url;
