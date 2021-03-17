@@ -2,9 +2,10 @@
 <#import "/layout/backend/form.ftl" as form>
 <@main.layout>
     <@form.form>
+        <input name="parentId" class="layui-input" type="hidden">
         <@form.item>
             <@form.inline label="上级菜单">
-                <input name="parentId" class="layui-input" type="text">
+                <ul id="tree"></ul>
             </@form.inline>
             <@form.inline label="权限名称" required=true>
                 <input name="name" class="layui-input" type="text">
@@ -12,7 +13,7 @@
         </@form.item>
         <@form.item>
             <@form.inline label="权限类型" required=true>
-                <@form.radio list=permissionType name="menu" value="0"></@form.radio>
+                <@form.radio list=permissionType name="menu" value="1"></@form.radio>
             </@form.inline>
             <@form.inline label="菜单url">
                 <input name="url" class="layui-input" type="text">
@@ -34,10 +35,58 @@
         <@form.submit></@form.submit>
     </@form.form>
 </@main.layout>
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_select_tree.css">
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
 <script>
-    LayUtil.form.init(function (form) {
-        form.submit(function (data) {
+
+    //下拉树选项
+    let selectTreeOption = {
+        elem: "#tree",
+        url: "${adminPath}/permission/selectTree.do",
+        dataType: "json",
+        async: false,
+        method: 'post',
+        ficon: ["1", "-1"],
+        dataStyle: "layuiStyle",
+        initLevel: 1,
+        width: "100%",
+        dot: false,
+        checkbar: false,
+        formatter: {
+            title: function (data) {
+                let s = data.name;
+                if (data.children) {
+                    s += ' <span style=\'color:blue\'>(' + data.children.length + ')</span>';
+                }
+                return s;
+            }
+        },
+        response: {
+            statusCode: 200,
+            statusName: "restCode",
+            treeId: "id",
+            message: "restCode",
+            rootName: "data",
+            title: 'name'
+        },
+    };
+
+    layui.extend({
+        dtree:'{/}' + BASE_PATH + "/admin/layui/lay/modules/selectTree"
+    }).use('dtree',function(){
+        let dtree = layui.dtree;
+        dtree.renderSelect(selectTreeOption);
+        dtree.on("node('tree')",function (obj) {
+            console.log(obj.param.nodeId)
+        })
+    });
+
+
+
+    LayUtil.form.init(function(form){
+        form.submit(function(data){
             core.http({url:"add.do",data:data.field})
         })
     })
+
 </script>
