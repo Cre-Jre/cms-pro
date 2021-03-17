@@ -6,10 +6,11 @@ let core={
             method.call(context,args);
         },200);
     },
+    //http请求方法
     http:function(option,callback){
         this.cancel && this.cancel.abort();
-        //load: 加载loading autoComplete：自动完成
-        let opt={load:true,autoComplete:true},loadHandler,loadTime,
+        //load: 加载loading autoComplete：自动完成  goBack自动回退
+        let opt={load:true,autoComplete:true,goBack:true},loadHandler,loadTime,
             options ={
                 url:"",
                 method:"post",
@@ -31,7 +32,7 @@ let core={
                             loadHandler.closeLoading();
                         },time)
                     }
-                    let that = this;
+                    let that = this,handler;
                     //延时
                     setTimeout(function(){
                         //判断请求接口
@@ -41,7 +42,11 @@ let core={
                                 break;
                             case CONSTANT.HTTP.SUCCESS:
                                 if(that.autoComplete){
-                                    core.prompt.msg(res.restInfo,{shade:0.3,time:1200});
+                                    handler=function(){
+                                        //后退刷新
+                                        window.location.href = document.referrer;
+                                    };
+                                    core.prompt.msg(res.restInfo,{shade:0.3,time:1200},handler);
                                 }
                                 break;
                         }
@@ -134,6 +139,7 @@ LayUtil.selectTreeOption = {
         title: 'name'
     },
 };
+
 
 
 LayUtil.prototype = {

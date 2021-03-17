@@ -4,11 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
 public class CmsViewResolver extends FreeMarkerView {
-
+    //后台路径
     private static final String ADMIN_PATH = "/admin/cms/";
 
 
@@ -21,7 +23,13 @@ public class CmsViewResolver extends FreeMarkerView {
         if (requestURI.contains(ADMIN_PATH)) {
             model.put("adminPath", contextPath + servletPath);
         }
-
+        //判断回退按钮
+        List<String> includeGoBackList = Arrays.asList("add.do", "edit.do");
+        includeGoBackList.forEach(x->{
+            if (requestURI.contains(x)) {
+                model.put("goBack",true);
+            }
+        });
         model.put("basePath", contextPath);
     }
 }
