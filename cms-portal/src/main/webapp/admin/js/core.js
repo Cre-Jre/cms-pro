@@ -103,6 +103,37 @@ LayUtil.treeTableOption={
     page: false
 }
 
+//下拉树选项
+LayUtil.selectTreeOption = {
+    elem: "#selectTree",
+    url: "",
+    dataType: "json",
+    async: false,
+    method: 'post',
+    ficon: ["1", "-1"],
+    dataStyle: "layuiStyle",
+    initLevel: 1,
+    width: "100%",
+    dot: false,
+    checkbar: false,
+    formatter: {
+        title: function (data) {
+            let s = data.name;
+            if (data.children) {
+                s += ' <span style=\'color:blue\'>(' + data.children.length + ')</span>';
+            }
+            return s;
+        }
+    },
+    response: {
+        statusCode: 200,
+        statusName: "restCode",
+        treeId: "id",
+        message: "restCode",
+        rootName: "data",
+        title: 'name'
+    },
+};
 
 
 LayUtil.prototype = {
@@ -192,5 +223,25 @@ LayUtil.prototype = {
             }
         }
         LayUtil.treeTable = new Inner();
+    })(LayUtil),
+    //下拉树形
+    selectTree:(function(LayUtil){
+        function Inner(){}
+        Inner.prototype={
+            construct: Inner,
+            init:function(config,callback){
+                let that = this,option=$.extend({},LayUtil.selectTreeOption,config);
+                // {/}的意思即代表采用自有路径，即不跟随 base 路径 你还得把第三方js改成layui.denfine()那种格式
+                layui.extend({
+                    dtree:'{/}' + BASE_PATH + "/admin/layui/lay/modules/selectTree"
+                }).use('dtree',function(){
+                    that.dtree = layui.dtree;
+                    that.dtree.renderSelect(option);
+                    (callback instanceof Function) && callback(that,that.dtree);
+                });
+                return this;
+            }
+        };
+        LayUtil.selectTree = new Inner();
     })(LayUtil)
 }
