@@ -1,6 +1,7 @@
 package com.cms.core.foundation;
 
 import java.io.Serializable;
+import java.util.List;
 
 public interface BaseMapper<ENTITY extends BaseEntity<PK>,PK extends Serializable> {
     /**
@@ -22,5 +23,9 @@ public interface BaseMapper<ENTITY extends BaseEntity<PK>,PK extends Serializabl
      */
     ENTITY selectById(PK id);
 
-
+    /**
+     * 查询所有
+     * @return list
+     */
+    List<ENTITY> selectAll();
 }

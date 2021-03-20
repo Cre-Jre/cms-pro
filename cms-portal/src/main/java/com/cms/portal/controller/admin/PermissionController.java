@@ -48,8 +48,14 @@ public class PermissionController {
     @DoLog(content = "添加权限")
     @DoValid
     public Result<String> doAdd(@Valid CmsPermissionDto cmsPermissionDto, BindingResult result){
-        cmsPermissionService.save(cmsPermissionDto);
+//        cmsPermissionService.save(cmsPermissionDto);
         return Result.success();
+    }
+
+    @GetMapping("list.do")
+    @ResponseBody
+    public Result doList(CmsPermissionDto cmsPermissionDto){
+        return Result.success((ArrayList)cmsPermissionService.getList(cmsPermissionDto));
     }
 
     @PostMapping("selectTree.do")

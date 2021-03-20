@@ -7,6 +7,8 @@ import com.cms.service.dto.CmsPermissionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CmsPermissionServiceImpl implements CmsPermissionService {
 
@@ -26,5 +28,10 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
     @Override
     public CmsPermissionDto getById(Integer id) {
         return null;
+    }
+
+    @Override
+    public List<CmsPermissionDto> getList(CmsPermissionDto cmsPermissionDto) {
+        return CmsPermissionConverter.CONVERTER.entityToDto(cmsPermissionMapper.selectAll());
     }
 }
