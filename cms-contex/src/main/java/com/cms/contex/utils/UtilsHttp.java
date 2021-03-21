@@ -98,6 +98,7 @@ public class UtilsHttp {
             HttpServletResponse response = getResponse();
             try {
                 response.sendRedirect(request.getServletPath() + path);
+                return null;
             } catch (IOException e) {
                 log.error("异常跳转失败!");
             }
