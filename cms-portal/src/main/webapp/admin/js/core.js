@@ -42,10 +42,12 @@ let core={
                                 break;
                             case CONSTANT.HTTP.SUCCESS:
                                 if(that.autoComplete){
-                                    handler=function(){
-                                        //后退刷新
-                                        window.location.href = document.referrer;
-                                    };
+                                    if(that.goBack){
+                                        handler=function(){
+                                            //后退刷新
+                                            window.location.href = document.referrer;
+                                        };
+                                    }
                                     core.prompt.msg(res.restInfo,{shade:0.3,time:1200},handler);
                                 }
                                 break;
@@ -82,6 +84,16 @@ let core={
         confirm:function(content,option,callback){
             LayUtil.layer.init(function(inner){
                 inner.confirm(content,option,callback);
+            })
+        }
+    },
+    //业务相关
+    business:{
+        //删除
+        delete:function(data,callback){
+            let config = {url:"delete.do",goBack:false,data:{id:data.id}};
+            core.prompt.confirm("确认执行该操作?",{icon:3,title:'提示'},function(){
+                core.http(config,callback);
             })
         }
     }
@@ -239,14 +251,26 @@ LayUtil.prototype = {
                     that.treetable = layui.treetable;
                     that.treetable.render(option);
                     that.table = layui.table;
+                    that.rightTool(function(obj){
+                        if(obj.event!==undefined && obj.event==="del"){
+                            that.delete(obj.data,$.extend({},LayUtil.treeTableOption,config))
+                        }
+                    });
                     (callback instanceof Function) && callback(that,that.treetable,that.table);
                 });
                 return this;
             },
             //右侧工具栏
-            rightTool:function(filter,callback){
+            rightTool:function(callback,filter='treeTable'){
                 this.table.on('tool('+filter+')',function(obj){
                     (callback instanceof Function) && callback(obj)
+                });
+            },
+            //表格单条删除操作
+            delete:function(data,option){
+                let that = this;
+                core.business.delete(data,function(){
+                    that.treetable.render(option);
                 });
             }
         };

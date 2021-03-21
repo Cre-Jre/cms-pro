@@ -62,6 +62,12 @@ public class PermissionController {
         return UtilsTemplate.adminTemplate("permission", "edit");
     }
 
+    @PostMapping("delete.do")
+    @ResponseBody
+    public Result doDelete(Integer id){
+        return Result.success();
+    }
+
     @GetMapping("list.do")
     @ResponseBody
     public Result doList(CmsPermissionDto cmsPermissionDto) {
