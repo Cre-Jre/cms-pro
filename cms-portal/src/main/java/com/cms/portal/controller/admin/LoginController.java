@@ -3,6 +3,7 @@ package com.cms.portal.controller.admin;
 import com.cms.contex.constant.ConstantsPool;
 import com.cms.contex.utils.UtilsHttp;
 import com.cms.contex.utils.UtilsShiro;
+import com.cms.contex.utils.UtilsTemplate;
 import com.cms.service.api.CommonService;
 import com.google.code.kaptcha.Producer;
 import lombok.extern.slf4j.Slf4j;
@@ -23,17 +24,15 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class LoginController {
 
-
     @Autowired
     private Producer captchaProducer;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
-
     @GetMapping("login.do")
     public String toLogin() {
         Subject subject = UtilsShiro.getSubject();
-        if (subject.isAuthenticated()){
+        if(subject.isAuthenticated()){
             return "redirect:index.do";
         }
         return "/admin/login";
@@ -58,6 +57,9 @@ public class LoginController {
         }
     }
 
-
+    @GetMapping("error.do")
+    public String toError(){
+        return UtilsTemplate.adminTemplate("error");
+    }
 }
 

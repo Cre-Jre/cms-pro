@@ -17,4 +17,10 @@ public class ConstantsPool {
      * 验证码相关
      */
     public static final String IMAGE_CAPTCHA_SUFFIX = "image_captcha";
+
+    /**
+     * 判断是否ajax请求
+     */
+    public static final String HEADER_X_REQUESTED_WITH = "X-Requested-With";
+
 }

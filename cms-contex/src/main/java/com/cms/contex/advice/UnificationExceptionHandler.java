@@ -1,6 +1,8 @@
 package com.cms.contex.advice;
 
+import com.cms.contex.constant.ConstantsPool;
 import com.cms.contex.foundation.Result;
+import com.cms.contex.utils.UtilsHttp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,10 +27,11 @@ public class UnificationExceptionHandler {
         Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
         for(ConstraintViolation<?> item:constraintViolations){
             log.info(item.getPropertyPath().toString()+item.getMessage());
-            return Result.failed(item.getMessage());
+            return UtilsHttp.responseExceptionHandler(item.getMessage(),"/error.do");
         }
-        return Result.failed("操作失败");
+        return UtilsHttp.responseExceptionHandler(ConstantsPool.EXCEPTION_NETWORK_ERROR,"/error.do");
     }
+
 
 
 }

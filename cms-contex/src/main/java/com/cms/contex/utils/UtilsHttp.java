@@ -1,12 +1,18 @@
 package com.cms.contex.utils;
 
+import com.cms.contex.constant.ConstantsPool;
+import com.cms.contex.foundation.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Objects;
 
+@Slf4j
 public class UtilsHttp {
 
     private static final String HEADER_REAL_IP = "X-Real-IP";
@@ -18,25 +24,25 @@ public class UtilsHttp {
     private static final String IP_EMPTY = "0:0:0:0:0:0:0:1";
     private static final String IP_LOOP = "127.0.0.1";
 
-
     /**
      * 获取request对象
+     *
      * @return
      */
-    public static HttpServletRequest getRequest(){
+    public static HttpServletRequest getRequest() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return requestAttributes.getRequest();
     }
 
     /**
      * 获取response对象
+     *
      * @return
      */
-    public static HttpServletResponse getResponse(){
+    public static HttpServletResponse getResponse() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         return requestAttributes.getResponse();
     }
-
 
     /**
      * 获取访问者IP
@@ -76,5 +82,26 @@ public class UtilsHttp {
             }
             return ip;
         }
+    }
+
+    /**
+     * 响应异常处理 会区分是ajax请求还是页面请求 进行重定向或直接返回json数据
+     *
+     * @param info      异常信息
+     * @param path      跳转路径
+     * @return          Result
+     */
+    public static Result<String> responseExceptionHandler(String info, String path) {
+        HttpServletRequest request = getRequest();
+        //判断不是ajax请求的话
+        if (Objects.isNull(request.getHeader(ConstantsPool.HEADER_X_REQUESTED_WITH))) {
+            HttpServletResponse response = getResponse();
+            try {
+                response.sendRedirect(request.getServletPath() + path);
+            } catch (IOException e) {
+                log.error("异常跳转失败!");
+            }
+        }
+        return Result.failed(info);
     }
 }

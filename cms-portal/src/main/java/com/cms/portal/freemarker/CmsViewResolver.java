@@ -19,14 +19,14 @@ public class CmsViewResolver extends FreeMarkerView {
         String requestURI = request.getRequestURI();
         String contextPath = request.getContextPath();
         String servletPath = request.getServletPath();
+        List<String> includeGoBackList = Arrays.asList("add.do", "edit.do","error.do");
         //就认为是后台请求路径
         if (requestURI.contains(ADMIN_PATH)) {
             model.put("adminPath", contextPath + servletPath);
         }
         //判断回退按钮
-        List<String> includeGoBackList = Arrays.asList("add.do", "edit.do");
         includeGoBackList.forEach(x->{
-            if (requestURI.contains(x)) {
+            if(requestURI.contains(x)){
                 model.put("goBack",true);
             }
         });
