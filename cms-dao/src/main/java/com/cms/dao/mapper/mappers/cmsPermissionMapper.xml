@@ -4,7 +4,7 @@
 
     <sql id="baseField">
         id,
-        name ,
+        name,
         url,
         parent_id,
         is_menu,
@@ -29,7 +29,7 @@
             action,
         </if>
         priority,
-        name ,
+        name,
         create_time
     </sql>
 
@@ -50,29 +50,29 @@
             #{action},
         </if>
         #{priority},
-        #{name} ,
+        #{name},
         #{createTime}
     </sql>
-    
+
     <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsPermissionEntity">
-        <id property="id" column="id"></id>
-        <result property="priority" column="priority"></result>
-        <result property="url" column="url"></result>
-        <result property="action" column="action"></result>
-        <result property="parentId" column="parent_id"></result>
-        <result property="name" column="name"></result>
-        <result property="menu" column="is_menu"></result>
+        <id property="id" column="id"/>
+        <result property="priority" column="priority"/>
+        <result property="url" column="url"/>
+        <result property="action" column="action"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="name" column="name"/>
+        <result property="menu" column="is_menu"/>
     </resultMap>
 
     <insert id="save">
-        insert into cms_permission (<include refid="key"></include>) values (<include refid="value"></include>)
+        insert into cms_permission (<include refid="key"/>) values (<include refid="value"/>)
     </insert>
 
     <select id="selectAll" resultMap="baseResultMap">
-        select <include refid="baseField"></include> from cms_permission
+        select <include refid="baseField"/> from cms_permission
     </select>
 
     <select id="selectById" resultMap="baseResultMap">
-        select <include refid="baseField"></include> from cms_permission where id = #{id}
+        select <include refid="baseField"/> from cms_permission where id = #{id}
     </select>
 </mapper>

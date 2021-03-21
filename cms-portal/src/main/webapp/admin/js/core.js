@@ -77,8 +77,13 @@ let core={
             LayUtil.layer.init(function(inner){
                 inner.msg(content,option,callback);
             })
+        },
+        //询问
+        confirm:function(content,option,callback){
+            LayUtil.layer.init(function(inner){
+                inner.confirm(content,option,callback);
+            })
         }
-
     }
 };
 
@@ -173,8 +178,18 @@ LayUtil.prototype = {
             //信息框
             msg:function(content,option,callback){
                 return layer.msg(content,option,callback);
+            },
+            //询问框
+            confirm:function(content,option,callback){
+                let that = this;
+                this.layer.confirm(content,option,function(index){
+                    that.layer.close(index);
+                    if(callback instanceof Function){
+                        callback();
+                    }
+                })
             }
-        }
+        };
         LayUtil.layer = new Inner();
     })(LayUtil),
     //form表单

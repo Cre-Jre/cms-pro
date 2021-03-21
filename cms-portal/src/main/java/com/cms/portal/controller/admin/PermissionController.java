@@ -9,10 +9,10 @@ import com.cms.service.api.CmsPermissionService;
 import com.cms.service.dto.CmsPermissionDto;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,24 +33,24 @@ public class PermissionController {
     private CmsPermissionService cmsPermissionService;
 
     @GetMapping("index.do")
-    public String toIndex(){
-        return UtilsTemplate.adminTemplate("permission","index");
+    public String toIndex() {
+        return UtilsTemplate.adminTemplate("permission", "index");
     }
 
     @GetMapping("add.do")
-    public String toAdd(Integer parentId,Model model){
-        if (Objects.nonNull(parentId)){
-            model.addAttribute("parentId",parentId);
+    public String toAdd(Integer parentId, Model model) {
+        if (Objects.nonNull(parentId)) {
+            model.addAttribute("parentId", parentId);
         }
-        model.addAttribute("permissionType",PermissionTypeEnum.values());
-        return UtilsTemplate.adminTemplate("permission","add");
+        model.addAttribute("permissionType", PermissionTypeEnum.values());
+        return UtilsTemplate.adminTemplate("permission", "add");
     }
 
     @PostMapping("add.do")
     @ResponseBody
     @DoLog(content = "添加权限")
     @DoValid
-    public Result<String> doAdd(@Valid CmsPermissionDto cmsPermissionDto, BindingResult result){
+    public Result<String> doAdd(@Valid CmsPermissionDto cmsPermissionDto, BindingResult result) {
         cmsPermissionService.save(cmsPermissionDto);
         return Result.success();
     }
@@ -64,45 +64,45 @@ public class PermissionController {
 
     @GetMapping("list.do")
     @ResponseBody
-    public Result doList(CmsPermissionDto cmsPermissionDto){
-        return Result.success((ArrayList)cmsPermissionService.getList(cmsPermissionDto));
+    public Result doList(CmsPermissionDto cmsPermissionDto) {
+        return Result.success((ArrayList) cmsPermissionService.getList(cmsPermissionDto));
     }
 
     @PostMapping("selectTree.do")
     @ResponseBody
-    public Result doSelectTree(Integer excludeId){
+    public Result doSelectTree(Integer excludeId) {
         List<CmsPermissionDto> cmsPermissionDtos = buildData();
         //存放所有数据 方便存取
         Map<Integer, CmsPermissionDto> permissionMap = Maps.newHashMap();
         //只存放parentId = 0的数据
         List<CmsPermissionDto> permissionList = Lists.newArrayList();
         //循环数据 进行处理
-        cmsPermissionDtos.forEach(x->{
+        cmsPermissionDtos.forEach(x -> {
             Integer id = x.getId();
-            //如果当前id等于排除de id跳过
-            if (Objects.nonNull(excludeId) && id.compareTo(excludeId)==0){
+            //如果当前id 等于 排除的id跳过
+            if (Objects.nonNull(excludeId) && id.compareTo(excludeId) == 0) {
                 return;
             }
-            permissionMap.put(id,x);
+            permissionMap.put(id, x);
             //获取当前dto的父类id
             Integer parentId = x.getParentId();
             //判断是否是顶级菜单
-            if(parentId==0){
+            if (parentId == 0) {
                 permissionList.add(x);
-            }else{
+            } else {
                 CmsPermissionDto cmsPermissionDto = permissionMap.get(parentId);
-                if (Objects.nonNull(cmsPermissionDto) && Objects.nonNull(excludeId) && parentId.compareTo(excludeId)==0){
+                if (Objects.isNull(cmsPermissionDto) && Objects.nonNull(excludeId) && parentId.compareTo(excludeId) == 0) {
                     return;
                 }
                 List<CmsPermissionDto> children = cmsPermissionDto.getChildren();
-                if(CollectionUtils.isEmpty(children)){
+                if (CollectionUtils.isEmpty(children)) {
                     children = Lists.newArrayList();
                 }
                 children.add(x);
                 cmsPermissionDto.setChildren(children);
             }
         });
-        return Result.success((ArrayList)permissionList);
+        return Result.success((ArrayList) permissionList);
     }
 
     public List<CmsPermissionDto> buildData() {
@@ -139,5 +139,4 @@ public class PermissionController {
         permissionList.add(cmsPermissionDto5);
         return permissionList;
     }
-
 }
