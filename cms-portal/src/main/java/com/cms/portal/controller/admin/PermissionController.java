@@ -23,6 +23,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("permission")
@@ -37,9 +38,11 @@ public class PermissionController {
     }
 
     @GetMapping("add.do")
-    public String toAdd(Model model){
-        PermissionTypeEnum[] values = PermissionTypeEnum.values();
-        model.addAttribute("permissionType",values);
+    public String toAdd(Integer parentId,Model model){
+        if (Objects.nonNull(parentId)){
+            model.addAttribute("parentId",parentId);
+        }
+        model.addAttribute("permissionType",PermissionTypeEnum.values());
         return UtilsTemplate.adminTemplate("permission","add");
     }
 

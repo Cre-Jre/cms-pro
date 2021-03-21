@@ -1,6 +1,6 @@
 <#import "/layout/backend/main.ftl" as main>
 <@main.layout>
-    <table id="treeTable" class="layui-table" lay-filter="munu-table"></table>
+    <table id="treeTable" class="layui-table" lay-filter="treeTable"></table>
 </@main.layout>
 <link rel="stylesheet" href="${basePath}/admin/layui/css/modules/treetable.css" media="all">
 
@@ -25,6 +25,18 @@
             {templet: '#rightTemplate', align: 'center', title: '操作'}
         ]],
         toolbar:'#toolbar'
+    },function (inner) {
+        inner.rightTool("treeTable",function (obj) {
+            switch (obj.event) {
+                case "add":
+                    window.location.href="${adminPath}/permission/add.do?parentId="+obj.data.id;
+                    break;
+                case "edit":
+                    break;
+                case "del":
+                    break;
+            }
+        })
     });
 
 </script>
