@@ -20,6 +20,11 @@ public class CmsUserPrimaryServiceImpl implements CmsUserPrimaryService {
     }
 
     @Override
+    public void deleteById(Integer id) {
+
+    }
+
+    @Override
     public void update(CmsUserPrimaryDto dto) {
 
     }

@@ -18,6 +18,11 @@ public class CmsLogServiceImpl implements CmsLogService {
     }
 
     @Override
+    public void deleteById(Integer id) {
+
+    }
+
+    @Override
     public void update(CmsLogDto dto) {
 
     }

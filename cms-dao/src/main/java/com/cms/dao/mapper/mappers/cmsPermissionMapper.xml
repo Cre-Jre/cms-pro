@@ -68,11 +68,19 @@
         insert into cms_permission (<include refid="key"/>) values (<include refid="value"/>)
     </insert>
 
+    <delete id="deleteById">
+        delete from cms_permission where id = #{id}
+    </delete>
+
     <select id="selectAll" resultMap="baseResultMap">
         select <include refid="baseField"/> from cms_permission
     </select>
 
     <select id="selectById" resultMap="baseResultMap">
         select <include refid="baseField"/> from cms_permission where id = #{id}
+    </select>
+
+    <select id="selectByParentId" resultMap="baseResultMap">
+        select <include refid="baseField"></include> from cms_permission where parent_id = #{parentId}
     </select>
 </mapper>

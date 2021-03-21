@@ -14,17 +14,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@Validated
 @Controller
 @RequestMapping("permission")
 public class PermissionController {
@@ -64,7 +67,8 @@ public class PermissionController {
 
     @PostMapping("delete.do")
     @ResponseBody
-    public Result doDelete(Integer id){
+    public Result doDelete(@NotNull(message = "请传递id") Integer id){
+        cmsPermissionService.deleteById(id);
         return Result.success();
     }
 

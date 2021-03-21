@@ -17,6 +17,12 @@ public interface BaseMapper<ENTITY extends BaseEntity<PK>,PK extends Serializabl
     void update(ENTITY entity);
 
     /**
+     * 根据id进行删除
+     * @param id
+     */
+    void deleteById(PK id);
+
+    /**
      * 根据id查找
      * @param id
      * @return

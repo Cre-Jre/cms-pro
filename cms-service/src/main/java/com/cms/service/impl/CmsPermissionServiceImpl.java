@@ -21,6 +21,11 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
     }
 
     @Override
+    public void deleteById(Integer id) {
+        cmsPermissionMapper.deleteById(id);
+    }
+
+    @Override
     public void update(CmsPermissionDto dto) {
 
     }
