@@ -91,7 +91,7 @@ let core={
     business:{
         //删除
         delete:function(data,callback){
-            let config = {url:"delete.do",goBack:false,data:{id:data.id}};
+            let config = {url:"delete.do",goBack:false};
             core.prompt.confirm("确认执行该操作?",{icon:3,title:'提示'},function(){
                 core.http(config,callback);
             })
