@@ -7,6 +7,7 @@
         name ,
         url,
         parent_id,
+        is_menu,
         action,
         priority
     </sql>
@@ -60,6 +61,7 @@
         <result property="action" column="action"></result>
         <result property="parentId" column="parent_id"></result>
         <result property="name" column="name"></result>
+        <result property="menu" column="is_menu"></result>
     </resultMap>
 
     <insert id="save">
@@ -67,6 +69,10 @@
     </insert>
 
     <select id="selectAll" resultMap="baseResultMap">
-        select <include refid="baseField"></include>from cms_permission
+        select <include refid="baseField"></include> from cms_permission
+    </select>
+
+    <select id="selectById" resultMap="baseResultMap">
+        select <include refid="baseField"></include> from cms_permission where id = #{id}
     </select>
 </mapper>

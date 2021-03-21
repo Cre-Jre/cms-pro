@@ -55,6 +55,13 @@ public class PermissionController {
         return Result.success();
     }
 
+    @GetMapping("edit.do")
+    public String toEdit(Integer id, Model model) {
+        model.addAttribute("data", cmsPermissionService.getById(id));
+        model.addAttribute("permissionType", PermissionTypeEnum.values());
+        return UtilsTemplate.adminTemplate("permission", "edit");
+    }
+
     @GetMapping("list.do")
     @ResponseBody
     public Result doList(CmsPermissionDto cmsPermissionDto){
@@ -98,33 +105,38 @@ public class PermissionController {
         return Result.success((ArrayList)permissionList);
     }
 
-    public List<CmsPermissionDto> buildData(){
+    public List<CmsPermissionDto> buildData() {
         List<CmsPermissionDto> permissionList = Lists.newArrayList();
         //4条数据
         CmsPermissionDto cmsPermissionDto = new CmsPermissionDto();
         CmsPermissionDto cmsPermissionDto2 = new CmsPermissionDto();
         CmsPermissionDto cmsPermissionDto3 = new CmsPermissionDto();
         CmsPermissionDto cmsPermissionDto4 = new CmsPermissionDto();
+        CmsPermissionDto cmsPermissionDto5 = new CmsPermissionDto();
 
         cmsPermissionDto.setId(1);
         cmsPermissionDto2.setId(2);
         cmsPermissionDto3.setId(3);
         cmsPermissionDto4.setId(4);
+        cmsPermissionDto5.setId(5);
 
         cmsPermissionDto.setName("测试");
         cmsPermissionDto2.setName("测试2");
         cmsPermissionDto3.setName("测试3");
         cmsPermissionDto4.setName("测试4");
+        cmsPermissionDto5.setName("测试5");
 
         cmsPermissionDto.setParentId(0);
         cmsPermissionDto2.setParentId(1);
         cmsPermissionDto3.setParentId(2);
         cmsPermissionDto4.setParentId(3);
+        cmsPermissionDto5.setParentId(0);
 
         permissionList.add(cmsPermissionDto);
         permissionList.add(cmsPermissionDto2);
         permissionList.add(cmsPermissionDto3);
         permissionList.add(cmsPermissionDto4);
+        permissionList.add(cmsPermissionDto5);
         return permissionList;
     }
 
