@@ -40,7 +40,7 @@
 <script>
     LayUtil.selectTree.init({
         url: "${adminPath}/permission/selectTree.do",
-        <#if parentId??>selectInitVal:"${parentId}",</#if>
+        <#if parentId??>selectInitVal: "${parentId}",</#if>
         selectTips:"上级菜单"
     },function(inner,dtree){
         dtree.on("node('selectTree')",function(obj){
