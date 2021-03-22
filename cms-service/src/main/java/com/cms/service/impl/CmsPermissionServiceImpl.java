@@ -26,7 +26,7 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
     @Override
     public void deleteById(Integer id) {
         List<CmsPermissionEntity> cmsPermissionEntities = cmsPermissionMapper.selectByParentId(id);
-        if (!CollectionUtils.isEmpty(cmsPermissionEntities)){
+        if(!CollectionUtils.isEmpty(cmsPermissionEntities)){
             throw new BusinessException("不能删除带有子类的权限");
         }
         cmsPermissionMapper.deleteById(id);
@@ -34,7 +34,7 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
 
     @Override
     public void update(CmsPermissionDto dto) {
-
+        cmsPermissionMapper.update(CmsPermissionConverter.CONVERTER.dtoToEntity(dto));
     }
 
     @Override
