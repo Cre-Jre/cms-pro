@@ -87,39 +87,6 @@ public class PermissionController {
     @PostMapping("selectTree.do")
     @ResponseBody
     public Result doSelectTree(Integer excludeId) {
-        List<CmsPermissionDto> cmsPermissionDtos = cmsPermissionService.getList(null);
-        //存放所有数据 方便存取
-        Map<Integer, CmsPermissionDto> permissionMap = Maps.newHashMap();
-        //只存放parentId = 0的数据
-        List<CmsPermissionDto> permissionList = Lists.newArrayList();
-        //循环数据 进行处理
-        cmsPermissionDtos.forEach(x -> {
-            Integer id = x.getId();
-            //如果当前id 等于 排除的id跳过
-            if (Objects.nonNull(excludeId) && id.compareTo(excludeId) == 0) {
-                return;
-            }
-            permissionMap.put(id, x);
-            //获取当前dto的父类id
-            Integer parentId = x.getParentId();
-            //判断是否是顶级菜单
-            if (parentId == 0) {
-                permissionList.add(x);
-            } else {
-                CmsPermissionDto cmsPermissionDto = permissionMap.get(parentId);
-                if (Objects.isNull(cmsPermissionDto) && Objects.nonNull(excludeId) && parentId.compareTo(excludeId) == 0) {
-                    return;
-                }
-                List<CmsPermissionDto> children = cmsPermissionDto.getChildren();
-                if (CollectionUtils.isEmpty(children)) {
-                    children = Lists.newArrayList();
-                }
-                children.add(x);
-                children.sort(Comparator.comparing(CmsPermissionDto::getPriority));
-                cmsPermissionDto.setChildren(children);
-            }
-        });
-        permissionList.sort(Comparator.comparing(CmsPermissionDto::getPriority));
-        return Result.success((ArrayList) permissionList);
+        return Result.success((ArrayList) cmsPermissionService.getTree(excludeId));
     }
 }

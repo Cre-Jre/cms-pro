@@ -1,6 +1,7 @@
 package com.cms.service.dto;
 
 import com.cms.core.foundation.BaseDto;
+import com.cms.core.foundation.TreeDto;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotBlank;
@@ -13,9 +14,8 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class CmsPermissionDto extends BaseDto<Integer> {
+public class CmsPermissionDto extends TreeDto<CmsPermissionDto,Integer> {
     private Integer parentId;
-    @NotNull(message = "请输入权限类型")
     private Boolean menu;
     private String icon;
     @NotBlank(message = "请输入权限名称")
@@ -26,6 +26,4 @@ public class CmsPermissionDto extends BaseDto<Integer> {
     @Min(value = 0,message = "排序最小为0")
     @Max(value = 9999,message = "排序最大到9999")
     private Integer priority;
-    private List<CmsPermissionDto> children;
-    private List<Map<String,String>> checkArr;
 }
