@@ -185,6 +185,40 @@ LayUtil.dataGridOption = {
         }
     }
 };
+//树形配置
+LayUtil.treeOption = {
+    elem: "#tree",
+    url: "",
+    dataType: "json",
+    async: false,
+    method: 'get',
+    dataStyle: "layuiStyle",
+    initLevel: 1,
+    data: "",
+    dot: false,
+    checkbar: false,
+    contentType:'application/json;charset=UTF-8',
+    nodeIconArray: {"1": {"open": "dtree-icon-wenjianjiazhankai", "close": "dtree-icon-weibiaoti5"}},
+    icon: ["1", "7"],
+    formatter: {
+        title: function (data) {
+            let s = data.name;
+            if (data.children) {
+                s += ' <span style=\'color:blue\'>(' + data.children.length + ')</span>';
+            }
+            return s;
+        }
+    },
+    response: {
+        statusCode: 200,
+        statusName: "restCode",
+        treeId: "id",
+        message: "restCode",
+        rootName: "data",
+        title: 'name'
+    },
+};
+
 
 LayUtil.prototype = {
     construct:LayUtil,
@@ -337,5 +371,23 @@ LayUtil.prototype = {
             }
         };
         LayUtil.selectTree = new Inner();
+    })(LayUtil),
+    //树形结构
+    tree:(function(LayUtil){
+        function Inner(){}
+        Inner.prototype={
+            construct:Inner,
+            init:function (config) {
+                let that = this,option = $.extend({},LayUtil.treeOption,config);
+                layui.extend({
+                    dtree: '{/}' + BASE_PATH + '/admin/layui/lay/modules/dtree'
+                }).use('dtree', function () {
+                    that.dtree = layui.dtree;
+                    that.dtree.render(option);
+                });
+                return this;
+            }
+        };
+        LayUtil.tree = new Inner();
     })(LayUtil)
 }
