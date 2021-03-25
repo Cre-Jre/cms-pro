@@ -379,6 +379,7 @@ LayUtil.prototype = {
             construct:Inner,
             init:function (config) {
                 let that = this,option = $.extend({},LayUtil.treeOption,config);
+                this.id = option.elem;
                 if (option.checkbar!==undefined && option.checkbar) {
                     // 自定扩展的二级非最后一级图标，从1开始
                     option.nodeIconArray = {
@@ -396,6 +397,21 @@ LayUtil.prototype = {
                     that.dtree.render(option);
                 });
                 return this;
+            },
+            //获取选中的
+            //obj.field["permission[0]"]="abc"
+            //obj.field["permission[1]"]="abc"
+            getChecked:function(obj,name){
+                let arr = this.dtree.getCheckbarNodesParam(this.id.replace("#",""));
+                if(arr instanceof Array){
+                    if(obj!==undefined && name!==undefined){
+                        for(let i=0,length=arr.length;i<length;i++){
+                            obj[name+"["+i+"]"]=arr[i].nodeId;
+                        }
+                        return obj;
+                    }
+                }
+                console.log(arr);
             }
         };
         LayUtil.tree = new Inner();
