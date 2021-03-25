@@ -379,6 +379,16 @@ LayUtil.prototype = {
             construct:Inner,
             init:function (config) {
                 let that = this,option = $.extend({},LayUtil.treeOption,config);
+                if (option.checkbar!==undefined && option.checkbar) {
+                    // 自定扩展的二级非最后一级图标，从1开始
+                    option.nodeIconArray = {
+                        "1": {
+                            "open": "dtree-icon-wenjianjiazhankai",
+                            "close": "dtree-icon-weibiaoti5"
+                        }
+                    };
+                    option.icon = ["1", "8"];
+                }
                 layui.extend({
                     dtree: '{/}' + BASE_PATH + '/admin/layui/lay/modules/dtree'
                 }).use('dtree', function () {
