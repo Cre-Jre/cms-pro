@@ -17,6 +17,10 @@
                 <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="1" title="是">
                 <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="0" checked title="否">
             </@form.inline>
+            <@form.inline label="是否启用" required=true>
+                <input name="status" class="layui-input" type="radio" value="0" checked title="启用">
+                <input name="status" class="layui-input" type="radio" value="1"  title="禁用">
+            </@form.inline>
         </@form.item>
         <@form.item>
             <@form.inline label="用户权限">
@@ -29,8 +33,10 @@
 <script>
     LayUtil.form.init(function(inner){
         inner.submit(function(data){
-            dtreeInner.getChecked(data.field,"permission");
-            console.log(data.field);
+            if(data.field.all==="0"){
+                dtreeInner.getChecked(data.field,"permission");
+            }
+            core.http({url:"add.do",data:data.field})
         })
     });
 

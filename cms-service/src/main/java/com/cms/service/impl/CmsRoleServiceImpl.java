@@ -9,6 +9,7 @@ import com.cms.service.dto.CmsRoleDto;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,10 +22,11 @@ public class CmsRoleServiceImpl implements CmsRoleService {
     private CmsRolePermissionMapper cmsRolePermissionMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void save(CmsRoleDto dto) {
         CmsRoleEntity cmsRoleEntity = CmsRoleConverter.CONVERTER.dtoToEntity(dto);
         cmsRoleMapper.save(cmsRoleEntity);
-        if(dto.getAll()){
+        if(!dto.getAll()){
             List<Integer> permission = dto.getPermission();
             if(CollectionUtils.isNotEmpty(permission)){
                 cmsRolePermissionMapper.batchInsert(permission,cmsRoleEntity.getId());

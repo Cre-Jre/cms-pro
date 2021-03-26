@@ -81,7 +81,7 @@
     </resultMap>
 
     <insert id="save">
-        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integeer">
+        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
             select last_insert_id()
         </selectKey>
         insert into cms_role (<include refid="key"/>) values (<include refid="value"/>)

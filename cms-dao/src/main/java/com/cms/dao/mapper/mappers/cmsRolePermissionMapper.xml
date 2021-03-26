@@ -14,8 +14,8 @@
     </sql>
 
     <sql id="key">
-        #{role_id},
-        #{permission_id},
+        role_id,
+        permission_id
     </sql>
 
     <sql id="updateField">
