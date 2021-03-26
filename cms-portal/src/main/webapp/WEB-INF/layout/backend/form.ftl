@@ -6,8 +6,8 @@
 </#macro>
 
 <#--通用form中的每一项 一行item-->
-<#macro item>
-    <div class="layui-form-item">
+<#macro item class="">
+    <div class="layui-form-item ${class}">
         <#nested>
     </div>
 </#macro>

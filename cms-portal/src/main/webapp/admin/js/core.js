@@ -282,7 +282,7 @@ LayUtil.prototype = {
                 });
                 return this;
             },
-            //提交表单
+            //表单 事件监听
             submit:function(callback,name,type="submit"){
                 this.form.on(type+"("+(name===undefined?'go':name)+")",function(obj){
                     if(callback instanceof Function){
@@ -295,8 +295,12 @@ LayUtil.prototype = {
             //验证
             verify:function(validator){
                 this.form.verify(validator);
+            },
+            //radio 事件监听
+            radio:function(name,callback){
+                this.submit(callback,name,"radio");
             }
-        }
+        };
         LayUtil.form = new Inner();
     })(LayUtil),
     //树形表格
