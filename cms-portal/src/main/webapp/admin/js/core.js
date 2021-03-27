@@ -1,4 +1,17 @@
 let core={
+    //字符串操作
+    String:{
+        //判断字符串是否为空
+        isEmpty:function(content){
+            if(content===undefined){
+                return true;
+            }
+            if($.trim(content).length===0){
+                return true;
+            }
+            return false;
+        }
+    },
     //限流工具类
     throttle:function(method,args,context){
         clearTimeout(method.tId);
@@ -163,7 +176,7 @@ LayUtil.dataGridOption = {
     elem: '#dataGrid',
     method: 'post',
     page: true,
-    url:'',
+    url:'page.do',
     limit: 10,
     request: {
         pageName: 'pageCurrent', //页码的参数名称，默认：page
@@ -277,7 +290,12 @@ LayUtil.prototype = {
                     that.form = layui.form;
                     that.form.render();
                     if(callback instanceof Function){
-                        callback(that,that.form)
+                        let autoOperation = callback(that,that.form);
+                        if(autoOperation === undefined){
+                            (OPERATION_URL!==undefined && !core.String.isEmpty(OPERATION_URL)) && that.submit(function(data){
+                                core.http({url:OPERATION_URL,data:data.field});
+                            })
+                        }
                     }
                 });
                 return this;

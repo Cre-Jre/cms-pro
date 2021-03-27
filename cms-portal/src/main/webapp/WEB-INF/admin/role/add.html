@@ -36,7 +36,6 @@
             if(data.field.all==="0"){
                 dtreeInner.getChecked(data.field,"permission");
             }
-            core.http({url:"add.do",data:data.field})
         });
         inner.radio("permissionFilter",function(obj){
             (obj.value==="1")?$(".permission").hide():$(".permission").show();

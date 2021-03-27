@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 视图解析器
+ */
 @Slf4j
 public class CmsViewResolver extends FreeMarkerView {
     //后台路径
@@ -23,13 +26,14 @@ public class CmsViewResolver extends FreeMarkerView {
         //就认为是后台请求路径
         if (requestURI.contains(ADMIN_PATH)) {
             model.put("adminPath", contextPath + servletPath);
+            //判断回退按钮
+            includeGoBackList.forEach(x->{
+                if(requestURI.contains(x)){
+                    model.put("goBack",true);
+                    model.put("operationUrl",x);
+                }
+            });
         }
-        //判断回退按钮
-        includeGoBackList.forEach(x->{
-            if(requestURI.contains(x)){
-                model.put("goBack",true);
-            }
-        });
         model.put("basePath", contextPath);
     }
 }
