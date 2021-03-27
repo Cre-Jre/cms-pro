@@ -2,31 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cms.dao.mapper.CmsRolePermissionMapper">
 
-    <sql id="baseField">
-        id,
-        name,
-        url,
-        parent_id,
-        is_menu,
-        action,
-        icon,
-        priority
-    </sql>
-
     <sql id="key">
         role_id,
         permission_id
     </sql>
-
-    <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsPermissionEntity">
-        <id property="id" column="id"/>
-        <result property="priority" column="priority"/>
-        <result property="url" column="url"/>
-        <result property="action" column="action"/>
-        <result property="parentId" column="parent_id"/>
-        <result property="name" column="name"/>
-        <result property="menu" column="is_menu"/>
-    </resultMap>
 
     <insert id="batchInsert">
         insert into cms_role_permission (<include refid="key"/>) values

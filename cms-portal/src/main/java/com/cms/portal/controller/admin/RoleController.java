@@ -75,6 +75,14 @@ public class RoleController {
         return Result.success();
     }
 
+    @PostMapping("delete.do")
+    @ResponseBody
+    @DoLog(content = "删除角色")
+    public Result<String> doDelete(@NotNull(message = "请输入id") Integer id){
+        cmsRoleService.deleteById(id);
+        return Result.success();
+    }
+
     @PostMapping("permission.do")
     @ResponseBody
     public Result doPermission(Integer roleId) {

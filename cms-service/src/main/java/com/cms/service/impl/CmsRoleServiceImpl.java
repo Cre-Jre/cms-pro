@@ -39,8 +39,10 @@ public class CmsRoleServiceImpl implements CmsRoleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteById(Integer id) {
-
+        cmsRolePermissionMapper.deleteByRoleId(id);
+        cmsRoleMapper.deleteById(id);
     }
 
     @Override
