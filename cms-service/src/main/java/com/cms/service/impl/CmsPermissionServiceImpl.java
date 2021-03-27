@@ -3,6 +3,7 @@ package com.cms.service.impl;
 import com.cms.core.exception.BusinessException;
 import com.cms.dao.entity.CmsPermissionEntity;
 import com.cms.dao.mapper.CmsPermissionMapper;
+import com.cms.dao.mapper.CmsRolePermissionMapper;
 import com.cms.service.api.CmsPermissionService;
 import com.cms.service.converter.CmsPermissionConverter;
 import com.cms.service.dto.CmsPermissionDto;
@@ -10,6 +11,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Comparator;
@@ -22,6 +24,8 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
 
     @Autowired
     private CmsPermissionMapper cmsPermissionMapper;
+    @Autowired
+    private CmsRolePermissionMapper cmsRolePermissionMapper;
 
     @Override
     public void save(CmsPermissionDto dto) {
@@ -29,11 +33,13 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteById(Integer id) {
         List<CmsPermissionEntity> cmsPermissionEntities = cmsPermissionMapper.selectByParentId(id);
         if(!CollectionUtils.isEmpty(cmsPermissionEntities)){
             throw new BusinessException("不能删除带有子类的权限");
         }
+        cmsRolePermissionMapper.deleteByPermissionId(id);
         cmsPermissionMapper.deleteById(id);
     }
 

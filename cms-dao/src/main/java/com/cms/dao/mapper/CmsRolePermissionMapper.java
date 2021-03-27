@@ -14,4 +14,9 @@ public interface CmsRolePermissionMapper extends BaseMapper<CmsRolePermissionEnt
      */
     void batchInsert(@Param("permissionList") List<Integer> permissionList, @Param("roleId")Integer roleId);
 
+    /**
+     * 根据permissionId 删除
+     * @param permissionId      权限id
+     */
+    void deleteByPermissionId(Integer permissionId);
 }

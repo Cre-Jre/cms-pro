@@ -290,9 +290,11 @@ LayUtil.prototype = {
                     that.form = layui.form;
                     that.form.render();
                     if(callback instanceof Function){
+                        //自动提交 如果返回undefined
                         let autoOperation = callback(that,that.form);
                         if(autoOperation === undefined){
                             (OPERATION_URL!==undefined && !core.String.isEmpty(OPERATION_URL)) && that.submit(function(data){
+                                debugger
                                 core.http({url:OPERATION_URL,data:data.field});
                             })
                         }
@@ -304,7 +306,12 @@ LayUtil.prototype = {
             submit:function(callback,name,type="submit"){
                 this.form.on(type+"("+(name===undefined?'go':name)+")",function(obj){
                     if(callback instanceof Function){
-                        callback(obj);
+                        //自动提交 如果返回undefined
+                        let data = callback(obj);
+                        if(data !== undefined){
+                            (OPERATION_URL!==undefined && !core.String.isEmpty(OPERATION_URL)) &&
+                            core.http({url:OPERATION_URL,data:data});
+                        }
                         return false;
                     }
                     return true;

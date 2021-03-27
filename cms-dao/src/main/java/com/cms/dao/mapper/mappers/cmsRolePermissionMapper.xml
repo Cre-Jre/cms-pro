@@ -18,31 +18,6 @@
         permission_id
     </sql>
 
-    <sql id="updateField">
-        update_time = #{updateTime},
-        <if test="parentId!=null">
-            parent_id = #{parentId},
-        </if>
-        <if test="menu!=null">
-            is_menu = #{menu},
-        </if>
-        <if test="icon!=null and icon!=''">
-            icon = #{icon},
-        </if>
-        <if test="url!=null and url!=''">
-            url = #{url},
-        </if>
-        <if test="name!=null and name!=''">
-            name = #{name},
-        </if>
-        <if test="action!=null and action!=''">
-            action = #{action},
-        </if>
-        <if test="priority!=null">
-            priority = #{priority},
-        </if>
-    </sql>
-
     <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsPermissionEntity">
         <id property="id" column="id"/>
         <result property="priority" column="priority"/>
@@ -60,28 +35,8 @@
         </foreach>
     </insert>
 
-    <delete id="deleteById">
-        delete from cms_permission where id = #{id}
+    <delete id="deleteByPermissionId">
+        delete from cms_role_permission where permission_id = #{permissionId}
     </delete>
-
-    <update id="update">
-        update cms_permission
-        <trim prefix="set" suffixOverrides=",">
-            <include refid="updateField"/>
-        </trim>
-        where id = #{id}
-    </update>
-
-    <select id="selectAll" resultMap="baseResultMap">
-        select
-        <include refid="baseField"/>
-        from cms_permission order by parent_id asc
-    </select>
-
-    <select id="selectById" resultMap="baseResultMap">
-        select
-        <include refid="baseField"/>
-        from cms_permission where id = #{id}
-    </select>
 
 </mapper>

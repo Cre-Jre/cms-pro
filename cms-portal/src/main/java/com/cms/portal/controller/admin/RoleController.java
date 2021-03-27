@@ -4,6 +4,7 @@ import com.cms.contex.foundation.Result;
 import com.cms.contex.utils.UtilsTemplate;
 import com.cms.contex.utils.UtilsTree;
 import com.cms.core.annotation.DoLog;
+import com.cms.core.annotation.DoValid;
 import com.cms.service.api.CmsPermissionService;
 import com.cms.service.api.CmsRoleService;
 import com.cms.service.dto.CmsPermissionDto;
@@ -13,8 +14,10 @@ import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -44,7 +47,8 @@ public class RoleController {
     @PostMapping("add.do")
     @ResponseBody
     @DoLog(content = "添加角色")
-    public Result doAdd(CmsRoleDto cmsRoleDto){
+    @DoValid
+    public Result doAdd(@Valid CmsRoleDto cmsRoleDto, BindingResult result){
         cmsRoleService.save(cmsRoleDto);
         return Result.success();
     }
