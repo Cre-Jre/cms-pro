@@ -66,6 +66,15 @@ public class RoleController {
         return UtilsTemplate.adminTemplate("role", "edit");
     }
 
+    @PostMapping("edit.do")
+    @ResponseBody
+    @DoValid
+    @DoLog(content = "修改角色")
+    public Result<String> doEdit(@Valid CmsRoleDto cmsRoleDto, BindingResult result){
+        cmsRoleService.update(cmsRoleDto);
+        return Result.success();
+    }
+
     @PostMapping("permission.do")
     @ResponseBody
     public Result doPermission(Integer roleId) {

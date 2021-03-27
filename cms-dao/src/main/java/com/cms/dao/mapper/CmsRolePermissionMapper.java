@@ -21,6 +21,12 @@ public interface CmsRolePermissionMapper extends BaseMapper<CmsRolePermissionEnt
     void deleteByPermissionId(Integer permissionId);
 
     /**
+     * 根据角色id删除
+     * @param roleId     角色id
+     */
+    void deleteByRoleId(Integer roleId);
+
+    /**
      * 根据角色id查找权限
      * @param roleId
      * @return

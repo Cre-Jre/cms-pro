@@ -45,7 +45,14 @@ public class CmsRoleServiceImpl implements CmsRoleService {
 
     @Override
     public void update(CmsRoleDto dto) {
-
+        cmsRoleMapper.update(CmsRoleConverter.CONVERTER.dtoToEntity(dto));
+        cmsRolePermissionMapper.deleteByRoleId(dto.getId());
+        if(!dto.getAll()){
+            List<Integer> permission = dto.getPermission();
+            if(CollectionUtils.isNotEmpty(permission)){
+                cmsRolePermissionMapper.batchInsert(permission,dto.getId());
+            }
+        }
     }
 
     @Override
