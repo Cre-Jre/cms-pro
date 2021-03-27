@@ -13,13 +13,17 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
+@Validated
 @Controller
 @RequestMapping("role")
 public class RoleController {
@@ -29,34 +33,40 @@ public class RoleController {
     private CmsPermissionService cmsPermissionService;
 
     @GetMapping("index.do")
-    public String toIndex(){
-        return UtilsTemplate.adminTemplate("role","index");
+    public String toIndex() {
+        return UtilsTemplate.adminTemplate("role", "index");
     }
 
     @PostMapping("page.do")
     @ResponseBody
-    public Result doPage(CmsRoleDto cmsRoleDto){
+    public Result doPage(CmsRoleDto cmsRoleDto) {
         return Result.success(cmsRoleService.getPage(cmsRoleDto));
     }
 
     @GetMapping("add.do")
-    public String toAdd(){
-        return UtilsTemplate.adminTemplate("role","add");
+    public String toAdd() {
+        return UtilsTemplate.adminTemplate("role", "add");
     }
 
     @PostMapping("add.do")
     @ResponseBody
     @DoLog(content = "添加角色")
     @DoValid
-    public Result doAdd(@Valid CmsRoleDto cmsRoleDto, BindingResult result){
+    public Result doAdd(@Valid CmsRoleDto cmsRoleDto, BindingResult result) {
         cmsRoleService.save(cmsRoleDto);
         return Result.success();
     }
 
+    @GetMapping("edit.do")
+    public String toEdit(@NotNull(message = "请输入id") Integer id, Model model) {
+        model.addAttribute("data", cmsRoleService.getById(id));
+        return UtilsTemplate.adminTemplate("role", "edit");
+    }
+
     @PostMapping("permission.do")
     @ResponseBody
-    public Result doPermission(){
-        List<CmsPermissionDto> permissionList =cmsPermissionService.getTree(null);
+    public Result doPermission() {
+        List<CmsPermissionDto> permissionList = cmsPermissionService.getTree(null);
         UtilsTree.recursion(permissionList);
         return Result.success((ArrayList) permissionList);
     }

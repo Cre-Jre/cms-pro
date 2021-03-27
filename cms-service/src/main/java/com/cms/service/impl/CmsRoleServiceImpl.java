@@ -50,7 +50,7 @@ public class CmsRoleServiceImpl implements CmsRoleService {
 
     @Override
     public CmsRoleDto getById(Integer id) {
-        return null;
+        return CmsRoleConverter.CONVERTER.entityToDto(cmsRoleMapper.selectById(id));
     }
 
     @Override
