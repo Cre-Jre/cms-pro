@@ -171,6 +171,7 @@ LayUtil.selectTreeOption = {
 };
 
 //layui的表格固定配置
+//headSearch  头部查询
 LayUtil.dataGridOption = {
     id: "dataGrid",
     elem: '#dataGrid',
@@ -178,6 +179,7 @@ LayUtil.dataGridOption = {
     page: true,
     url:'page.do',
     limit: 10,
+    headSearch:"searchSubmit",
     request: {
         pageName: 'pageCurrent', //页码的参数名称，默认：page
         limitName: 'pageSize' //每页数据量的参数名，默认：limit
@@ -294,7 +296,6 @@ LayUtil.prototype = {
                         let autoOperation = callback(that,that.form);
                         if(autoOperation === undefined){
                             (OPERATION_URL!==undefined && !core.String.isEmpty(OPERATION_URL)) && that.submit(function(data){
-                                debugger
                                 core.http({url:OPERATION_URL,data:data.field});
                             })
                         }
@@ -376,6 +377,23 @@ LayUtil.prototype = {
                 layui.use('table',function(){
                     that.table = layui.table;
                     that.table.render(config);
+                    that.renderSearch(config.headSearch);
+                })
+            },
+            //渲染form表头查询
+            renderSearch:function(name){
+                layui.use('form',function(){
+                    let form = layui.form,that = this;
+                    //监听提交
+                    form.on('submit('+name+')', function(data){
+                        that.table.reload('dataGrid',{
+                            where:data.field,
+                            page:{
+                                curr:1
+                            }
+                        });
+                        return false;
+                    });
                 })
             }
         };
