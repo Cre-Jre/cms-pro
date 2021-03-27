@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface BaseMapper<ENTITY extends BaseEntity<PK>,PK extends Serializable> {
+
     /**
      * 添加
      * @param entity
@@ -11,16 +12,16 @@ public interface BaseMapper<ENTITY extends BaseEntity<PK>,PK extends Serializabl
     void save(ENTITY entity);
 
     /**
+     * 根据id进行删除
+     * @param id    主键
+     */
+    void deleteById(PK id);
+
+    /**
      * 修改
      * @param entity
      */
     void update(ENTITY entity);
-
-    /**
-     * 根据id进行删除
-     * @param id
-     */
-    void deleteById(PK id);
 
     /**
      * 根据id查找
@@ -31,7 +32,13 @@ public interface BaseMapper<ENTITY extends BaseEntity<PK>,PK extends Serializabl
 
     /**
      * 查询所有
-     * @return list
+     * @return    list
      */
     List<ENTITY> selectAll();
+
+    /**
+     * 分页查询
+     * @return
+     */
+    List<ENTITY> selectBySearchProvider(SearchProvider searchProvider);
 }
