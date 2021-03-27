@@ -377,6 +377,11 @@ LayUtil.prototype = {
                 layui.use('table',function(){
                     that.table = layui.table;
                     that.table.render(config);
+                    that.rightTool(function(obj){
+                        if(obj.event!==undefined && obj.event==="del"){
+                            that.delete(obj.data,$.extend({},LayUtil.dataGridOption,config))
+                        }
+                    });
                     that.renderSearch(config.headSearch);
                 })
             },
@@ -395,6 +400,19 @@ LayUtil.prototype = {
                         return false;
                     });
                 })
+            },
+            //右侧工具栏
+            rightTool:function(callback,filter='dataGrid'){
+                this.table.on('tool('+filter+')',function(obj){
+                    (callback instanceof Function) && callback(obj)
+                });
+            },
+            //表格单条删除操作
+            delete:function(data,option){
+                let that = this;
+                core.business.delete(data,function(){
+                    that.table.render(option);
+                });
             }
         };
         LayUtil.dataGrid = new Inner();
