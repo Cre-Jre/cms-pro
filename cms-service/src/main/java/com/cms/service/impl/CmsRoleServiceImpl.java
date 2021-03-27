@@ -1,11 +1,13 @@
 package com.cms.service.impl;
 
+import com.cms.core.foundation.Page;
 import com.cms.dao.entity.CmsRoleEntity;
 import com.cms.dao.mapper.CmsRoleMapper;
 import com.cms.dao.mapper.CmsRolePermissionMapper;
 import com.cms.service.api.CmsRoleService;
 import com.cms.service.converter.CmsRoleConverter;
 import com.cms.service.dto.CmsRoleDto;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,5 +49,11 @@ public class CmsRoleServiceImpl implements CmsRoleService {
     @Override
     public CmsRoleDto getById(Integer id) {
         return null;
+    }
+
+    @Override
+    public Page<CmsRoleDto> getPage(CmsRoleDto dto) {
+        com.github.pagehelper.Page<CmsRoleEntity> page = PageHelper.startPage(1, 1).doSelectPage(() -> cmsRoleMapper.selectByPage(CmsRoleConverter.CONVERTER.dtoToEntity(dto)));
+        return new Page<>(page.getTotal(),CmsRoleConverter.CONVERTER.entityToDto(page.getResult()));
     }
 }

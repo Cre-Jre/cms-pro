@@ -36,7 +36,7 @@ public class RoleController {
     @PostMapping("page.do")
     @ResponseBody
     public Result doPage(CmsRoleDto cmsRoleDto){
-        return Result.success();
+        return Result.success(cmsRoleService.getPage(cmsRoleDto));
     }
 
     @GetMapping("add.do")

@@ -1,5 +1,6 @@
 package com.cms.service.impl;
 
+import com.cms.core.foundation.Page;
 import com.cms.service.dto.CmsRolePermissionDto;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,11 @@ public class CmsRolePermissionService implements com.cms.service.api.CmsRolePerm
 
     @Override
     public CmsRolePermissionDto getById(Integer id) {
+        return null;
+    }
+
+    @Override
+    public Page<CmsRolePermissionDto> getPage(CmsRolePermissionDto dto) {
         return null;
     }
 }

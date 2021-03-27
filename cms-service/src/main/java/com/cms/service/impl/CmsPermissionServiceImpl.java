@@ -1,6 +1,7 @@
 package com.cms.service.impl;
 
 import com.cms.core.exception.BusinessException;
+import com.cms.core.foundation.Page;
 import com.cms.dao.entity.CmsPermissionEntity;
 import com.cms.dao.mapper.CmsPermissionMapper;
 import com.cms.dao.mapper.CmsRolePermissionMapper;
@@ -51,6 +52,11 @@ public class CmsPermissionServiceImpl implements CmsPermissionService {
     @Override
     public CmsPermissionDto getById(Integer id) {
         return CmsPermissionConverter.CONVERTER.entityToDto(cmsPermissionMapper.selectById(id));
+    }
+
+    @Override
+    public Page<CmsPermissionDto> getPage(CmsPermissionDto dto) {
+        return null;
     }
 
     @Override

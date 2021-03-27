@@ -1,5 +1,6 @@
 package com.cms.service.impl;
 
+import com.cms.core.foundation.Page;
 import com.cms.dao.mapper.CmsUserMapper;
 import com.cms.service.api.CmsUserService;
 import com.cms.service.converter.CmsUserConverter;
@@ -35,6 +36,11 @@ public class CmsUserServiceImpl implements CmsUserService {
 
     @Override
     public CmsUserDto getById(Integer id) {
+        return null;
+    }
+
+    @Override
+    public Page<CmsUserDto> getPage(CmsUserDto dto) {
         return null;
     }
 }

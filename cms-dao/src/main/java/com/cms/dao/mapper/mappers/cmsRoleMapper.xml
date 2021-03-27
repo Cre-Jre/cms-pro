@@ -5,11 +5,8 @@
     <sql id="baseField">
         id,
         name,
-        url,
-        parent_id,
-        is_menu,
-        action,
-        icon,
+        is_all,
+        status,
         priority
     </sql>
 
@@ -70,14 +67,12 @@
         </if>
     </sql>
 
-    <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsPermissionEntity">
+    <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsRoleEntity">
         <id property="id" column="id"/>
         <result property="priority" column="priority"/>
-        <result property="url" column="url"/>
-        <result property="action" column="action"/>
-        <result property="parentId" column="parent_id"/>
+        <result property="all" column="is_all"/>
+        <result property="status" column="status"/>
         <result property="name" column="name"/>
-        <result property="menu" column="is_menu"/>
     </resultMap>
 
     <insert id="save">
@@ -99,10 +94,10 @@
         where id = #{id}
     </update>
 
-    <select id="selectAll" resultMap="baseResultMap">
+    <select id="selectByPage" resultMap="baseResultMap">
         select
         <include refid="baseField"/>
-        from cms_permission order by parent_id asc
+        from cms_role where status = 0 order by priority asc
     </select>
 
     <select id="selectById" resultMap="baseResultMap">
