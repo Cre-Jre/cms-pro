@@ -1,5 +1,6 @@
 package com.cms.service.impl;
 
+import com.cms.contex.utils.UtilsHttp;
 import com.cms.core.foundation.Page;
 import com.cms.dao.entity.CmsRoleEntity;
 import com.cms.dao.mapper.CmsRoleMapper;
@@ -53,7 +54,9 @@ public class CmsRoleServiceImpl implements CmsRoleService {
 
     @Override
     public Page<CmsRoleDto> getPage(CmsRoleDto dto) {
-        com.github.pagehelper.Page<CmsRoleEntity> page = PageHelper.startPage(1, 1).doSelectPage(() -> cmsRoleMapper.selectByPage(CmsRoleConverter.CONVERTER.dtoToEntity(dto)));
+        UtilsHttp.Page pageInfo = UtilsHttp.getPageInfo();
+        com.github.pagehelper.Page<CmsRoleEntity> page = PageHelper.startPage(pageInfo.getPageCurrent(), pageInfo.getPageSize()).
+                doSelectPage(() -> cmsRoleMapper.selectByPage(CmsRoleConverter.CONVERTER.dtoToEntity(dto)));
         return new Page<>(page.getTotal(),CmsRoleConverter.CONVERTER.entityToDto(page.getResult()));
     }
 }
