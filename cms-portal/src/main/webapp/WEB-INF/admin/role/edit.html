@@ -19,8 +19,8 @@
                     <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="1" checked title="是">
                     <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="0"  title="否">
                 <#else>
-                     <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="1" title="是">
-                     <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="0" checked title="否">
+                    <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="1" title="是">
+                    <input name="all" class="layui-input" type="radio" lay-filter="permissionFilter" value="0" checked title="否">
                 </#if>
             </@form.inline>
             <@form.inline label="是否启用" required=true>
@@ -42,6 +42,9 @@
     </@form.form>
 </@main.layout>
 <script>
+    <#if data.all?string("1","0")=="1">
+    $(".permission").hide()
+    </#if>
     LayUtil.form.init(function(inner){
         inner.submit(function(data){
             if(data.field.all==="0"){
@@ -58,6 +61,8 @@
     let dtreeInner = LayUtil.tree.init({
         url:"${adminPath}/role/permission.do",
         method: "post",
+        contentType:"application/x-www-form-urlencoded",
+        request:{roleId:"${data.id!}"},
         checkbar:true
     });
 </script>

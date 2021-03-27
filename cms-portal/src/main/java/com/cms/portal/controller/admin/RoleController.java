@@ -6,6 +6,7 @@ import com.cms.contex.utils.UtilsTree;
 import com.cms.core.annotation.DoLog;
 import com.cms.core.annotation.DoValid;
 import com.cms.service.api.CmsPermissionService;
+import com.cms.service.api.CmsRolePermissionService;
 import com.cms.service.api.CmsRoleService;
 import com.cms.service.dto.CmsPermissionDto;
 import com.cms.service.dto.CmsRoleDto;
@@ -31,6 +32,8 @@ public class RoleController {
     private CmsRoleService cmsRoleService;
     @Autowired
     private CmsPermissionService cmsPermissionService;
+    @Autowired
+    private CmsRolePermissionService cmsRolePermissionService;
 
     @GetMapping("index.do")
     public String toIndex() {
@@ -65,9 +68,13 @@ public class RoleController {
 
     @PostMapping("permission.do")
     @ResponseBody
-    public Result doPermission() {
+    public Result doPermission(Integer roleId) {
         List<CmsPermissionDto> permissionList = cmsPermissionService.getTree(null);
-        UtilsTree.recursion(permissionList);
+        List<Integer> permissionIds = null;
+        if(Objects.nonNull(roleId)){
+            permissionIds = cmsRolePermissionService.getPermissionIdByRoleId(roleId);
+        }
+        UtilsTree.recursion(permissionList,permissionIds);
         return Result.success((ArrayList) permissionList);
     }
 }

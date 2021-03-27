@@ -39,4 +39,7 @@
         delete from cms_role_permission where permission_id = #{permissionId}
     </delete>
 
+    <select id="selectPermissionIdByRoleId" resultType="java.lang.Integer">
+        select permission_id from cms_role_permission where role_id = #{roleId}
+    </select>
 </mapper>
