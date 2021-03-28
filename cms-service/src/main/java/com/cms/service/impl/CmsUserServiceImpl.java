@@ -74,7 +74,7 @@ public class CmsUserServiceImpl implements CmsUserService {
 
     @Override
     public void deleteById(Integer id) {
-
+        cmsUserMapper.deleteById(id);
     }
 
     @Override

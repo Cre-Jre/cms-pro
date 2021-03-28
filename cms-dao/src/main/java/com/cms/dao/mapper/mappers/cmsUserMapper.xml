@@ -116,6 +116,12 @@
         where id = #{id}
     </update>
 
+    <update id="deleteById">
+        update cms_user
+        set is_delete = 0
+        where id = #{id}
+    </update>
+
     <select id="getByUsername"  resultMap="baseResultMap">
         select <include refid="baseColumn"/> from cms_user a where username = #{username} and is_delete = 1
     </select>
