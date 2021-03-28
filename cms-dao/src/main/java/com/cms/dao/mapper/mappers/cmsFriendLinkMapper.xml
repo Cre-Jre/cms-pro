@@ -17,11 +17,8 @@
         <if test="priority!=null">
             priority,
         </if>
-        <if test="all!=null">
-            is_all,
-        </if>
-        <if test="status!=null">
-            status,
+        <if test="url!=null and url!=''">
+            url,
         </if>
         create_time
     </sql>
@@ -33,11 +30,8 @@
         <if test="priority!=null">
             #{priority},
         </if>
-        <if test="all!=null">
-            #{all},
-        </if>
-        <if test="status!=null">
-            #{status},
+        <if test="url!=null and url!=''">
+            #{url},
         </if>
         #{createTime}
     </sql>
@@ -70,7 +64,7 @@
         <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
             select last_insert_id()
         </selectKey>
-        insert into cms_role (<include refid="key"/>) values (<include refid="value"/>)
+        insert into cms_friend_link (<include refid="key"/>) values (<include refid="value"/>)
     </insert>
 
     <delete id="deleteById">
