@@ -27,7 +27,7 @@
             status,
         </if>
         <if test="admin!=null">
-            admin,
+            is_backend,
         </if>
         <if test="registerTime!=null">
             register_time,

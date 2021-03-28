@@ -2,6 +2,7 @@ package com.cms.contex.utils;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
@@ -31,4 +32,14 @@ public class UtilsShiro {
         return new SecureRandomNumberGenerator().nextBytes().toHex();
     }
 
+    /**
+     * sga256散列加密
+     * @param message           要加密的信息
+     * @param salt              盐值
+     * @param hashIterations    散列次数
+     * @return
+     */
+    public static String sha256(String message,String salt,int hashIterations){
+        return new SimpleHash("SHA-256",message,salt,hashIterations).toHex();
+    }
 }

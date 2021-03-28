@@ -9,7 +9,7 @@
                 <!--配置加密方式-->
                 <property name="hashAlgorithmName" value="SHA-256"/>
                 <!--散列迭代次数-->
-                <property name="hashIterations" value="1024"/>
+                <property name="hashIterations" value="${shiro.hash.iterations}"/>
                 <!--表示是否存储散列后的密码为16进制，需要和生成密码时的一样，默认是base64-->
                 <!--此处最需要注意的就是HashedCredentialsMatcher的算法需要和生成密码时的算法一样。
                 另外HashedCredentialsMatcher会自动根据AuthenticationInfo的类型是否是SaltedAuthenticationInfo来获取credentialsSalt盐-->

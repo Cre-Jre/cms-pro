@@ -1,5 +1,6 @@
 package com.cms.service.impl;
 
+import com.cms.contex.utils.UtilsProperties;
 import com.cms.contex.utils.UtilsShiro;
 import com.cms.core.foundation.Page;
 import com.cms.dao.entity.CmsUserEntity;
@@ -10,6 +11,7 @@ import com.cms.service.converter.CmsUserConverter;
 import com.cms.service.dto.CmsUserDto;
 import com.cms.service.dto.CmsUserRoleDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,8 @@ public class CmsUserServiceImpl implements CmsUserService {
 
     @Autowired
     private CmsUserMapper cmsUserMapper;
+    @Autowired
+    private UtilsProperties utilsProperties;
     @Autowired
     private CmsUserRoleService cmsUserRoleService;
 
@@ -40,6 +44,8 @@ public class CmsUserServiceImpl implements CmsUserService {
         String salt = UtilsShiro.generateSalt();
         dto.setSalt(salt);
         dto.setAdmin(true);
+        String password = dto.getPassword();
+        dto.setPassword(UtilsShiro.sha256(password,salt,Integer.parseInt(utilsProperties.getPropertiesValue("shiro.hash.iterations"))));
         dto.setRegisterTime(LocalDateTime.now());
         CmsUserEntity cmsUserEntity = CmsUserConverter.CONVERTER.dtoToEntity(dto);
         cmsUserMapper.save(cmsUserEntity);
