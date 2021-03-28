@@ -27,12 +27,12 @@ public class CmsFriendLinkServiceImpl implements CmsFriendLinkService {
 
     @Override
     public void deleteById(Integer id) {
-
+        cmsFriendLinkMapper.deleteById(id);
     }
 
     @Override
     public void update(CmsFriendLinkDto dto) {
-
+        cmsFriendLinkMapper.update(CmsFriendLinkConverter.CONVERTER.dtoToEntity(dto));
     }
 
     @Override

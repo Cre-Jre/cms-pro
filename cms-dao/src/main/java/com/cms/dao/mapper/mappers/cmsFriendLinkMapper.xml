@@ -43,11 +43,8 @@
         <if test="priority!=null">
             priority = #{priority},
         </if>
-        <if test="all!=null">
-            is_all = #{all},
-        </if>
-        <if test="status!=null">
-            status= #{status},
+        <if test="url!=null and url!=''">
+            url = #{url},
         </if>
     </sql>
 
@@ -66,11 +63,11 @@
     </insert>
 
     <delete id="deleteById">
-        delete from cms_role where id = #{id}
+        delete from cms_friend_link where id = #{id}
     </delete>
 
     <update id="update">
-        update cms_role
+        update cms_friend_link
         <trim prefix="set" suffixOverrides=",">
             <include refid="updateField"/>
         </trim>

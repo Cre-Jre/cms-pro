@@ -36,10 +36,24 @@ public class FriendLinkController {
         return Result.success();
     }
 
+    @PostMapping("delete.do")
+    @ResponseBody
+    public Result<String> doDelete(Integer id){
+        cmsFriendLinkService.deleteById(id);
+        return Result.success();
+    }
+
     @GetMapping("edit.do")
     public String toEdit(Integer id, Model model){
         model.addAttribute("data",cmsFriendLinkService.getById(id));
         return UtilsTemplate.adminTemplate("friend","edit");
+    }
+
+    @PostMapping("edit.do")
+    @ResponseBody
+    public Result<String> doEdit(CmsFriendLinkDto cmsFriendLinkDto){
+        cmsFriendLinkService.update(cmsFriendLinkDto);
+        return Result.success();
     }
 
     @PostMapping("page.do")
