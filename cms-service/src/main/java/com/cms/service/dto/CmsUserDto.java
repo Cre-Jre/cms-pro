@@ -18,5 +18,6 @@ public class CmsUserDto extends BaseDto<Integer> {
     private String salt;
     private String email;
     private Integer roleId;
+    private String roleName;
     private LocalDateTime registerTime;
 }

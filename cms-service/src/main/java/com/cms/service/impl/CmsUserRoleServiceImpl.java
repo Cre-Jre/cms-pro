@@ -1,15 +1,22 @@
 package com.cms.service.impl;
 
 import com.cms.core.foundation.Page;
+import com.cms.dao.mapper.CmsUserRoleMapper;
 import com.cms.service.api.CmsUserRoleService;
+import com.cms.service.converter.CmsUserRoleConverter;
 import com.cms.service.dto.CmsUserRoleDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CmsUserRoleServiceImpl implements CmsUserRoleService {
+
+    @Autowired
+    private CmsUserRoleMapper cmsUserRoleMapper;
+
     @Override
     public void save(CmsUserRoleDto dto) {
-
+        cmsUserRoleMapper.save(CmsUserRoleConverter.CONVERTER.dtoToEntity(dto));
     }
 
     @Override

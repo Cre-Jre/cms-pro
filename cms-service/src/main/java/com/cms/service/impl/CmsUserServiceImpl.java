@@ -1,15 +1,21 @@
 package com.cms.service.impl;
 
+import com.cms.contex.utils.UtilsHttp;
 import com.cms.contex.utils.UtilsProperties;
 import com.cms.contex.utils.UtilsShiro;
 import com.cms.core.foundation.Page;
+import com.cms.core.foundation.SearchProvider;
+import com.cms.dao.entity.CmsRoleEntity;
 import com.cms.dao.entity.CmsUserEntity;
 import com.cms.dao.mapper.CmsUserMapper;
 import com.cms.service.api.CmsUserRoleService;
 import com.cms.service.api.CmsUserService;
+import com.cms.service.converter.CmsRoleConverter;
 import com.cms.service.converter.CmsUserConverter;
+import com.cms.service.converter.CmsUserRoleConverter;
 import com.cms.service.dto.CmsUserDto;
 import com.cms.service.dto.CmsUserRoleDto;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -75,6 +81,10 @@ public class CmsUserServiceImpl implements CmsUserService {
 
     @Override
     public Page<CmsUserDto> getPage(CmsUserDto dto) {
-        return null;
+        UtilsHttp.Page pageInfo = UtilsHttp.getPageInfo();
+        SearchProvider of = SearchProvider.of(CmsUserConverter.CONVERTER.dtoToEntity(dto));
+        com.github.pagehelper.Page<CmsUserEntity> page = PageHelper.startPage(pageInfo.getPageCurrent(), pageInfo.getPageSize()).
+                doSelectPage(() -> cmsUserMapper.selectBySearchProvider(of));
+        return new Page<>(page.getTotal(),CmsUserConverter.CONVERTER.entityToDto(page.getResult()));
     }
 }

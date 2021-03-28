@@ -52,4 +52,10 @@ public class AdminController {
         return Result.success();
     }
 
+    @PostMapping("page.do")
+    @ResponseBody
+    public Result doPage(CmsUserDto cmsUserDto){
+        return Result.success(cmsUserService.getPage(cmsUserDto));
+    }
+
 }

@@ -3,11 +3,12 @@
 <mapper namespace="com.cms.dao.mapper.CmsUserMapper">
 
     <sql id="baseColumn">
-        id,
-        username,
-        status,
-        password,
-        salt
+        a.id,
+        a.username,
+        a.status,
+        a.password,
+        a.email,
+        a.salt
     </sql>
 
     <sql id="key">
@@ -71,6 +72,7 @@
         <result property="password" column="password"/>
         <result property="salt" column="salt"/>
         <result property="email" column="email"/>
+        <result property="roleName" column="roleName"/>
     </resultMap>
 
     <insert id="save">
@@ -89,11 +91,24 @@
     </update>
 
     <select id="getByUsername"  resultMap="baseResultMap">
-        select <include refid="baseColumn"/> from cms_user where username = #{username} and is_delete = 1
+        select <include refid="baseColumn"/> from cms_user a where username = #{username} and is_delete = 1
     </select>
 
     <select id="getByEmail"  resultMap="baseResultMap">
-        select <include refid="baseColumn"/> from cms_user where email = #{email} and is_delete = 1
+        select <include refid="baseColumn"/> from cms_user a where email = #{email} and is_delete = 1
+    </select>
+
+    <select id="selectBySearchProvider" parameterType="SearchProvider" resultMap="baseResultMap">
+        select
+        <include refid="baseColumn"/>,c.name as roleName
+        from cms_user a left join cms_user_role b on a.id = b.user_id left join cms_role c
+        on b.role_id = c.id
+        <where>
+            <if test="criteria.username!=null and criteria.username!=''">
+                name like concat ('%',#{criteria.username},'%')
+            </if>
+        </where>
+        order by id desc
     </select>
 
 </mapper>

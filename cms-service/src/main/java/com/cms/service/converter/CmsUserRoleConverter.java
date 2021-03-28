@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface CmsUserRoleConverter {
-    CmsUserConverter CONVERTER = Mappers.getMapper(CmsUserConverter.class);
+    CmsUserRoleConverter CONVERTER = Mappers.getMapper(CmsUserRoleConverter.class);
 
     CmsUserRoleEntity dtoToEntity(CmsUserRoleDto dto);
 
