@@ -14,5 +14,9 @@ public class AdminController {
         return UtilsTemplate.adminTemplate("admin","index");
     }
 
+    @GetMapping("add.do")
+    public String toAdd(){
+        return UtilsTemplate.adminTemplate("admin","add");
+    }
 
 }
