@@ -21,7 +21,7 @@
         insert into cms_user_role (role_id,user_id) values (#{roleId},#{userId})
     </insert>
 
-    <select id="selectById" resultMap="baseResultMap">
-        select <include refid="baseColumn"/> from cms_site where id = #{id}
+    <select id="selectByUserId" resultType="integer">
+        select role_id from cms_user_role where user_id = #{userId}
     </select>
 </mapper>

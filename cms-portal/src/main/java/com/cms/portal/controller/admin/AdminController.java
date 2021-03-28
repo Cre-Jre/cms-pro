@@ -54,6 +54,13 @@ public class AdminController {
         return Result.success();
     }
 
+    @GetMapping("edit.do")
+    public String toEdit(Integer id,Model model){
+        model.addAttribute("data",cmsUserService.getById(id));
+        model.addAttribute("roles",cmsRoleService.getList());
+        return UtilsTemplate.adminTemplate("admin","edit");
+    }
+
     @FastJsonView(exclude={
             @FastJsonFilter(clazz=CmsUserDto.class,props={"password","salt"})
     })

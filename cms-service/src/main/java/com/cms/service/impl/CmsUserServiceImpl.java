@@ -8,6 +8,7 @@ import com.cms.core.foundation.SearchProvider;
 import com.cms.dao.entity.CmsRoleEntity;
 import com.cms.dao.entity.CmsUserEntity;
 import com.cms.dao.mapper.CmsUserMapper;
+import com.cms.dao.mapper.CmsUserRoleMapper;
 import com.cms.service.api.CmsUserRoleService;
 import com.cms.service.api.CmsUserService;
 import com.cms.service.converter.CmsRoleConverter;
@@ -31,6 +32,8 @@ public class CmsUserServiceImpl implements CmsUserService {
     private CmsUserMapper cmsUserMapper;
     @Autowired
     private UtilsProperties utilsProperties;
+    @Autowired
+    private CmsUserRoleMapper cmsUserRoleMapper;
     @Autowired
     private CmsUserRoleService cmsUserRoleService;
 
@@ -76,7 +79,12 @@ public class CmsUserServiceImpl implements CmsUserService {
 
     @Override
     public CmsUserDto getById(Integer id) {
-        return null;
+        CmsUserDto cmsUserDto = CmsUserConverter.CONVERTER.entityToDto(cmsUserMapper.selectById(id));
+        Integer roleId = cmsUserRoleMapper.selectByUserId(id);
+        if(Objects.nonNull(roleId)){
+            cmsUserDto.setRoleId(roleId);
+        }
+        return cmsUserDto;
     }
 
     @Override

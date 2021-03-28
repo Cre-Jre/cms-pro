@@ -8,6 +8,7 @@
         a.status,
         a.password,
         a.email,
+        a.register_time,
         a.salt
     </sql>
 
@@ -73,6 +74,7 @@
         <result property="salt" column="salt"/>
         <result property="email" column="email"/>
         <result property="roleName" column="roleName"/>
+        <result property="registerTime" column="register_time"/>
     </resultMap>
 
     <insert id="save">
@@ -104,11 +106,16 @@
         from cms_user a left join cms_user_role b on a.id = b.user_id left join cms_role c
         on b.role_id = c.id
         <where>
+            is_delete = 1
             <if test="criteria.username!=null and criteria.username!=''">
-                name like concat ('%',#{criteria.username},'%')
+                and username like concat ('%',#{criteria.username},'%')
             </if>
         </where>
         order by id desc
+    </select>
+
+    <select id="selectById"  resultMap="baseResultMap">
+        select <include refid="baseColumn"/> from cms_user a where id = #{id} and is_delete = 1
     </select>
 
 </mapper>
