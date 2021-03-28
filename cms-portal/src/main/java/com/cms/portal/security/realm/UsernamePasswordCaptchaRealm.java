@@ -27,6 +27,7 @@ public class UsernamePasswordCaptchaRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         CmsUserDto cmsUserDto = (CmsUserDto) principalCollection.getPrimaryPrincipal();
         simpleAuthorizationInfo.addStringPermissions(cmsUserRoleService.selectPermissionsByUserId(cmsUserDto.getId()));
+        simpleAuthorizationInfo.addStringPermission("admin:index");
         return simpleAuthorizationInfo;
     }
 
