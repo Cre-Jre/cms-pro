@@ -12,7 +12,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class UsernamePasswordCaptchaRealm extends AuthorizingRealm {
@@ -27,7 +26,6 @@ public class UsernamePasswordCaptchaRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         CmsUserDto cmsUserDto = (CmsUserDto) principalCollection.getPrimaryPrincipal();
         simpleAuthorizationInfo.addStringPermissions(cmsUserRoleService.selectPermissionsByUserId(cmsUserDto.getId()));
-        simpleAuthorizationInfo.addStringPermission("admin:index");
         return simpleAuthorizationInfo;
     }
 
@@ -37,7 +35,7 @@ public class UsernamePasswordCaptchaRealm extends AuthorizingRealm {
         String username = (String) authenticationToken.getPrincipal();
         //现在副表中查找用户是否存在
         CmsUserDto cmsUserDto = cmsUserService.selectByUsername(username);
-        if(Objects.isNull(cmsUserDto)){
+        if (Objects.isNull(cmsUserDto)) {
             throw new UnknownAccountException();
         }
         //校验用户状态 禁用
@@ -51,11 +49,22 @@ public class UsernamePasswordCaptchaRealm extends AuthorizingRealm {
 
     /**
      * 校验状态
-     * @param userStatus   用户状态
+     *
+     * @param userStatus 用户状态
      */
-    private void verifyStatus(Boolean userStatus){
-        if(BooleanUtils.isFalse(userStatus)){
+    private void verifyStatus(Boolean userStatus) {
+        if (BooleanUtils.isFalse(userStatus)) {
             throw new DisabledAccountException("该账号已被禁用,请联系管理员!");
         }
+    }
+
+    @Override
+    public boolean isPermitted(PrincipalCollection principals, String permission) {
+        CmsUserDto cmsUserDto = (CmsUserDto) principals.getPrimaryPrincipal();
+        //如果是超管的话 不再检查权限
+        if(BooleanUtils.isTrue(cmsUserDto.getAdministrator())){
+            return true;
+        }
+        return false;
     }
 }

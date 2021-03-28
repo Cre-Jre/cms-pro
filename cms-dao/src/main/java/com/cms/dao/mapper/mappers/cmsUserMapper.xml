@@ -9,6 +9,7 @@
         a.password,
         a.email,
         a.register_time,
+        a.is_super,
         a.salt
     </sql>
 
@@ -93,6 +94,7 @@
         <result property="email" column="email"/>
         <result property="roleName" column="roleName"/>
         <result property="registerTime" column="register_time"/>
+        <result property="administrator" column="is_super"/>
     </resultMap>
 
     <insert id="save">
