@@ -92,7 +92,7 @@
     <select id="selectById" resultMap="baseResultMap">
         select
         <include refid="baseField"/>
-        from cms_role where id = #{id}
+        from cms_friend_link where id = #{id}
     </select>
 
 </mapper>

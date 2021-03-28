@@ -37,7 +37,7 @@ public class CmsFriendLinkServiceImpl implements CmsFriendLinkService {
 
     @Override
     public CmsFriendLinkDto getById(Integer id) {
-        return null;
+        return CmsFriendLinkConverter.CONVERTER.entityToDto(cmsFriendLinkMapper.selectById(id));
     }
 
     @Override
