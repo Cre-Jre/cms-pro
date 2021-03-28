@@ -34,4 +34,10 @@ public class FriendLinkController {
         cmsFriendLinkService.save(cmsFriendLinkDto);
         return Result.success();
     }
+
+    @PostMapping("page.do")
+    @ResponseBody
+    public Result doPage(CmsFriendLinkDto cmsFriendLinkDto){
+        return Result.success(cmsFriendLinkService.getPage(cmsFriendLinkDto));
+    }
 }

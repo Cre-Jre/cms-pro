@@ -14,18 +14,12 @@
 
 <script>
     LayUtil.dataGrid.init({
-        url:'${adminPath}/role/page.do'
-        ,cellMinWidth: 80
+        cellMinWidth: 80
         ,cols: [[
             {field:'id', width:80, title: 'ID', sort: true}
-            ,{field:'name', title: '角色名'}
-            ,{field:'status', width:80, title: '状态', templet:function(data){
-                    return !data.status?"正常":"禁用";
-                }}
+            ,{field:'name', title: '名称'}
             ,{field:'priority', title: '排序'}
-            ,{field:'all', title: '是否所有权限', templet:function(data){
-                    return data.all?"是":"否"
-                }}
+            ,{field:'url', title: '链接地址'}
             ,{templet: '#rightTemplate', align: 'center', title: '操作'}
         ]]
         ,toolbar:"#toolbar"
