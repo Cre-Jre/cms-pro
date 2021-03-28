@@ -82,7 +82,7 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         String ip = UtilsHttp.getRemoteAddress();
         threadPoolTaskExecutor.execute(()->{
             CmsUserDto cmsUserDto = (CmsUserDto) subject.getPrincipal();
-            cmsUserService.update(cmsUserDto);
+            cmsUserService.updateLoginCount(cmsUserDto.getId());
             cmsLogService.save(CmsLogDto.of(cmsUserDto.getId(),cmsUserDto.getUsername(),ip,url,"用户后台系统登录"));
         });
         return false;

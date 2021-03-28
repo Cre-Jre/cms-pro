@@ -48,6 +48,11 @@ public class CmsUserServiceImpl implements CmsUserService {
     }
 
     @Override
+    public void updateLoginCount(Integer id) {
+        cmsUserMapper.updateLoginCount(id);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(CmsUserDto dto) {
         String salt = UtilsShiro.generateSalt();
