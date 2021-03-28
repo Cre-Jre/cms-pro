@@ -28,7 +28,10 @@
         </@form.item>
         <@form.item>
             <@form.inline label="角色" full=true>
-
+                <#if roles?size==0>
+                    <span>当前无角色,请先在角色管理中创建角色</span>
+                </#if>
+                <@form.radio list=roles name="role" itemLabel="name" itemValue="id"  filter=""></@form.radio>
             </@form.inline>
         </@form.item>
         <@form.submit></@form.submit>

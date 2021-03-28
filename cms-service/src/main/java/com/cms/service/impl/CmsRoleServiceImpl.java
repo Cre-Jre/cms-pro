@@ -70,4 +70,10 @@ public class CmsRoleServiceImpl implements CmsRoleService {
                 doSelectPage(() -> cmsRoleMapper.selectBySearchProvider(of));
         return new Page<>(page.getTotal(),CmsRoleConverter.CONVERTER.entityToDto(page.getResult()));
     }
+
+    @Override
+    public List<CmsRoleDto> getList() {
+        SearchProvider of = SearchProvider.of(CmsRoleConverter.CONVERTER.dtoToEntity(new CmsRoleDto()));
+        return CmsRoleConverter.CONVERTER.entityToDto(cmsRoleMapper.selectBySearchProvider(of));
+    }
 }
