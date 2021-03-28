@@ -130,9 +130,9 @@
         <div class="pro_label">
             <a href="xxxxxxx" target="_blank">友情链接：</a></div>
         <ul>
-            [@cms_friend_link_directive;result]
+            [@cms_friend_link_directive]
                 [#list  result as item]
-                   <li><a href="" rel="nofollow" target="_blank">${item.name!}</a></li>
+                   <li><a href="${item.url!}" rel="nofollow" target="_blank">${item.name!}</a></li>
                 [/#list]
             [/@cms_friend_link_directive]
         </ul>
