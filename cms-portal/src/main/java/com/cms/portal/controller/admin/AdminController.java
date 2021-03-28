@@ -61,6 +61,21 @@ public class AdminController {
         return UtilsTemplate.adminTemplate("admin","edit");
     }
 
+    @PostMapping("edit.do")
+    @ResponseBody
+    public Result<String> doEdit(CmsUserDto cmsUserDto){
+        CmsUserDto cmsUserByUsername = cmsUserService.selectByUsername(cmsUserDto.getUsername());
+        if(Objects.nonNull(cmsUserByUsername) && Integer.compare(cmsUserByUsername.getId(),cmsUserDto.getId())!=0){
+            return Result.failed("当前用户已经存在");
+        }
+        CmsUserDto cmsUserByEmail = cmsUserService.selectByEmail(cmsUserDto.getEmail());
+        if(Objects.nonNull(cmsUserByEmail) && Integer.compare(cmsUserByEmail.getId(),cmsUserDto.getId())!=0){
+            return Result.failed("当前邮箱已经存在");
+        }
+        cmsUserService.update(cmsUserDto);
+        return Result.success();
+    }
+
     @FastJsonView(exclude={
             @FastJsonFilter(clazz=CmsUserDto.class,props={"password","salt"})
     })

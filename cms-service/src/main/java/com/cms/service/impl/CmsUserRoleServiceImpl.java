@@ -21,7 +21,7 @@ public class CmsUserRoleServiceImpl implements CmsUserRoleService {
 
     @Override
     public void deleteById(Integer id) {
-
+        cmsUserRoleMapper.deleteById(id);
     }
 
     @Override

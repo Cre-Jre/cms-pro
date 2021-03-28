@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cms.dao.mapper.CmsUserRoleMapper">
-    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
-
-    <sql id="baseColumn">
-        id,
-        site_name,
-        keywords,
-        description
-    </sql>
-
-    <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsSiteEntity">
-        <id property="id" column="id"/>
-        <result property="siteName" column="siteName"/>
-        <result property="keywords" column="keywords"/>
-        <result property="description" column="description"/>
-    </resultMap>
 
     <insert id="save">
         insert into cms_user_role (role_id,user_id) values (#{roleId},#{userId})
     </insert>
+
+    <delete id="deleteById">
+        delete from cms_user_role where user_id = #{userId}
+    </delete>
 
     <select id="selectByUserId" resultType="integer">
         select role_id from cms_user_role where user_id = #{userId}

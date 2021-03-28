@@ -74,7 +74,22 @@ public class CmsUserServiceImpl implements CmsUserService {
 
     @Override
     public void update(CmsUserDto dto) {
+        String password = dto.getPassword();
+        if(Objects.nonNull(password)){
+            String salt = UtilsShiro.generateSalt();
+            dto.setSalt(salt);
+            dto.setPassword(UtilsShiro.sha256(password,salt,Integer.parseInt(utilsProperties.getPropertiesValue("shiro.hash.iterations"))));
+        }
+        Integer userId = dto.getId();
         cmsUserMapper.update(CmsUserConverter.CONVERTER.dtoToEntity(dto));
+        cmsUserRoleService.deleteById(userId);
+        Integer roleId = dto.getRoleId();
+        if(Objects.nonNull(roleId)){
+            CmsUserRoleDto cmsUserRoleDto = new CmsUserRoleDto();
+            cmsUserRoleDto.setRoleId(roleId);
+            cmsUserRoleDto.setUserId(userId);
+            cmsUserRoleService.save(cmsUserRoleDto);
+        }
     }
 
     @Override

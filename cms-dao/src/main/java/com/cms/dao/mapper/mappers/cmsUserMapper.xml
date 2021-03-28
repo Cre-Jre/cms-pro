@@ -63,6 +63,24 @@
     </sql>
 
     <sql id="updateField">
+        <if test="username!=null and username!=''">
+            username = #{username},
+        </if>
+        <if test="password!=null and password!=''">
+            password = #{password},
+        </if>
+        <if test="email!=null and email!=''">
+            email = #{email},
+        </if>
+        <if test="salt!=null and salt!=''">
+            salt = #{salt},
+        </if>
+        <if test="status!=null">
+            status = #{status},
+        </if>
+        <if test="admin!=null">
+            is_backend = #{admin},
+        </if>
         update_time = #{updateTime}
     </sql>
 
