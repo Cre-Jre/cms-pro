@@ -7,20 +7,30 @@ public class UtilsTemplate {
 
     /**
      * 后台模板方法
-     * @param template
-     * @return
+     *
+     * @param template 模板
+     * @return string
      */
-    public static String adminTemplate(String template){
-        return "admin/"+template;
+    public static String adminTemplate(String template) {
+        return "admin/" + template;
     }
 
     /**
-     * 后台模板
-     * @param dir   目录
-     * @param template  名称
-     * @return
+     * 后台模板方法
+     * @param dir           模板目录
+     * @param template      模板名称
+     * @return              string
      */
-    public static String adminTemplate(String dir,String template){
-        return "admin/"+dir+"/"+template;
+    public static String adminTemplate(String dir, String template) {
+        return "admin/" + dir + "/" + template;
+    }
+
+    /**
+     * 前台模板方法
+     * @param template      模板名称
+     * @return              string
+     */
+    public static String frontTemplate(String template){
+        return "front/default/"+template;
     }
 }
