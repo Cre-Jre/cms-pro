@@ -1,5 +1,7 @@
 package com.cms.portal.controller.admin;
 
+import com.alibaba.fastjson.support.spring.annotation.FastJsonFilter;
+import com.alibaba.fastjson.support.spring.annotation.FastJsonView;
 import com.cms.contex.foundation.Result;
 import com.cms.contex.utils.UtilsTemplate;
 import com.cms.core.annotation.DoLog;
@@ -52,6 +54,9 @@ public class AdminController {
         return Result.success();
     }
 
+    @FastJsonView(exclude={
+            @FastJsonFilter(clazz=CmsUserDto.class,props={"password","salt"})
+    })
     @PostMapping("page.do")
     @ResponseBody
     public Result doPage(CmsUserDto cmsUserDto){
