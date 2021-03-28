@@ -1,26 +1,33 @@
 package com.cms.portal.security.realm;
 
-import com.cms.dao.enums.UserStatusEnum;
+import com.cms.service.api.CmsUserRoleService;
 import com.cms.service.api.CmsUserService;
 import com.cms.service.dto.CmsUserDto;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class UsernamePasswordCaptchaRealm extends AuthorizingRealm {
 
     @Autowired
     private CmsUserService cmsUserService;
+    @Autowired
+    private CmsUserRoleService cmsUserRoleService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        CmsUserDto cmsUserDto = (CmsUserDto) principalCollection.getPrimaryPrincipal();
+        simpleAuthorizationInfo.addStringPermissions(cmsUserRoleService.selectPermissionsByUserId(cmsUserDto.getId()));
+        return simpleAuthorizationInfo;
     }
 
     @Override

@@ -8,6 +8,8 @@ import com.cms.service.dto.CmsUserRoleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CmsUserRoleServiceImpl implements CmsUserRoleService {
 
@@ -37,5 +39,10 @@ public class CmsUserRoleServiceImpl implements CmsUserRoleService {
     @Override
     public Page<CmsUserRoleDto> getPage(CmsUserRoleDto dto) {
         return null;
+    }
+
+    @Override
+    public List<String> selectPermissionsByUserId(Integer userId) {
+        return cmsUserRoleMapper.selectPermissionsByUserId(userId);
     }
 }

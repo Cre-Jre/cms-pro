@@ -34,12 +34,14 @@ public class AdminController {
         return UtilsTemplate.adminTemplate("admin","index");
     }
 
+    @RequiresPermissions("admin:add")
     @GetMapping("add.do")
     public String toAdd(Model model){
         model.addAttribute("roles",cmsRoleService.getList());
         return UtilsTemplate.adminTemplate("admin","add");
     }
 
+    @RequiresPermissions("admin:add")
     @PostMapping("add.do")
     @ResponseBody
     @DoLog(content = "添加管理员")
