@@ -14,6 +14,8 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CmsFriendLinkServiceImpl implements CmsFriendLinkService {
 
@@ -47,5 +49,11 @@ public class CmsFriendLinkServiceImpl implements CmsFriendLinkService {
         com.github.pagehelper.Page<CmsFriendLinkEntity> page = PageHelper.startPage(pageInfo.getPageCurrent(), pageInfo.getPageSize()).
                 doSelectPage(() -> cmsFriendLinkMapper.selectBySearchProvider(of));
         return new Page<>(page.getTotal(),CmsFriendLinkConverter.CONVERTER.entityToDto(page.getResult()));
+    }
+
+    @Override
+    public List<CmsFriendLinkDto> getList(CmsFriendLinkDto cmsFriendLinkDto) {
+        SearchProvider of = SearchProvider.of(CmsFriendLinkConverter.CONVERTER.dtoToEntity(cmsFriendLinkDto));
+        return CmsFriendLinkConverter.CONVERTER.entityToDto(cmsFriendLinkMapper.selectBySearchProvider(of));
     }
 }
