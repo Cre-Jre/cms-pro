@@ -39,8 +39,6 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
     @Autowired
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
-
-
     @Override
     protected boolean isLoginRequest(ServletRequest request, ServletResponse response) {
         return this.pathsMatch(this.getLoginUrl(), request) ||
@@ -70,6 +68,7 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         }catch (DisabledAccountException e){
             writer.write(JSON.toJSONString(Result.failed(e.getMessage())));
         }catch (Exception e){
+            //用户有可能已经登录 其他错误
             writer.write(JSON.toJSONString((subject.isAuthenticated()?Result.success("登录成功"):Result.failed(ConstantsPool.EXCEPTION_NETWORK_ERROR))));
         }
         writer.close();
@@ -81,11 +80,8 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String url = httpServletRequest.getRequestURI();
         String ip = UtilsHttp.getRemoteAddress();
-
         threadPoolTaskExecutor.execute(()->{
             CmsUserDto cmsUserDto = (CmsUserDto) subject.getPrincipal();
-            cmsUserDto.setLastLoginIp(ip);
-            cmsUserDto.setSessionId(UtilsShiro.getSession().getId().toString());
             cmsUserService.update(cmsUserDto);
             cmsLogService.save(CmsLogDto.of(cmsUserDto.getId(),cmsUserDto.getUsername(),ip,url,"用户后台系统登录"));
         });
