@@ -53,5 +53,5 @@
 <#--封装表头查询-->
 <#macro headSearch>
     <#nested>
-    <button class="layui-btn" lay-submit lay-filter="searchSubmit">立即提交</button>
+    <button class="layui-btn" lay-submit lay-filter="searchSubmit">查询</button>
 </#macro>
