@@ -7,12 +7,15 @@
         id,
         site_name,
         keywords,
-        description
+        description,
+        static_dir,
+        static_suffix,
+        is_static_index
     </sql>
 
     <sql id="updateField">
         update_time = #{updateTime},
-        <if test="siteName!=null and siteName!=''" >
+        <if test="siteName!=null and siteName!=''">
             site_name = #{siteName},
         </if>
         <if test="keywords!=null and keywords!=''">
@@ -21,6 +24,15 @@
         <if test="description!=null and description!=''">
             description = #{description},
         </if>
+        <if test="staticDir!=null and staticDir!=''">
+            static_dir = #{staticDir},
+        </if>
+        <if test="staticSuffix!=null">
+            static_suffix = #{staticSuffix},
+        </if>
+        <if test="staticIndex!=null and staticIndex!=''">
+            is_static_index = #{staticIndex},
+        </if>
     </sql>
 
     <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsSiteEntity">
@@ -28,17 +40,20 @@
         <result property="siteName" column="siteName"/>
         <result property="keywords" column="keywords"/>
         <result property="description" column="description"/>
+        <result property="staticDir" column="static_dir"/>
+        <result property="staticSuffix" column="static_suffix"/>
+        <result property="staticIndex" column="is_static_index"/>
     </resultMap>
 
     <update id="update">
         update cms_site
         <trim prefix="set" suffixOverrides=",">
-            <include refid="updateField"></include>
+            <include refid="updateField"/>
         </trim>
         where id = #{id}
     </update>
 
     <select id="selectById" resultMap="baseResultMap">
-        select <include refid="baseColumn"/> from cms_site where id=#{id}
+        select <include refid="baseColumn"/> from cms_site where id = #{id}
     </select>
 </mapper>
