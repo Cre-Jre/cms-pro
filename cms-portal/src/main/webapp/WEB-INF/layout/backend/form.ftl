@@ -76,7 +76,7 @@ name select标签的name属性
 list 数据
 
 -->
-<#macro select name list enum=false showDefaultOption=false defaultOptionLabel="">
+<#macro select name list enum=false showDefaultOption=false defaultOptionLabel="" value="">
     <select name="${name}">
         <#if showDefaultOption==true>
             <option value><#if defaultOptionLabel!="">${defaultOptionLabel}<#else>请选择</#if></option>
@@ -85,7 +85,7 @@ list 数据
 
         <#else>
             <#list list as item>
-                <option value="${item.getOrdinal()}">${item.label}</option>
+                <option value="${item.getOrdinal()}" <#if value=="${item.getOrdinal()}">selected="selected"</#if> >${item.label}</option>
             </#list>
         </#if>
     </select>
