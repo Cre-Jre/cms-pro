@@ -127,4 +127,9 @@
         <include refid="baseColumn"/>
         from cms_task where is_enable = 1
     </select>
+
+    <select id="selectBySearchProvider" parameterType="SearchProvider" resultMap="baseResultMap">
+        select <include refid="baseColumn"/>
+        from cms_task order by create_time desc
+    </select>
 </mapper>

@@ -1,18 +1,23 @@
 package com.cms.service.impl;
 
+import com.cms.contex.utils.UtilsHttp;
 import com.cms.contex.utils.UtilsString;
 import com.cms.core.exception.BusinessException;
 import com.cms.core.foundation.Page;
+import com.cms.core.foundation.SearchProvider;
+import com.cms.dao.entity.CmsRoleEntity;
 import com.cms.dao.entity.CmsTaskEntity;
 import com.cms.dao.enums.TaskExecutionCycleUnitEnum;
 import com.cms.dao.enums.TaskExecutionTypeEnum;
 import com.cms.dao.enums.TaskStaticTypeEnum;
 import com.cms.dao.mapper.CmsTaskMapper;
 import com.cms.service.api.CmsTaskService;
+import com.cms.service.converter.CmsRoleConverter;
 import com.cms.service.converter.CmsTaskConverter;
 import com.cms.service.dto.CmsTaskDto;
 import com.cms.service.strategy.*;
 import com.cms.service.task.job.IndexStaticJob;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -114,6 +119,10 @@ public class CmsTaskServiceImpl implements CmsTaskService {
 
     @Override
     public Page<CmsTaskDto> getPage(CmsTaskDto dto) {
-        return null;
+        UtilsHttp.Page pageInfo = UtilsHttp.getPageInfo();
+        SearchProvider of = SearchProvider.of(CmsTaskConverter.CONVERTER.dtoToEntity(dto));
+        com.github.pagehelper.Page<CmsTaskEntity> page = PageHelper.startPage(pageInfo.getPageCurrent(), pageInfo.getPageSize()).
+                doSelectPage(() -> cmsTaskMapper.selectBySearchProvider(of));
+        return new Page<>(page.getTotal(),CmsTaskConverter.CONVERTER.entityToDto(page.getResult()));
     }
 }

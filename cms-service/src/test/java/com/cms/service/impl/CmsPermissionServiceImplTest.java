@@ -1,22 +1,17 @@
 package com.cms.service.impl;
 
-import com.cms.dao.entity.CmsPermissionEntity;
-import com.cms.dao.mapper.CmsPermissionMapper;
 import com.cms.service.dto.CmsPermissionDto;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import javafx.beans.binding.When;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RunWith(MockitoJUnitRunner.class)
 @Slf4j
@@ -24,25 +19,25 @@ public class CmsPermissionServiceImplTest {
 
 
     @Test
-    public void add(){
+    public void add() {
         List<CmsPermissionDto> cmsPermissionDtos = buildData();
         //存放所有数据 方便存取
         Map<Integer, CmsPermissionDto> permissionMap = Maps.newHashMap();
         //只存放parentId = 0的数据
         List<CmsPermissionDto> permissionList = Lists.newArrayList();
         //循环数据 进行处理
-        cmsPermissionDtos.forEach(x->{
+        cmsPermissionDtos.forEach(x -> {
             Integer id = x.getId();
-            permissionMap.put(id,x);
+            permissionMap.put(id, x);
             //获取当前dto的父类id
             Integer parentId = x.getParentId();
             //判断是否是顶级菜单
-            if(parentId==0){
+            if (parentId == 0) {
                 permissionList.add(x);
-            }else{
+            } else {
                 CmsPermissionDto cmsPermissionDto = permissionMap.get(parentId);
                 List<CmsPermissionDto> children = cmsPermissionDto.getChildren();
-                if(CollectionUtils.isEmpty(children)){
+                if (CollectionUtils.isEmpty(children)) {
                     children = Lists.newArrayList();
                 }
                 children.add(x);
@@ -53,7 +48,7 @@ public class CmsPermissionServiceImplTest {
     }
 
     @Test
-    public void edit(){
+    public void edit() {
         List<CmsPermissionDto> cmsPermissionDtos = buildData();
         //存放所有数据 方便存取
         Map<Integer, CmsPermissionDto> permissionMap = Maps.newHashMap();
@@ -62,24 +57,24 @@ public class CmsPermissionServiceImplTest {
         //在修改的时候id为3的要排除掉
         Integer excludeId = 3;
         //循环数据 进行处理
-        cmsPermissionDtos.forEach(x->{
+        cmsPermissionDtos.forEach(x -> {
             Integer id = x.getId();
-            if(id.compareTo(excludeId)==0){
+            if (id.compareTo(excludeId) == 0) {
                 return;
             }
-            permissionMap.put(id,x);
+            permissionMap.put(id, x);
             //获取当前dto的父类id
             Integer parentId = x.getParentId();
             //判断是否是顶级菜单
-            if(parentId==0){
+            if (parentId == 0) {
                 permissionList.add(x);
-            }else{
+            } else {
                 CmsPermissionDto cmsPermissionDto = permissionMap.get(parentId);
-                if(Objects.isNull(cmsPermissionDto) && parentId.compareTo(excludeId)==0){
+                if (Objects.isNull(cmsPermissionDto) && parentId.compareTo(excludeId) == 0) {
                     return;
                 }
                 List<CmsPermissionDto> children = cmsPermissionDto.getChildren();
-                if(CollectionUtils.isEmpty(children)){
+                if (CollectionUtils.isEmpty(children)) {
                     children = Lists.newArrayList();
                 }
                 children.add(x);
@@ -89,7 +84,7 @@ public class CmsPermissionServiceImplTest {
         log.info("success");
     }
 
-    public List<CmsPermissionDto> buildData(){
+    public List<CmsPermissionDto> buildData() {
         List<CmsPermissionDto> permissionList = Lists.newArrayList();
         //4条数据
         CmsPermissionDto cmsPermissionDto = new CmsPermissionDto();

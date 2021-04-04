@@ -34,8 +34,14 @@ public class TaskController {
 
     @PostMapping("add.do")
     @ResponseBody
-    public Result doAdd(CmsTaskDto cmsTaskDto){
+    public Result<String> doAdd(CmsTaskDto cmsTaskDto){
         cmsTaskService.save(cmsTaskDto);
         return Result.success();
+    }
+
+    @PostMapping("page.do")
+    @ResponseBody
+    public Result doPage(CmsTaskDto cmsTaskDto){
+        return Result.success(cmsTaskService.getPage(cmsTaskDto));
     }
 }
