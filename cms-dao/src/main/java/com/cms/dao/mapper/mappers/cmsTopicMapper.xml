@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cms.dao.mapper.CmsTopicMapper">
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <sql id="baseColumn">
+        create_time,
+        id,
+        name,
+        code,
+        type,
+        execution_cycle,
+        day_of_month,
+        day_of_week,
+        hour,
+        minute,
+        interval_hour,
+        interval_minute,
+        cron_expression,
+        is_enable,
+        interval_unit,
+        remark
+    </sql>
+
+    <sql id="key">
+        name,
+        type,
+        code,
+        execution_cycle,
+        <if test="dayOfMonth!=null and dayOfMonth!=''">
+            day_of_month,
+        </if>
+        <if test="dayOfWeek!=null and dayOfWeek!=''">
+            day_of_week,
+        </if>
+        <if test="hour!=null and hour!=''">
+            hour,
+        </if>
+        <if test="minute!=null and minute!=''">
+            minute,
+        </if>
+        <if test="intervalHour!=null and intervalHour!=''">
+            interval_hour,
+        </if>
+        <if test="intervalMinute!=null and intervalMinute!=''">
+            interval_minute,
+        </if>
+        <if test="cronExpression!=null and cronExpression!=''">
+            cron_expression,
+        </if>
+        <if test="enable!=null">
+            is_enable,
+        </if>
+        <if test="intervalUnit!=null and intervalUnit!=''">
+            interval_unit,
+        </if>
+        <if test="remark!=null and remark!=''">
+            remark,
+        </if>
+        create_time
+    </sql>
+
+    <sql id="val">
+        #{name},
+        #{type},
+        #{code},
+        #{taskExecutionType},
+        <if test="dayOfMonth!=null and dayOfMonth!=''">
+            #{dayOfMonth},
+        </if>
+        <if test="dayOfWeek!=null and dayOfWeek!=''">
+            #{dayOfWeek},
+        </if>
+        <if test="hour!=null and hour!=''">
+            #{hour},
+        </if>
+        <if test="minute!=null and minute!=''">
+            #{minute},
+        </if>
+        <if test="intervalHour!=null and intervalHour!=''">
+            #{intervalHour},
+        </if>
+        <if test="intervalMinute!=null and intervalMinute!=''">
+            #{intervalMinute},
+        </if>
+        <if test="cronExpression!=null and cronExpression!=''">
+            #{cronExpression},
+        </if>
+        <if test="enable!=null">
+            #{enable},
+        </if>
+        <if test="intervalUnit!=null and intervalUnit!=''">
+            #{intervalUnit},
+        </if>
+        <if test="remark!=null and remark!=''">
+            #{remark},
+        </if>
+        #{createTime}
+    </sql>
+
+    <sql id="updateField">
+        update_time = #{updateTime},
+        name=#{name},
+        type=#{type},
+        code=#{code},
+        execution_cycle = #{taskExecutionType},
+        <if test="dayOfMonth!=null">
+            day_of_month =#{dayOfMonth},
+        </if>
+        <if test="dayOfWeek!=null">
+            day_of_week = #{dayOfWeek},
+        </if>
+        <if test="hour!=null">
+            hour = #{hour},
+        </if>
+        <if test="minute!=null">
+            minute = #{minute},
+        </if>
+        <if test="intervalHour!=null">
+            interval_hour=#{intervalHour},
+        </if>
+        <if test="intervalMinute!=null">
+            interval_minute=#{intervalMinute},
+        </if>
+        <if test="cronExpression!=null">
+            cron_expression=#{cronExpression},
+        </if>
+        <if test="enable!=null">
+            is_enable = #{enable},
+        </if>
+        <if test="intervalUnit!=null">
+            interval_unit=#{intervalUnit},
+        </if>
+        <if test="remark!=null and remark!=''">
+            remark=#{remark},
+        </if>
+    </sql>
+
+    <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsTaskEntity">
+        <id property="id" column="id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="taskExecutionType" column="execution_cycle"/>
+        <result property="dayOfMonth" column="day_of_month"/>
+        <result property="dayOfWeek" column="day_of_week"/>
+        <result property="hour" column="hour"/>
+        <result property="intervalHour" column="interval_hour"/>
+        <result property="intervalMinute" column="interval_minute"/>
+        <result property="cronExpression" column="cron_expression"/>
+        <result property="enable" column="is_enable"/>
+        <result property="intervalUnit" column="interval_unit"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <insert id="save">
+        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
+            select last_insert_id()
+        </selectKey>
+        insert into cms_task(<include refid="key"/>) values (<include refid="val"/>)
+    </insert>
+
+    <update id="update">
+        update cms_task
+        <trim prefix="set" suffixOverrides=",">
+            <include refid="updateField"/>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from cms_task where id = #{id}
+    </delete>
+
+    <select id="selectAll" resultMap="baseResultMap">
+        select
+        <include refid="baseColumn"/>
+        from cms_task where is_enable = 1
+    </select>
+
+    <select id="selectBySearchProvider" parameterType="SearchProvider" resultMap="baseResultMap">
+        select <include refid="baseColumn"/>
+        from cms_task
+        <where>
+            <if test="criteria.name!=null and criteria.name!=''">
+                name like concat ('%',#{criteria.name},'%')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectById" resultMap="baseResultMap">
+        select <include refid="baseColumn"/>
+        from cms_task
+        where id = #{id}
+    </select>
+</mapper>

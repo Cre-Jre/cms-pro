@@ -164,3 +164,20 @@ create table cms_task
     remark          varchar(255) not null default '' comment '任务说明'
 ) ENGINE = InnoDB
   CHARSET = utf8 comment 'CMS 任务表';
+
+-- ----------------------------
+-- Table structure for cms_topic  专题表
+-- ----------------------------
+create table cms_topic
+(
+    create_time timestamp    not null default CURRENT_TIMESTAMP,
+    update_time timestamp    not null default '0000-00-00 00:00:00',
+    id          int auto_increment primary key,
+    name        varchar(50)  null comment '名称',
+    keywords    varchar(150) null comment '关键字',
+    description varchar(255) null comment '描述',
+    title_img   varchar(200) null comment '标题图',
+    content_img varchar(200) null comment '内容图',
+    tpl_content varchar(100) null comment '专题模板'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 comment 'CMS专题表';
