@@ -13,8 +13,8 @@
 </#macro>
 
 <#--    item中左右两边的inline-->
-<#macro inline required=false full=false label="">
-    <div class="layui-inline ${full?string("cms-inline-100","cms-inline-50")}">
+<#macro inline required=false full=false label="" className="" inlineStyle="">
+    <div class="layui-inline ${className!} ${full?string("cms-inline-100","cms-inline-50")}" <#if inlineStyle!="">style="${inlineStyle!}"</#if> >
         <label class="layui-form-label layui-col-md6 <#if required>cms-label-required</#if>" style="width:197px;">${label}</label>
         <div class="layui-input-block layui-col-md6 cms-inline-block">
             <#nested>
@@ -76,8 +76,8 @@ name select标签的name属性
 list 数据
 
 -->
-<#macro select name list enum=false showDefaultOption=false itemLabel="" itemValue="" defaultOptionLabel="" value="">
-    <select name="${name}">
+<#macro select name list enum=false showDefaultOption=false itemLabel="" itemValue="" defaultOptionLabel="" value="" filter="">
+    <select name="${name}" <#if filter!="">lay-filter="${filter}"</#if> >
         <#if showDefaultOption==true>
             <option value><#if defaultOptionLabel!="">${defaultOptionLabel}<#else>请选择</#if></option>
         </#if>
