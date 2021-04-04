@@ -24,76 +24,40 @@
 
     <sql id="key">
         name,
-        type,
-        code,
-        execution_cycle,
-        <if test="dayOfMonth!=null and dayOfMonth!=''">
-            day_of_month,
+        <if test="keywords!=null and keywords!=''">
+            keywords,
         </if>
-        <if test="dayOfWeek!=null and dayOfWeek!=''">
-            day_of_week,
+        <if test="description!=null and description!=''">
+            description,
         </if>
-        <if test="hour!=null and hour!=''">
-            hour,
+        <if test="titleImg!=null and titleImg!=''">
+            title_img,
         </if>
-        <if test="minute!=null and minute!=''">
-            minute,
+        <if test="contentImg!=null and contentImg!=''">
+            content_img,
         </if>
-        <if test="intervalHour!=null and intervalHour!=''">
-            interval_hour,
-        </if>
-        <if test="intervalMinute!=null and intervalMinute!=''">
-            interval_minute,
-        </if>
-        <if test="cronExpression!=null and cronExpression!=''">
-            cron_expression,
-        </if>
-        <if test="enable!=null">
-            is_enable,
-        </if>
-        <if test="intervalUnit!=null and intervalUnit!=''">
-            interval_unit,
-        </if>
-        <if test="remark!=null and remark!=''">
-            remark,
+        <if test="tplContent!=null and tplContent!=''">
+            tpl_content,
         </if>
         create_time
     </sql>
 
     <sql id="val">
         #{name},
-        #{type},
-        #{code},
-        #{taskExecutionType},
-        <if test="dayOfMonth!=null and dayOfMonth!=''">
-            #{dayOfMonth},
+        <if test="keywords!=null and keywords!=''">
+            #{keywords},
         </if>
-        <if test="dayOfWeek!=null and dayOfWeek!=''">
-            #{dayOfWeek},
+        <if test="description!=null and description!=''">
+            #{description},
         </if>
-        <if test="hour!=null and hour!=''">
-            #{hour},
+        <if test="titleImg!=null and titleImg!=''">
+            #{titleImg},
         </if>
-        <if test="minute!=null and minute!=''">
-            #{minute},
+        <if test="contentImg!=null and contentImg!=''">
+            #{contentImg},
         </if>
-        <if test="intervalHour!=null and intervalHour!=''">
-            #{intervalHour},
-        </if>
-        <if test="intervalMinute!=null and intervalMinute!=''">
-            #{intervalMinute},
-        </if>
-        <if test="cronExpression!=null and cronExpression!=''">
-            #{cronExpression},
-        </if>
-        <if test="enable!=null">
-            #{enable},
-        </if>
-        <if test="intervalUnit!=null and intervalUnit!=''">
-            #{intervalUnit},
-        </if>
-        <if test="remark!=null and remark!=''">
-            #{remark},
+        <if test="tplContent!=null and tplContent!=''">
+            #{tplContent},
         </if>
         #{createTime}
     </sql>
@@ -157,7 +121,7 @@
         <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
             select last_insert_id()
         </selectKey>
-        insert into cms_task(<include refid="key"/>) values (<include refid="val"/>)
+        insert into cms_topic(<include refid="key"/>) values (<include refid="val"/>)
     </insert>
 
     <update id="update">

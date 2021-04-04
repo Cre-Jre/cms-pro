@@ -543,7 +543,7 @@ LayUtil.prototype = {
                         },
                         done: function (res) {
                             let parent = ((this.elem!==undefined) ? this.elem : $(this.item.context)).parent();
-                            $(".submitInput", parent).val(res.data);
+                            $(".submitInput", parent).val(res.restInfo);
                         }
                     };
                     if (token) {
