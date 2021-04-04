@@ -32,7 +32,7 @@ public class CmsTopicServiceImpl implements CmsTopicService {
 
     @Override
     public void update(CmsTopicDto dto) {
-
+        cmsTopicMapper.update(CmsTopicConverter.CONVERTER.dtoToEntity(dto));
     }
 
     @Override

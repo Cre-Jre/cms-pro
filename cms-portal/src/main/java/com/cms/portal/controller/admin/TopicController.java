@@ -48,6 +48,13 @@ public class TopicController {
         return UtilsTemplate.adminTemplate("topic","edit");
     }
 
+    @PostMapping("edit.do")
+    @ResponseBody
+    public Result<String> doEdit(CmsTopicDto dto){
+        cmsTopicService.update(dto);
+        return Result.success();
+    }
+
     @PostMapping("page.do")
     @ResponseBody
     public Result<Page<CmsTopicDto>> doPage(CmsTopicDto dto){

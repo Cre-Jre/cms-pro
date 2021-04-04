@@ -57,38 +57,20 @@
     <sql id="updateField">
         update_time = #{updateTime},
         name=#{name},
-        type=#{type},
-        code=#{code},
-        execution_cycle = #{taskExecutionType},
-        <if test="dayOfMonth!=null">
-            day_of_month =#{dayOfMonth},
+        <if test="keywords!=null and keywords!=''">
+            keywords =#{keywords},
         </if>
-        <if test="dayOfWeek!=null">
-            day_of_week = #{dayOfWeek},
+        <if test="description!=null and description!=''">
+            description =#{description},
         </if>
-        <if test="hour!=null">
-            hour = #{hour},
+        <if test="titleImg!=null and titleImg!=''">
+            title_img =#{titleImg},
         </if>
-        <if test="minute!=null">
-            minute = #{minute},
+        <if test="contentImg!=null and contentImg!=''">
+            content_img =#{contentImg},
         </if>
-        <if test="intervalHour!=null">
-            interval_hour=#{intervalHour},
-        </if>
-        <if test="intervalMinute!=null">
-            interval_minute=#{intervalMinute},
-        </if>
-        <if test="cronExpression!=null">
-            cron_expression=#{cronExpression},
-        </if>
-        <if test="enable!=null">
-            is_enable = #{enable},
-        </if>
-        <if test="intervalUnit!=null">
-            interval_unit=#{intervalUnit},
-        </if>
-        <if test="remark!=null and remark!=''">
-            remark=#{remark},
+        <if test="tplContent!=null and tplContent!=''">
+            tpl_content =#{tplContent},
         </if>
     </sql>
 
@@ -111,7 +93,7 @@
     </insert>
 
     <update id="update">
-        update cms_task
+        update cms_topic
         <trim prefix="set" suffixOverrides=",">
             <include refid="updateField"/>
         </trim>
