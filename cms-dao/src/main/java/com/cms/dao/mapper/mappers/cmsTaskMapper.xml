@@ -98,6 +98,44 @@
         #{createTime}
     </sql>
 
+    <sql id="updateField">
+        update_time = #{updateTime},
+        name=#{name},
+        type=#{type},
+        code=#{code},
+        execution_cycle = #{taskExecutionType},
+        <if test="dayOfMonth!=null">
+            day_of_month =#{dayOfMonth},
+        </if>
+        <if test="dayOfWeek!=null">
+            day_of_week = #{dayOfWeek},
+        </if>
+        <if test="hour!=null">
+            hour = #{hour},
+        </if>
+        <if test="minute!=null">
+            minute = #{minute},
+        </if>
+        <if test="intervalHour!=null">
+            interval_hour=#{intervalHour},
+        </if>
+        <if test="intervalMinute!=null">
+            interval_minute=#{intervalMinute},
+        </if>
+        <if test="cronExpression!=null">
+            cron_expression=#{cronExpression},
+        </if>
+        <if test="enable!=null">
+            is_enable = #{enable},
+        </if>
+        <if test="intervalUnit!=null">
+            interval_unit=#{intervalUnit},
+        </if>
+        <if test="remark!=null and remark!=''">
+            remark=#{remark},
+        </if>
+    </sql>
+
     <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsTaskEntity">
         <id property="id" column="id"/>
         <result property="createTime" column="create_time"/>
@@ -121,6 +159,14 @@
         </selectKey>
         insert into cms_task(<include refid="key"/>) values (<include refid="val"/>)
     </insert>
+
+    <update id="update">
+        update cms_task
+        <trim prefix="set" suffixOverrides=",">
+            <include refid="updateField"/>
+        </trim>
+        where id = #{id}
+    </update>
 
     <select id="selectAll" resultMap="baseResultMap">
         select

@@ -48,6 +48,13 @@ public class TaskController {
         return UtilsTemplate.adminTemplate("task","edit");
     }
 
+    @PostMapping("edit.do")
+    @ResponseBody
+    public Result<String> doEdit(CmsTaskDto cmsTaskDto){
+        cmsTaskService.update(cmsTaskDto);
+        return Result.success();
+    }
+
     @PostMapping("page.do")
     @ResponseBody
     public Result doPage(CmsTaskDto cmsTaskDto){

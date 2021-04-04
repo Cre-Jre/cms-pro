@@ -21,7 +21,10 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.utils.Key;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
@@ -109,7 +112,27 @@ public class CmsTaskServiceImpl implements CmsTaskService {
 
     @Override
     public void update(CmsTaskDto dto) {
+        CmsTaskDto cmsTaskDto = getById(dto.getId());
+        if(Objects.isNull(cmsTaskDto)){
+            throw new BusinessException("当前任务不存在");
+        }
+        deleteJob(cmsTaskDto.getCode());
+        dto.setCode(UtilsString.uuid());
+        cmsTaskMapper.update(CmsTaskConverter.CONVERTER.dtoToEntity(dto));
+        startTask(dto);
+    }
 
+    /**
+     * 删除某个指定名称的job
+     * @param jobName           job名称
+     */
+    public void deleteJob(String jobName){
+        try {
+            boolean result = scheduler.deleteJob(JobKey.jobKey(jobName));
+            log.info("结束[{}]任务,结果=[{}]",jobName,result);
+        } catch (SchedulerException e) {
+            log.error("删除定时任务失败=[{}]",e.getMessage());
+        }
     }
 
     @Override
