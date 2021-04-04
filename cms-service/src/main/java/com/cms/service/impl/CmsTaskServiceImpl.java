@@ -1,5 +1,6 @@
 package com.cms.service.impl;
 
+import com.cms.contex.utils.UtilsString;
 import com.cms.core.foundation.Page;
 import com.cms.dao.entity.CmsTaskEntity;
 import com.cms.dao.mapper.CmsTaskMapper;
@@ -18,6 +19,7 @@ public class CmsTaskServiceImpl implements CmsTaskService {
 
     @Override
     public void save(CmsTaskDto dto) {
+        dto.setCode(UtilsString.uuid());
         CmsTaskEntity cmsTaskEntity = CmsTaskConverter.CONVERTER.dtoToEntity(dto);
         cmsTaskMapper.save(cmsTaskEntity);
         if(BooleanUtils.isTrue(dto.getEnable())){
