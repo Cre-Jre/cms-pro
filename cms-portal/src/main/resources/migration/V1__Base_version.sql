@@ -139,3 +139,28 @@ INSERT INTO cms_friend_link (create_time, update_time, id, name, url, priority)
 VALUES ('2020-06-28 20:31:36', null, 3, '360', 'http://www.360.com', 1);
 INSERT INTO cms_friend_link (create_time, update_time, id, name, url, priority)
 VALUES ('2020-06-28 20:31:50', null, 4, '腾讯', 'http://www.qq.com', 1);
+
+-- ----------------------------
+-- Table structure for cms_task  CMS 任务表
+-- ----------------------------
+create table cms_task
+(
+    create_time     timestamp    not null default CURRENT_TIMESTAMP,
+    update_time     timestamp    not null default '0000-00-00 00:00:00',
+    id              int auto_increment primary key,
+    name            varchar(100) not null comment '任务名称',
+    code            varchar(255) null comment 'quartz任务执行名称',
+    type            tinyint(1)   not null default '0' comment '任务类型(0首页静态化、1栏目页静态化、2内容页静态化)',
+    execution_cycle tinyint(1)   not null default '0' comment '执行周期分类(0:执行周期 非表达式  1:执行方式 cron表达式)',
+    day_of_month    int          null comment '每月的哪天',
+    day_of_week     tinyint(1)   null comment '周几',
+    hour            int          null comment '小时',
+    minute          int          null comment '分钟',
+    interval_hour   int          null comment '间隔小时',
+    interval_minute int          null comment '间隔分钟',
+    cron_expression varchar(255) not null default '' comment 'cron规则表达式',
+    is_enable       tinyint(1)   not null default 1 comment '是否启用',
+    interval_unit   tinyint(1)   not null default 0 comment '0:分钟、1:小时、2:日、3:周、4:月',
+    remark          varchar(255) not null default '' comment '任务说明'
+) ENGINE = InnoDB
+  CHARSET = utf8 comment 'CMS 任务表';
