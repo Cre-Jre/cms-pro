@@ -2,6 +2,7 @@ package com.cms.portal.controller.admin;
 
 import com.cms.contex.foundation.Result;
 import com.cms.contex.utils.UtilsTemplate;
+import com.cms.core.annotation.DoLog;
 import com.cms.dao.enums.TaskExecutionCycleUnitEnum;
 import com.cms.dao.enums.TaskExecutionTypeEnum;
 import com.cms.dao.enums.TaskStaticTypeEnum;
@@ -36,6 +37,14 @@ public class TaskController {
     @ResponseBody
     public Result<String> doAdd(CmsTaskDto cmsTaskDto){
         cmsTaskService.save(cmsTaskDto);
+        return Result.success();
+    }
+
+    @PostMapping("delete.do")
+    @ResponseBody
+    @DoLog(content = "É¾³ýÈÎÎñ")
+    public Result<String> doDelete(Integer id){
+        cmsTaskService.deleteById(id);
         return Result.success();
     }
 

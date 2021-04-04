@@ -104,10 +104,16 @@ public class CmsTaskServiceImpl implements CmsTaskService {
         return CmsTaskConverter.CONVERTER.entityToDto(cmsTaskMapper.selectAll());
     }
 
-
     @Override
     public void deleteById(Integer id) {
-
+        CmsTaskDto cmsTaskDto = getById(id);
+        if(Objects.isNull(cmsTaskDto)){
+            throw new BusinessException("当前任务不存在");
+        }
+        if(!deleteJob(cmsTaskDto.getCode()))         {
+            throw new BusinessException("当前任务无法删除,请联系管理员");
+        }
+        cmsTaskMapper.deleteById(id);
     }
 
     @Override
@@ -126,13 +132,15 @@ public class CmsTaskServiceImpl implements CmsTaskService {
      * 删除某个指定名称的job
      * @param jobName           job名称
      */
-    public void deleteJob(String jobName){
+    public boolean deleteJob(String jobName){
+        boolean result = false;
         try {
-            boolean result = scheduler.deleteJob(JobKey.jobKey(jobName));
+            result = scheduler.deleteJob(JobKey.jobKey(jobName));
             log.info("结束[{}]任务,结果=[{}]",jobName,result);
         } catch (SchedulerException e) {
             log.error("删除定时任务失败=[{}]",e.getMessage());
         }
+        return result;
     }
 
     @Override

@@ -168,6 +168,10 @@
         where id = #{id}
     </update>
 
+    <delete id="deleteById">
+        delete from cms_task where id = #{id}
+    </delete>
+
     <select id="selectAll" resultMap="baseResultMap">
         select
         <include refid="baseColumn"/>
