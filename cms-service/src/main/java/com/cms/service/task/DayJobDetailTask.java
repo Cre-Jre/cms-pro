@@ -1,4 +1,4 @@
-package com.cms.portal.task;
+package com.cms.service.task;
 
 public class DayJobDetailTask {
 
