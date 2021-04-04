@@ -124,8 +124,14 @@ const  CONSTANT = {
         USERNAME: /^(?![_]+$)\w{5,10}$/,
         //密码正则
         PASSWORD: /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{7,15}$/
+    },
+    //文件相关配置
+    FILE: {
+        //文件上传路径
+        FILE_URL: ADMIN_PATH + "/upload/file.do",
+        //文件上传最大KB 单位 KB 不支持ie8/9
+        FILE_UPLOAD_MAX_SIZE: 1000
     }
-
 
 
 };
@@ -491,5 +497,63 @@ LayUtil.prototype = {
             }
         };
         LayUtil.tree = new Inner();
+    })(LayUtil),
+    //图片上传组件
+    imageUpload: (function (LayUtil) {
+        function Inner() {
+            this.photoViewer = null;
+        }
+
+        Inner.prototype = {
+            construct: Inner,
+            init: function (option, PhotoViewer, token) {
+                let that = this,elem = (option!==undefined && option.elem!==undefined) ? option.elem : ".imageUpload",
+                    imgParent = $(elem).parent();
+                //点击放大图片
+                $(".imageText", imgParent).click(function () {
+                    if (that.photoViewer) {
+                        that.photoViewer.close();
+                    }
+                    let items = [{src: $(elem).attr("src"), title: '图片查看'}], options = {index: 0};
+                    that.photoViewer = new PhotoViewer(items, options);
+                });
+                //点击修改
+                $(".imageUpdate", imgParent).click(function(){
+                    $(".layui-upload-file",imgParent).click();
+                });
+                //点击删除
+                $(".imageDelete", imgParent).click(function () {
+                    $(elem).attr("src","");
+                    $(".imageMask",imgParent).removeClass("imageOpenMask");
+                });
+                layui.use('upload', function () {
+                    that.upload = layui.upload;
+                    let config = {
+                        elem: elem,
+                        size: (option && option.size) ? option.size : CONSTANT.FILE.FILE_UPLOAD_MAX_SIZE,
+                        url: (option && option.url) ? option.url : CONSTANT.FILE.FILE_URL,
+                        field: (option && option.field) ? option.field : "file",
+                        before: function (obj) {
+                            let image = (this.elem!==undefined) ? this.elem : $(this.item.context);
+                            let imageParent = $(image).parent(), mask = $(".imageMask", imageParent);
+                            obj.preview(function (index, file, result) {
+                                image.attr("src", result);
+                                image.attr("src") && !mask.hasClass("imageOpenMask") && mask.addClass("imageOpenMask");
+                            });
+                        },
+                        done: function (res) {
+                            let parent = ((this.elem!==undefined) ? this.elem : $(this.item.context)).parent();
+                            $(".submitInput", parent).val(res.data);
+                        }
+                    };
+                    if (token) {
+                        config.data = {token: token};
+                    }
+                    that.upload.render(config);
+                });
+                return this;
+            }
+        };
+        LayUtil.imageUpload = new Inner();
     })(LayUtil)
 }

@@ -1,53 +1,7 @@
 <#import "/layout/backend/main.ftl" as main>
 <#import "/layout/backend/form.ftl" as form>
-<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_tree.css">
-<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
-<style>
-    img[src=""], img:not([src]) {
-        opacity: 0;
-    }
-    /*图片上传包装div*/
-    .imageUploadWrapper{
-        display:inline-block;
-        cursor:pointer;
-        position:relative;
-        border:1px dashed #d9d9d9;
-        border-radius: 6px;
-        width: 130px;
-        height: 130px;
-        overflow: hidden;
-    }
-    /*图片上传icon*/
-    .imageUploadIcon{
-        font-size:28px;
-        color:#8c939d;
-        position:absolute;
-        top:42%;
-        left:42%;
-    }
-    /*图片上传的图片*/
-    .imageUpload{
-        position:absolute;
-        z-index:10;
-        left:0;
-        top:0;
-        width:100%;
-        height:100%;
-    }
-    .imageMask{
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.6);
-        position: absolute;
-        left: 0;
-        top: -100%;
-        z-index:15;
-        transition: top ease 250ms;
-    }
-    .imageUploadWrapper:hover .imageOpenMask{
-        top:0;
-    }
-</style>
+<link rel="stylesheet" href="${basePath}/admin/plugin/photoviewer.css">
+<script src="${basePath}/admin/plugin/photoviewer.min.js" charset="utf-8"></script>
 <@main.layout>
     <@form.form>
         <@form.item>
@@ -59,5 +13,5 @@
     </@form.form>
 </@main.layout>
 <script>
-
+    LayUtil.imageUpload.init({},PhotoViewer)
 </script>
