@@ -138,4 +138,10 @@
         </where>
         order by create_time desc
     </select>
+
+    <select id="selectById" resultMap="baseResultMap">
+        select <include refid="baseColumn"/>
+        from cms_task
+        where id = #{id}
+    </select>
 </mapper>

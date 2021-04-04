@@ -39,6 +39,15 @@ public class TaskController {
         return Result.success();
     }
 
+    @GetMapping("edit.do")
+    public String toEdit(Integer id,Model model){
+        model.addAttribute("taskType", TaskStaticTypeEnum.values());
+        model.addAttribute("taskExecutionType", TaskExecutionTypeEnum.values());
+        model.addAttribute("taskExecutionCycle", TaskExecutionCycleUnitEnum.values());
+        model.addAttribute("data", cmsTaskService.getById(id));
+        return UtilsTemplate.adminTemplate("task","edit");
+    }
+
     @PostMapping("page.do")
     @ResponseBody
     public Result doPage(CmsTaskDto cmsTaskDto){

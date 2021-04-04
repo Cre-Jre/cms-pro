@@ -114,7 +114,7 @@ public class CmsTaskServiceImpl implements CmsTaskService {
 
     @Override
     public CmsTaskDto getById(Integer id) {
-        return null;
+        return CmsTaskConverter.CONVERTER.entityToDto(cmsTaskMapper.selectById(id));
     }
 
     @Override
