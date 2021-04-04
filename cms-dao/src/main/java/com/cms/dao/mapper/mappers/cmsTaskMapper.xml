@@ -130,6 +130,12 @@
 
     <select id="selectBySearchProvider" parameterType="SearchProvider" resultMap="baseResultMap">
         select <include refid="baseColumn"/>
-        from cms_task order by create_time desc
+        from cms_task
+        <where>
+            <if test="criteria.name!=null and criteria.name!=''">
+                name like concat ('%',#{criteria.name},'%')
+            </if>
+        </where>
+        order by create_time desc
     </select>
 </mapper>
