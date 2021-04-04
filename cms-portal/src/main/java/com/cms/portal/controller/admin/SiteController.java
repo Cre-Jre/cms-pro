@@ -1,6 +1,7 @@
 package com.cms.portal.controller.admin;
 
 import com.cms.contex.foundation.Result;
+import com.cms.contex.utils.UtilsServletContext;
 import com.cms.contex.utils.UtilsTemplate;
 import com.cms.core.annotation.DoLog;
 import com.cms.core.annotation.DoValid;
@@ -25,11 +26,14 @@ public class SiteController {
 
     @Autowired
     private CmsSiteService cmsSiteService;
+    @Autowired
+    private UtilsServletContext utilsServletContext;
 
     @GetMapping("index.do")
     public String toIndex(Model model) {
         model.addAttribute("data", cmsSiteService.get());
         model.addAttribute("staticWebSuffix", StaticWebSuffixEnum.values());
+        model.addAttribute("tplIndex",utilsServletContext.getTplRelativePath("index","index"));
         return UtilsTemplate.adminTemplate("site", "index");
     }
 
@@ -37,7 +41,7 @@ public class SiteController {
     @ResponseBody
     @DoValid
     @DoLog(content = "修改站点配置")
-    public Result doEdit(@Valid CmsSiteDto cmsSiteDto, BindingResult result){
+    public Result<String> doEdit(@Valid CmsSiteDto cmsSiteDto, BindingResult result){
         cmsSiteService.update(cmsSiteDto);
         return Result.success();
     }

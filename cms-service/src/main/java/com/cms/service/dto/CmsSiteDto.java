@@ -17,5 +17,6 @@ public class CmsSiteDto extends BaseDto<Integer> {
     private String description;
     private StaticWebSuffixEnum staticSuffix;
     private String staticDir;
+    private String tplIndex;
     private Boolean staticIndex;
 }

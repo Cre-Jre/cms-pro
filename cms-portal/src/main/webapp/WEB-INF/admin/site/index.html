@@ -34,6 +34,9 @@
                     <input type="radio" name="staticIndex" value="1" title="是" >
                 </#if>
             </@form.inline>
+            <@form.inline label="首页模板">
+                <@form.select list=tplIndex name="tplIndex" value="${data.tplIndex!}"></@form.select>
+            </@form.inline>
         </@form.item>
         <@form.submit></@form.submit>
     </@form.form>

@@ -10,6 +10,7 @@
         description,
         static_dir,
         static_suffix,
+        tpl_index,
         is_static_index
     </sql>
 
@@ -33,6 +34,9 @@
         <if test="staticIndex!=null">
             is_static_index = #{staticIndex},
         </if>
+        <if test="tplIndex!=null and tplIndex!=''">
+            tpl_index = #{tplIndex},
+        </if>
     </sql>
 
     <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsSiteEntity">
@@ -43,6 +47,7 @@
         <result property="staticDir" column="static_dir"/>
         <result property="staticSuffix" column="static_suffix"/>
         <result property="staticIndex" column="is_static_index"/>
+        <result property="tplIndex" column="tpl_index"/>
     </resultMap>
 
     <update id="update">

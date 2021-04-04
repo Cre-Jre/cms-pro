@@ -11,6 +11,7 @@ public class CmsSiteEntity extends BaseEntity<Integer> {
     private String keywords;
     private String description;
     private Integer staticSuffix;
+    private String tplIndex;
     private String staticDir;
     private Boolean staticIndex;
 }
