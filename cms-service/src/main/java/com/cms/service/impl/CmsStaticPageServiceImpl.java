@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -58,8 +59,10 @@ public class CmsStaticPageServiceImpl implements CmsStaticPageService {
         if(!parentDir.exists()){
             parentDir.mkdirs();
         }
+        HttpServletRequest request = UtilsHttp.getRequest();
         HashMap<String, Object> data = Maps.newHashMap();
         data.put("site",cmsSite);
+        data.put("basePath",request.getContextPath());
         try(Writer writer=new OutputStreamWriter(new FileOutputStream(realOutPutPathFile), StandardCharsets.UTF_8)){
             WebApplicationContext webApplicationContext = UtilsHttp.getWebApplicationContext(UtilsHttp.getRequest());
             FreeMarkerConfigurer freeMarkerConfigurer = webApplicationContext.getBean(FreeMarkerConfigurer.class);
@@ -71,5 +74,15 @@ public class CmsStaticPageServiceImpl implements CmsStaticPageService {
             log.error("staticIndex生成首页模板失败=[{}]",e.getMessage());
             throw new BusinessException("生成首页模板失败");
         }
+    }
+
+    @Override
+    public boolean deleteIndex() {
+        CmsSiteDto cmsSite = cmsSiteService.get();
+        String staticDir = cmsSite.getStaticDir();
+        HttpServletRequest request = UtilsHttp.getRequest();
+        String contextPath = request.getContextPath();
+        File file = new File(utilsServletContext.getRealPath(contextPath + "/" + staticDir + "/index" + StaticWebSuffixEnum.HTML.getLabel()));
+        return file.delete();
     }
 }

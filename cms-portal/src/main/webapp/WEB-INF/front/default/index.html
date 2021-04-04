@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>首页 - ${site.siteName!} - 个人博客官网</title>
+    <meta http-equiv="keywords" content="${site.keywords!}"/>
+    <meta http-equiv="description" content="${site.description!}"/>
+    <script src="${basePath}/common/js/jq.js"></script>
     <style>
         *, html, body {
             padding: 0;
@@ -132,7 +138,7 @@
         <ul>
             [@cms_friend_link_directive]
                 [#list  result as item]
-                   <li><a href="${item.url!}" rel="nofollow" target="_blank">${item.name!}</a></li>
+                    <li><a href="${item.url!}" rel="nofollow" target="_blank">${item.name!}</a></li>
                 [/#list]
             [/@cms_friend_link_directive]
         </ul>

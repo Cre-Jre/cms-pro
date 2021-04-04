@@ -40,5 +40,13 @@ public class StaticPageController {
         return Result.success();
     }
 
-
+    @PostMapping("deleteIndex.do")
+    @ResponseBody
+    public Result<String> doDeleteIndex(){
+        boolean result = cmsStaticPageService.deleteIndex();
+        if(BooleanUtils.isTrue(result)){
+            return Result.success();
+        }
+        return Result.failed("删除失败");
+    }
 }

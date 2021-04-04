@@ -10,6 +10,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,16 +28,18 @@ public class DynamicPageController {
     private UtilsServletContext utilsServletContext;
 
     @GetMapping("index.shtml")
-    public String index(HttpServletRequest request, HttpServletResponse response){
+    public String index(HttpServletRequest request, HttpServletResponse response, Model model){
         CmsSiteDto cmsSite = cmsSiteService.get();
         if(BooleanUtils.isTrue(existStaticIndexPage(cmsSite))){
             String contextPath = request.getContextPath();
             try {
                 response.sendRedirect(contextPath+"/"+cmsSite.getStaticDir()+"/index"+StaticWebSuffixEnum.HTML.getLabel());
+                return null;
             } catch (IOException e) {
                 log.error("跳转静态首页报错,错误信息=[{}]",e.getMessage());
             }
         }
+        model.addAttribute("site",cmsSite);
         return UtilsTemplate.frontTemplate("index");
     }
 

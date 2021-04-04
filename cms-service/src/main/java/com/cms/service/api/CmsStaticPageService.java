@@ -6,5 +6,9 @@ public interface CmsStaticPageService {
      */
     void staticIndex();
 
-
+    /**
+     * 删除静态化首页
+     * @return      布尔值
+     */
+    boolean deleteIndex();
 }
