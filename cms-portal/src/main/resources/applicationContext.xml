@@ -29,5 +29,6 @@
     <import resource="classpath:applicationContext-redis.xml"/>
     <import resource="classpath:applicationContext-configuration.xml"/>
     <import resource="classpath:applicationContext-shiro.xml"/>
+    <import resource="classpath:applicationContext-quartz.xml"/>
 
 </beans>
