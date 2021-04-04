@@ -9,6 +9,7 @@
         <script src="${basePath}/admin/layui/layui.js" charset="utf-8"></script>
         <script src="${basePath}/admin/js/core.js"></script>
         <link rel="stylesheet" href="${basePath}/admin/css/admin.css" media="all">
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_1060794_yaw1vj40wh9.css">
         <script type="application/javascript">
             let BASE_PATH = "${basePath!''}",OPERATION_URL = "${operationUrl!''}";
         </script>

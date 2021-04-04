@@ -96,3 +96,23 @@ list 数据
         </#if>
     </select>
 </#macro>
+<#--上传图片-->
+<#macro imageUpload name src="" hasMask=false className="imageUpload" cssStyle="">
+    <div class="imageUploadBox" <#if cssStyle!="">style="${cssStyle}"</#if>>
+        <div class="imageUploadWrapper">
+            <i class="iconfont iconplus imageUploadIcon"></i>
+            <img src="${src}" alt="" class="${className}" width="100%" height="100%">
+            <input name="${name}" type="hidden" class="submitInput">
+            <div class="imageMask <#if hasMask==true>imageOpenMask</#if>">
+                <div class="imageText"
+                     style="width:100%;height:100px;color:#fff;font-size:12px;text-align:center;line-height:100px;">
+                    点击查看大图
+                </div>
+                <span class="imageUpdate"
+                      style="text-align:center;line-height:30px;color:#fff;z-index:10;background:#00aeff;display:inline-block;width:50%;height:30px;position:absolute;bottom:0;left:0;">修改</span>
+                <span class="imageDelete"
+                      style="text-align:center;line-height:30px;color:#fff;z-index:10;background:#ff7653;display:inline-block;width:50%;height:30px;position:absolute;bottom:0;right:0;">删除</span>
+            </div>
+        </div>
+    </div>
+</#macro>
