@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -40,7 +41,7 @@ public class DynamicPageController {
             }
         }
         model.addAttribute("site",cmsSite);
-        return UtilsTemplate.frontTemplate("index");
+        return UtilsTemplate.frontTemplate("index","index");
     }
 
     /**
