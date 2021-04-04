@@ -5,13 +5,39 @@
 <@main.layout>
     <@form.form>
         <@form.item>
-            <@form.inline label="名称" required=true>
-                <@form.imageUpload name="aaa"></@form.imageUpload>
+            <@form.inline label="专题名称" required=true>
+                <input name="name" class="layui-input" type="text" lay-verify="required">
+            </@form.inline>
+            <@form.inline label="关键字">
+                <input name="keywords" class="layui-input" type="text">
+            </@form.inline>
+        </@form.item>
+        <@form.item>
+            <@form.inline label="描述" full=true>
+                <textarea name="description" class="layui-textarea"></textarea>
+            </@form.inline>
+        </@form.item>
+        <@form.item>
+            <@form.inline label="模板">
+                <@form.select list=template name="tplContent"></@form.select>
+            </@form.inline>
+        </@form.item>
+        <@form.item>
+            <@form.inline label="标题图">
+                <@form.imageUpload name="titleImg" className="titleImg"></@form.imageUpload>
+            </@form.inline>
+            <@form.inline label="内容图">
+                <@form.imageUpload name="contentImg" className="contentImg"></@form.imageUpload>
             </@form.inline>
         </@form.item>
         <@form.submit></@form.submit>
     </@form.form>
 </@main.layout>
 <script>
-    LayUtil.imageUpload.init({},PhotoViewer)
+    LayUtil.imageUpload.init({elem:".titleImg"},PhotoViewer);
+    LayUtil.imageUpload.init({elem:".contentImg"},PhotoViewer);
+
+    LayUtil.form.init(function(){
+
+    })
 </script>
