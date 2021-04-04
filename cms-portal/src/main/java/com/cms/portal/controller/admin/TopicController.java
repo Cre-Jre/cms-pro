@@ -3,6 +3,7 @@ package com.cms.portal.controller.admin;
 import com.cms.contex.foundation.Result;
 import com.cms.contex.utils.UtilsServletContext;
 import com.cms.contex.utils.UtilsTemplate;
+import com.cms.core.foundation.Page;
 import com.cms.service.api.CmsTopicService;
 import com.cms.service.dto.CmsTopicDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,9 @@ public class TopicController {
         return Result.success();
     }
 
-
+    @PostMapping("page.do")
+    @ResponseBody
+    public Result<Page<CmsTopicDto>> doPage(CmsTopicDto dto){
+        return Result.success(cmsTopicService.getPage(dto));
+    }
 }

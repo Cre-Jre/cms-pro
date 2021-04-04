@@ -7,19 +7,11 @@
         create_time,
         id,
         name,
-        code,
-        type,
-        execution_cycle,
-        day_of_month,
-        day_of_week,
-        hour,
-        minute,
-        interval_hour,
-        interval_minute,
-        cron_expression,
-        is_enable,
-        interval_unit,
-        remark
+        keywords,
+        description,
+        title_img,
+        content_img,
+        tpl_content
     </sql>
 
     <sql id="key">
@@ -100,21 +92,15 @@
         </if>
     </sql>
 
-    <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsTaskEntity">
+    <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsTopicEntity">
         <id property="id" column="id"/>
         <result property="createTime" column="create_time"/>
         <result property="name" column="name"/>
-        <result property="type" column="type"/>
-        <result property="taskExecutionType" column="execution_cycle"/>
-        <result property="dayOfMonth" column="day_of_month"/>
-        <result property="dayOfWeek" column="day_of_week"/>
-        <result property="hour" column="hour"/>
-        <result property="intervalHour" column="interval_hour"/>
-        <result property="intervalMinute" column="interval_minute"/>
-        <result property="cronExpression" column="cron_expression"/>
-        <result property="enable" column="is_enable"/>
-        <result property="intervalUnit" column="interval_unit"/>
-        <result property="remark" column="remark"/>
+        <result property="keywords" column="keywords"/>
+        <result property="description" column="description"/>
+        <result property="titleImg" column="title_img"/>
+        <result property="contentImg" column="content_img"/>
+        <result property="tplContent" column="tpl_content"/>
     </resultMap>
 
     <insert id="save">
@@ -144,7 +130,7 @@
 
     <select id="selectBySearchProvider" parameterType="SearchProvider" resultMap="baseResultMap">
         select <include refid="baseColumn"/>
-        from cms_task
+        from cms_topic
         <where>
             <if test="criteria.name!=null and criteria.name!=''">
                 name like concat ('%',#{criteria.name},'%')
