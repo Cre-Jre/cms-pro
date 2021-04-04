@@ -58,4 +58,17 @@ public class UtilsServletContext implements ServletContextAware {
     public String getContextPath(){
         return servletContext.getContextPath();
     }
+
+    /**
+     * 文件目录是否存在
+     * @param dir          文件目录
+     * @return              布尔值
+     */
+    public static boolean dirExist(String dir){
+        File file = new File(dir);
+        if(file.isDirectory()){
+            return true;
+        }
+        return false;
+    }
 }
