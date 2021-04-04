@@ -17,15 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -90,6 +89,11 @@ public class CmsTaskServiceImpl implements CmsTaskService {
             log.error("执行定时任务失败,message=[{}]",e.getMessage());
             throw new BusinessException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<CmsTaskDto> getList() {
+        return CmsTaskConverter.CONVERTER.entityToDto(cmsTaskMapper.selectAll());
     }
 
 
