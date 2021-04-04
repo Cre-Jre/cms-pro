@@ -50,4 +50,12 @@ public class UtilsServletContext implements ServletContextAware {
         return fileList.stream().map(x->StringUtils.substring(StringUtils.replace(x.getAbsolutePath(),File.separator,"/"),webInfoFile.getAbsolutePath().length())
         ).collect(Collectors.toList());
     }
+
+    /**
+     * 获取项目虚拟路径
+     * @return          虚拟路径
+     */
+    public String getContextPath(){
+        return servletContext.getContextPath();
+    }
 }

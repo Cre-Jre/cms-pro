@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,8 @@ public class CmsStaticPageServiceImpl implements CmsStaticPageService {
 
     @Autowired
     private CmsSiteService cmsSiteService;
+    @Autowired
+    private FreeMarkerConfig freeMarkerConfig;
     @Autowired
     private UtilsServletContext utilsServletContext;
 
@@ -45,8 +48,6 @@ public class CmsStaticPageServiceImpl implements CmsStaticPageService {
         if(StringUtils.isEmpty(staticDir)){
             throw new BusinessException("请先在站点设置中填写静态页目录");
         }
-        //获取静态后缀
-        StaticWebSuffixEnum staticSuffix = cmsSite.getStaticSuffix();
         //首页模板路径
         String templatePath = cmsSite.getTplIndex();
         //输出路径
@@ -59,14 +60,11 @@ public class CmsStaticPageServiceImpl implements CmsStaticPageService {
         if(!parentDir.exists()){
             parentDir.mkdirs();
         }
-        HttpServletRequest request = UtilsHttp.getRequest();
         HashMap<String, Object> data = Maps.newHashMap();
         data.put("site",cmsSite);
-        data.put("basePath",request.getContextPath());
+        data.put("basePath",utilsServletContext.getContextPath());
         try(Writer writer=new OutputStreamWriter(new FileOutputStream(realOutPutPathFile), StandardCharsets.UTF_8)){
-            WebApplicationContext webApplicationContext = UtilsHttp.getWebApplicationContext(UtilsHttp.getRequest());
-            FreeMarkerConfigurer freeMarkerConfigurer = webApplicationContext.getBean(FreeMarkerConfigurer.class);
-            Configuration configuration = freeMarkerConfigurer.getConfiguration();
+            Configuration configuration = freeMarkerConfig.getConfiguration();
             configuration.setDefaultEncoding(StandardCharsets.UTF_8.name());
             Template template = configuration.getTemplate(templatePath);
             template.process(data,writer);

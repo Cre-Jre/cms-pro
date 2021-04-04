@@ -10,6 +10,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="${basePath}/admin/layui/css/layui.css" media="all">
+    <script type="application/javascript">
+        let BASE_PATH = "${basePath!''}",OPERATION_URL = "${operationUrl!''}";
+    </script>
     <style>
         html, body {width: 100%;height: 100%;overflow: hidden}
         body {background: #009688;}
@@ -49,9 +52,6 @@
                     <div class="captcha-img" style="cursor: pointer;">
                         <img id="captchaPic" src="${adminPath}/captcha.do" onclick="this.src='${adminPath}/captcha.do?random='+Math.random()">
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
                 </div>
                 <div class="layui-form-item">
                     <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="go">登 入</button>
