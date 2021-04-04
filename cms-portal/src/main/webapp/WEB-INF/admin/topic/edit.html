@@ -1,0 +1,44 @@
+<#import "/layout/backend/main.ftl" as main>
+<#import "/layout/backend/form.ftl" as form>
+<link rel="stylesheet" href="${basePath}/admin/plugin/photoviewer.css">
+<script src="${basePath}/admin/plugin/photoviewer.min.js" charset="utf-8"></script>
+<@main.layout>
+    <@form.form>
+        <input type="hidden" name="id" value="${data.id!}">
+        <@form.item>
+            <@form.inline label="专题名称" required=true>
+                <input name="name" class="layui-input" type="text" value="${data.name!}" lay-verify="required">
+            </@form.inline>
+            <@form.inline label="关键字">
+                <input name="keywords" class="layui-input" type="text" value="${data.keywords!}">
+            </@form.inline>
+        </@form.item>
+        <@form.item>
+            <@form.inline label="描述" full=true>
+                <textarea name="description" class="layui-textarea">${data.description!}</textarea>
+            </@form.inline>
+        </@form.item>
+        <@form.item>
+            <@form.inline label="模板">
+                <@form.select list=template name="tplContent" value="${data.tplContent!}"></@form.select>
+            </@form.inline>
+        </@form.item>
+        <@form.item>
+            <@form.inline label="标题图">
+                <@form.imageUpload name="titleImg" className="titleImg" src="${data.titleImg!}"></@form.imageUpload>
+            </@form.inline>
+            <@form.inline label="内容图">
+                <@form.imageUpload name="contentImg" className="contentImg" src="${data.contentImg!}"></@form.imageUpload>
+            </@form.inline>
+        </@form.item>
+        <@form.submit></@form.submit>
+    </@form.form>
+</@main.layout>
+<script>
+    LayUtil.imageUpload.init({elem:".titleImg"},PhotoViewer);
+    LayUtil.imageUpload.init({elem:".contentImg"},PhotoViewer);
+
+    LayUtil.form.init(function(){
+
+    })
+</script>

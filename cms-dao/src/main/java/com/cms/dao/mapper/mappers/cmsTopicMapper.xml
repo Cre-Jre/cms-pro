@@ -141,7 +141,7 @@
 
     <select id="selectById" resultMap="baseResultMap">
         select <include refid="baseColumn"/>
-        from cms_task
+        from cms_topic
         where id = #{id}
     </select>
 </mapper>

@@ -37,7 +37,7 @@ public class CmsTopicServiceImpl implements CmsTopicService {
 
     @Override
     public CmsTopicDto getById(Integer id) {
-        return null;
+        return CmsTopicConverter.CONVERTER.entityToDto(cmsTopicMapper.selectById(id));
     }
 
     @Override

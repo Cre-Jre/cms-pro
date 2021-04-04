@@ -41,6 +41,13 @@ public class TopicController {
         return Result.success();
     }
 
+    @GetMapping("edit.do")
+    public String toEdit(Integer id,Model model){
+        model.addAttribute("data",cmsTopicService.getById(id));
+        model.addAttribute("template",utilsServletContext.getTplRelativePath("topic","topic"));
+        return UtilsTemplate.adminTemplate("topic","edit");
+    }
+
     @PostMapping("page.do")
     @ResponseBody
     public Result<Page<CmsTopicDto>> doPage(CmsTopicDto dto){
