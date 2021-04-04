@@ -1,18 +1,26 @@
 package com.cms.service.impl;
 
+import com.cms.contex.utils.UtilsHttp;
 import com.cms.contex.utils.UtilsServletContext;
 import com.cms.core.exception.BusinessException;
 import com.cms.dao.enums.StaticWebSuffixEnum;
 import com.cms.service.api.CmsSiteService;
 import com.cms.service.api.CmsStaticPageService;
 import com.cms.service.dto.CmsSiteDto;
+import com.google.common.collect.Maps;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import java.io.File;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 @Slf4j
 @Service
@@ -49,6 +57,19 @@ public class CmsStaticPageServiceImpl implements CmsStaticPageService {
         File parentDir = realOutPutPathFile.getParentFile();
         if(!parentDir.exists()){
             parentDir.mkdirs();
+        }
+        HashMap<String, Object> data = Maps.newHashMap();
+        data.put("site",cmsSite);
+        try(Writer writer=new OutputStreamWriter(new FileOutputStream(realOutPutPathFile), StandardCharsets.UTF_8)){
+            WebApplicationContext webApplicationContext = UtilsHttp.getWebApplicationContext(UtilsHttp.getRequest());
+            FreeMarkerConfigurer freeMarkerConfigurer = webApplicationContext.getBean(FreeMarkerConfigurer.class);
+            Configuration configuration = freeMarkerConfigurer.getConfiguration();
+            configuration.setDefaultEncoding(StandardCharsets.UTF_8.name());
+            Template template = configuration.getTemplate(templatePath);
+            template.process(data,writer);
+        }catch (Exception e){
+            log.error("staticIndex生成首页模板失败=[{}]",e.getMessage());
+            throw new BusinessException("生成首页模板失败");
         }
     }
 }
