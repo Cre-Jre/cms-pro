@@ -11,11 +11,61 @@
     <link rel="stylesheet" href="${basePath}/common/css/common.css">
     <link rel="stylesheet" href="${basePath}/front/index.css">
     <script src="${basePath}/common/js/jq.js"></script>
+    <style>
+        .home-ch {
+            width: 100%;
+        }
+        .home-ch-left {
+            width: 290px;
+        }
+        .home-main, .home-main a {
+            font-family: 宋体;
+            font-size: 14px;
+            color: rgb(27, 74, 127);
+        }
+        .jczt .jczt-nav {
+            width: 100%;
+            color: rgb(26, 26, 26);
+            font-size: 14px;
+            box-sizing: border-box;
+            height: 30px;
+            line-height: 30px;
+            position: relative;
+            border-bottom: 2px solid rgb(231, 231, 231);
+        }
+        .jczt-list {
+            padding-top: 7px;
+        }
+        .jczt-list a {
+            width: 100%;
+            display: inline-block;
+            margin-top: 8px;
+        }
+    </style>
 </head>
 <body>
-
-
-
+<div class="main container home-main clearfix">
+    <section class="top-ad">
+    </section>
+    <section class="home-top clearfix">
+    </section>
+    <section class="home-ch clearfix">
+        <div class="home-ch-left fl">
+            <div class="jczt">
+                <div class="jczt-nav">精彩专题</div>
+                <div class="jczt-list">
+                    <div class="home-jczt">
+                        [@cms_topic_list count='3']
+                            [#list result as t]
+                                <a href="" target="_blank"><img src="${t.titleImg!}" width="290px" height="94px"></a>
+                            [/#list]
+                        [/@cms_topic_list]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 <div id="footer">
     <div class="footer_cont_box">
         <div class="nav_qr_box" style="width: 930px;">

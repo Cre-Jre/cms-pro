@@ -118,6 +118,9 @@
                 name like concat ('%',#{criteria.name},'%')
             </if>
         </where>
+        <if test="inner!=null and inner.count!=null">
+            limit #{inner.count}
+        </if>
         order by create_time desc
     </select>
 

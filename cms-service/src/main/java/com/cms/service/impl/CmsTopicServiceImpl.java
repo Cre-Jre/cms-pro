@@ -14,6 +14,8 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CmsTopicServiceImpl implements CmsTopicService {
 
@@ -47,5 +49,12 @@ public class CmsTopicServiceImpl implements CmsTopicService {
         com.github.pagehelper.Page<CmsTopicEntity> page = PageHelper.startPage(pageInfo.getPageCurrent(), pageInfo.getPageSize()).
                 doSelectPage(() -> cmsTopicMapper.selectBySearchProvider(of));
         return new Page<>(page.getTotal(),CmsTopicConverter.CONVERTER.entityToDto(page.getResult()));
+    }
+
+    @Override
+    public List<CmsTopicDto> getListByTag(int count) {
+        CmsTopicDto cmsTopicDto = new CmsTopicDto();
+        SearchProvider of = SearchProvider.of(CmsTopicConverter.CONVERTER.dtoToEntity(cmsTopicDto),new SearchProvider.Inner(count));
+        return CmsTopicConverter.CONVERTER.entityToDto(cmsTopicMapper.selectBySearchProvider(of));
     }
 }

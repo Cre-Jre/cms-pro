@@ -18,7 +18,6 @@ public class CmsFriendLinkDirective implements TemplateDirectiveModel {
 
     @Override
     public void execute(Environment environment, Map map, TemplateModel[] templateModels, TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
-        System.out.println(templateModels.length);
         List<CmsFriendLinkDto> list = cmsFriendLinkService.getList(new CmsFriendLinkDto());
         DefaultObjectWrapper defaultObjectWrapper = new DefaultObjectWrapper(Configuration.VERSION_2_3_23);
         environment.setVariable("result",defaultObjectWrapper.wrap(list));

@@ -10,6 +10,16 @@ public class SearchProvider<T extends BaseEntity> {
      */
     private String searchOrderBy;
 
+    private SearchProvider.Inner inner;
+
+    public Inner getInner() {
+        return inner;
+    }
+
+    public void setInner(Inner inner) {
+        this.inner = inner;
+    }
+
     /**
      * 静态方法  没有排序
      * @param criteria
@@ -19,6 +29,20 @@ public class SearchProvider<T extends BaseEntity> {
     public static<W extends BaseEntity> SearchProvider of(W criteria){
         SearchProvider searchProvider = new SearchProvider<>();
         searchProvider.setCriteria(criteria);
+        return searchProvider;
+    }
+
+    /**
+     * 静态方法  自定义属性查询使用
+     * @param criteria
+     * @param inner
+     * @param <W>
+     * @return
+     */
+    public static<W extends BaseEntity> SearchProvider of(W criteria,SearchProvider.Inner inner){
+        SearchProvider searchProvider = new SearchProvider<>();
+        searchProvider.setCriteria(criteria);
+        searchProvider.setInner(inner);
         return searchProvider;
     }
 
@@ -34,6 +58,28 @@ public class SearchProvider<T extends BaseEntity> {
         searchProvider.setCriteria(criteria);
         searchProvider.setSearchOrderBy(orderBy);
         return searchProvider;
+    }
+
+    /**
+     * 参数化内部类
+     */
+    public static class Inner{
+        /**
+         * 总条数
+         */
+        private Integer count;
+
+        public Inner(Integer count) {
+            this.count = count;
+        }
+
+        public Integer getCount() {
+            return count;
+        }
+
+        public void setCount(Integer count) {
+            this.count = count;
+        }
     }
 
     public T getCriteria() {
