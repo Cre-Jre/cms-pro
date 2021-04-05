@@ -31,8 +31,10 @@ public class ModelItemController {
         model.addAttribute("modelId",modelId);
         model.addAttribute("modelName",modelName);
         model.addAttribute("channelModel",channelModel);
-        model.addAttribute("defaultModelItem",defaultChannelModelItemList());
-        model.addAttribute("checkedModelItem",cmsModelItemService.getByModelIdAndChannelModel(modelId,channelModel));
+        List<CmsModelItemDto> checkedModelItemList = cmsModelItemService.getByModelIdAndChannelModel(modelId, channelModel);
+        List<String> checkedModelItem = checkedModelItemList.stream().map(CmsModelItemDto::getField).collect(Collectors.toList());
+        model.addAttribute("defaultModelItem",defaultChannelModelItemList().stream().filter(x->!checkedModelItem.contains(x.getField())).collect(Collectors.toList()));
+        model.addAttribute("checkedModelItem",checkedModelItemList);
         return UtilsTemplate.adminTemplate("model","itemIndex");
     }
 

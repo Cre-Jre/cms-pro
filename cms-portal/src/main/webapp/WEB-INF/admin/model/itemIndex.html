@@ -19,6 +19,59 @@
             <i class="layui-icon layui-icon-add-1"></i>添加</a>
         <a class="layui-btn layui-btn-sm layui-bg-red" onclick="remove()">
             <i class="layui-icon layui-icon-delete"></i>批量删除</a>
+        <table class="layui-table" lay-even="" lay-skin="nob">
+            <colgroup>
+                <col width="70">
+                <col width="200">
+                <col width="100">
+                <col width="300">
+                <col width="100">
+                <col width="100">
+                <col width="180">
+            </colgroup>
+            <thead>
+            <tr>
+                <th><input id="checkedItemId" type="checkbox" lay-skin="primary" lay-filter="selectAddedItem"/></th>
+                <th>字段</th>
+                <th>数据类型</th>
+                <th>名称</th>
+                <th>独占一行</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="selectedItemTbody">
+            <#assign requiredChannelName="name" requiredChannelPath="path" requiredContentChannelId="channelId" requiredContentTitle="title">
+            <#list checkedModelItem as item>
+                <tr>
+                    <td>
+                        <#if (item.field!=requiredChannelName) && (item.field!=requiredChannelPath) && (item.field!=requiredContentChannelId) && (item.field!=requiredContentTitle)>
+                            <input type="checkbox" lay-skin="primary" class="modelItem" value="${item.id}" lay-filter="checkedFieldFilter"/>
+                        </#if>
+                    </td>
+                    <td>
+                        <#if (item.field==requiredChannelName) || (item.field==requiredChannelPath) || (item.field==requiredContentChannelId) || (item.field==requiredContentTitle)>
+                            <span class="red">${item.field!}</span>
+                        <#else>
+                            ${item.field!}
+                        </#if>
+                    </td>
+                    <td>${item.dataType.label}</td>
+                    <td>${item.label!}</td>
+                    <td>
+                        ${item.single.label}
+                    </td>
+                    <td>
+                        <a class="layui-btn layui-btn-xs layui-bg-green" href="edit.do?id=${item.id}"><i class="layui-icon layui-icon-edit"></i>修改</a>
+                        <#if (item.field==requiredChannelName) || (item.field==requiredChannelPath) || (item.field==requiredContentChannelId) || (item.field==requiredContentTitle)>
+                            <a class="layui-btn layui-btn-xs layui-bg-red" style="visibility: hidden;"><i class="layui-icon layui-icon-refresh-3">修改</i></a>
+                        <#else>
+                            <a class="layui-btn layui-btn-xs layui-bg-red" onclick="del(${item.id})"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                        </#if>
+                    </td>
+                </tr>
+            </#list>
+            </tbody>
+        </table>
     </form>
     <p class="p20">系统默认字段<span class="red">(标红字段为必选字段)</span></p>
     <form class="layui-form" id="defaultItemForm">
@@ -27,7 +80,7 @@
         <a class="layui-btn layui-btn-sm layui-bg-blue" lay-submit lay-filter="addDefaultFieldHandler"><i class="layui-icon layui-icon-add-1" ></i>添加选中的默认字段</a>
         <table class="layui-table" lay-even="" lay-skin="nob">
             <colgroup>
-                <col width="70">g
+                <col width="70">
                 <col width="200">
                 <col width="100">
                 <col width="300">
