@@ -66,6 +66,28 @@
         <result property="name" column="name"/>
     </resultMap>
 
+    <insert id="batchInsert">
+        insert into cms_model_item(
+        label,
+        field,
+        data_type,
+        is_single,
+        required,
+        is_channel_model,
+        model_id
+        ) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.label},
+            #{item.field},
+            #{item.dataType},
+            #{item.single},
+            #{item.required},
+            #{item.channelModel},
+            #{item.modelId}
+            )
+        </foreach>
+    </insert>
+
     <insert id="save">
         <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
             select last_insert_id()

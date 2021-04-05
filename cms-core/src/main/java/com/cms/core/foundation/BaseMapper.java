@@ -12,6 +12,12 @@ public interface BaseMapper<ENTITY extends BaseEntity<PK>,PK extends Serializabl
     void save(ENTITY entity);
 
     /**
+     * 批量插入
+     * @param list
+     */
+    void batchInsert(List<ENTITY> list);
+
+    /**
      * 根据id进行删除
      * @param id    主键
      */
