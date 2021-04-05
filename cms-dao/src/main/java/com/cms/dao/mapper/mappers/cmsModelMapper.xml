@@ -11,33 +11,41 @@
     </sql>
 
     <sql id="key">
-        <if test="name!=null and name!=''">
-            name,
+        name,
+        <if test="tplChannelPrefix!=null and tplChannelPrefix!=''">
+            tpl_channel_prefix,
+        </if>
+        <if test="tplContentPrefix!=null and tplContentPrefix!=''">
+            tpl_content_prefix,
         </if>
         <if test="priority!=null">
             priority,
         </if>
-        <if test="all!=null">
-            is_all,
+        <if test="hasContent!=null">
+            has_content,
         </if>
-        <if test="status!=null">
-            status,
+        <if test="delete!=null">
+            is_delete,
         </if>
         create_time
     </sql>
 
     <sql id="value">
-        <if test="name!=null and name!=''">
-            #{name},
+        #{name},
+        <if test="tplChannelPrefix!=null and tplChannelPrefix!=''">
+            #{tplChannelPrefix},
+        </if>
+        <if test="tplContentPrefix!=null and tplContentPrefix!=''">
+            #{tplContentPrefix},
         </if>
         <if test="priority!=null">
             #{priority},
         </if>
-        <if test="all!=null">
-            #{all},
+        <if test="hasContent!=null">
+            #{hasContent},
         </if>
-        <if test="status!=null">
-            #{status},
+        <if test="delete!=null">
+            #{delete},
         </if>
         #{createTime}
     </sql>
@@ -68,7 +76,7 @@
         <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
             select last_insert_id()
         </selectKey>
-        insert into cms_role (<include refid="key"/>) values (<include refid="value"/>)
+        insert into cms_model (<include refid="key"/>) values (<include refid="value"/>)
     </insert>
 
     <delete id="deleteById">
