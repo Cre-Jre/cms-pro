@@ -1,0 +1,23 @@
+<#import "/layout/backend/main.ftl" as main>
+<#import "/layout/backend/form.ftl" as form>
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_tree.css">
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
+<@main.layout>
+    <@form.form>
+        <@form.item>
+            <@form.inline label="名称" required=true>
+                <input name="name" class="layui-input" type="text" lay-verify="required" maxlength="15">
+            </@form.inline>
+        </@form.item>
+
+        <@form.submit></@form.submit>
+    </@form.form>
+</@main.layout>
+<script>
+
+    <#--let dtreeInner = LayUtil.tree.init({-->
+    <#--    url:"${adminPath}/role/permission.do",-->
+    <#--    method: "post",-->
+    <#--    checkbar:true-->
+    <#--});-->
+</script>
