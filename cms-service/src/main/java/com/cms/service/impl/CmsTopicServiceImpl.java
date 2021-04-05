@@ -29,7 +29,7 @@ public class CmsTopicServiceImpl implements CmsTopicService {
 
     @Override
     public void deleteById(Integer id) {
-
+        cmsTopicMapper.deleteById(id);
     }
 
     @Override

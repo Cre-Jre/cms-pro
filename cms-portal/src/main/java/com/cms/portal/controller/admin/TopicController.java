@@ -3,6 +3,7 @@ package com.cms.portal.controller.admin;
 import com.cms.contex.foundation.Result;
 import com.cms.contex.utils.UtilsServletContext;
 import com.cms.contex.utils.UtilsTemplate;
+import com.cms.core.annotation.DoLog;
 import com.cms.core.foundation.Page;
 import com.cms.service.api.CmsTopicService;
 import com.cms.service.dto.CmsTopicDto;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.constraints.NotNull;
 
 @Controller
 @RequestMapping("topic")
@@ -38,6 +41,14 @@ public class TopicController {
     @ResponseBody
     public Result<String> doAdd(CmsTopicDto dto){
         cmsTopicService.save(dto);
+        return Result.success();
+    }
+
+    @PostMapping("delete.do")
+    @ResponseBody
+    @DoLog(content = "…æ≥˝◊®Ã‚")
+    public Result<String> doDelete(@NotNull(message = "«Î ‰»Îid") Integer id){
+        cmsTopicService.deleteById(id);
         return Result.success();
     }
 

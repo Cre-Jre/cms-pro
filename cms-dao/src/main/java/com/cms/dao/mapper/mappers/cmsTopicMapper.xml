@@ -101,14 +101,8 @@
     </update>
 
     <delete id="deleteById">
-        delete from cms_task where id = #{id}
+        delete from cms_topic where id = #{id}
     </delete>
-
-    <select id="selectAll" resultMap="baseResultMap">
-        select
-        <include refid="baseColumn"/>
-        from cms_task where is_enable = 1
-    </select>
 
     <select id="selectBySearchProvider" parameterType="SearchProvider" resultMap="baseResultMap">
         select <include refid="baseColumn"/>
