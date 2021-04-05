@@ -21,6 +21,7 @@
             ,{field:'tplChannelPrefix', title: '栏目模板前缀'}
             ,{field:'tplContentPrefix', title: '内容模板前缀'}
             ,{field:'priority', title: '排序'}
+            ,{title:'栏目模型操作',toolbar:'#channelOperationToolbar'}
             ,{templet: '#rightTemplate', align: 'center', title: '操作'}
         ]]
         ,toolbar:"#toolbar"
@@ -33,4 +34,7 @@
 <script type="text/html" id="toolbar">
     <a class="layui-btn layui-btn-sm layui-bg-blue" href="add.do"><i class="layui-icon layui-icon-add-1"></i>添加</a>
     <a class="layui-btn layui-btn-sm" onclick="javascript:window.location.reload()"><i class="layui-icon layui-icon-refresh-3"></i>刷新</a>
+</script>
+<script type="text/html" id="channelOperationToolbar">
+    <a class="" href="modelItem/index.do?modelId={{d.id}}&channelModel=1&modelName={{d.name}}">[栏目模型]</a>
 </script>
