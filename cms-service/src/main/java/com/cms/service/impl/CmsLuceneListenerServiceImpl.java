@@ -6,6 +6,8 @@ import com.cms.service.dto.CmsContentDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
@@ -64,6 +66,23 @@ public class CmsLuceneListenerServiceImpl implements CmsContentListenerService {
 
     @Override
     public Document buildDocument(CmsContentDto cmsContentDto) {
-        return null;
+        Document document = new Document();
+        //id
+        FieldType idFieldType = new FieldType();
+        idFieldType.setStored(true);
+        //标题
+        FieldType titleFieldType = new FieldType();
+        titleFieldType.setStored(true);
+        titleFieldType.setTokenized(true);
+        titleFieldType.setIndexed(true);
+        //内容
+        FieldType contentFieldType = new FieldType();
+        contentFieldType.setTokenized(true);
+        contentFieldType.setIndexed(true);
+
+        document.add(new Field("id",String.valueOf(cmsContentDto.getId()),idFieldType));
+        document.add(new Field("title",cmsContentDto.getTitle(),titleFieldType));
+        document.add(new Field("content",cmsContentDto.getContent(),contentFieldType));
+        return document;
     }
 }
