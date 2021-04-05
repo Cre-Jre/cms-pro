@@ -17,14 +17,10 @@
         cellMinWidth: 80
         ,cols: [[
             {field:'id', width:80, title: 'ID', sort: true}
-            ,{field:'name', title: '角色名'}
-            ,{field:'status', width:80, title: '状态', templet:function(data){
-                    return !data.status?"正常":"禁用";
-                }}
+            ,{field:'name', title: '模型名称'}
+            ,{field:'tplChannelPrefix', title: '栏目模板前缀'}
+            ,{field:'tplContentPrefix', title: '内容模板前缀'}
             ,{field:'priority', title: '排序'}
-            ,{field:'all', title: '是否所有权限', templet:function(data){
-                    return data.all?"是":"否"
-                }}
             ,{templet: '#rightTemplate', align: 'center', title: '操作'}
         ]]
         ,toolbar:"#toolbar"

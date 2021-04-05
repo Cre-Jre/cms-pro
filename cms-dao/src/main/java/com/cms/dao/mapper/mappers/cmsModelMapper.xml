@@ -5,8 +5,9 @@
     <sql id="baseField">
         id,
         name,
-        is_all,
-        status,
+        tpl_channel_prefix,
+        tpl_content_prefix,
+        has_content,
         priority
     </sql>
 
@@ -70,6 +71,9 @@
         <id property="id" column="id"/>
         <result property="priority" column="priority"/>
         <result property="name" column="name"/>
+        <result property="tplChannelPrefix" column="tpl_channel_prefix"/>
+        <result property="tplContentPrefix" column="tpl_content_prefix"/>
+        <result property="hasContent" column="has_content"/>
     </resultMap>
 
     <insert id="save">
@@ -94,7 +98,7 @@
     <select id="selectBySearchProvider" parameterType="SearchProvider" resultMap="baseResultMap">
         select
         <include refid="baseField"/>
-        from cms_role
+        from cms_model
         <where>
             <if test="criteria.name!=null and criteria.name!=''">
                 name like concat ('%',#{criteria.name},'%')

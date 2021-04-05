@@ -2,6 +2,7 @@ package com.cms.portal.controller.admin;
 
 import com.cms.contex.foundation.Result;
 import com.cms.contex.utils.UtilsTemplate;
+import com.cms.core.foundation.Page;
 import com.cms.service.api.CmsModelService;
 import com.cms.service.dto.CmsModelDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,11 @@ public class ModelController {
     public Result<String> doAdd(CmsModelDto dto){
         cmsModelService.save(dto);
         return Result.success();
+    }
+
+    @PostMapping("page.do")
+    @ResponseBody
+    public Result<Page<CmsModelDto>> doPage(CmsModelDto dto){
+        return Result.success(cmsModelService.getPage(dto));
     }
 }
