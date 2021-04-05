@@ -1,15 +1,22 @@
 package com.cms.service.impl;
 
 import com.cms.core.foundation.Page;
+import com.cms.dao.mapper.CmsChannelMapper;
 import com.cms.service.api.CmsChannelService;
+import com.cms.service.converter.CmsChannelConverter;
 import com.cms.service.dto.CmsChannelDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CmsChannelServiceImpl implements CmsChannelService {
+
+    @Autowired
+    private CmsChannelMapper cmsChannelMapper;
+
     @Override
     public void save(CmsChannelDto dto) {
-
+        cmsChannelMapper.save(CmsChannelConverter.CONVERTER.dtoToEntity(dto));
     }
 
     @Override

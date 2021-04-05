@@ -16,41 +16,15 @@
 
     <sql id="key">
         name,
-        <if test="keywords!=null and keywords!=''">
-            keywords,
-        </if>
-        <if test="description!=null and description!=''">
-            description,
-        </if>
-        <if test="titleImg!=null and titleImg!=''">
-            title_img,
-        </if>
-        <if test="contentImg!=null and contentImg!=''">
-            content_img,
-        </if>
-        <if test="tplContent!=null and tplContent!=''">
-            tpl_content,
-        </if>
+        path,
+        model_id,
         create_time
     </sql>
 
     <sql id="val">
         #{name},
-        <if test="keywords!=null and keywords!=''">
-            #{keywords},
-        </if>
-        <if test="description!=null and description!=''">
-            #{description},
-        </if>
-        <if test="titleImg!=null and titleImg!=''">
-            #{titleImg},
-        </if>
-        <if test="contentImg!=null and contentImg!=''">
-            #{contentImg},
-        </if>
-        <if test="tplContent!=null and tplContent!=''">
-            #{tplContent},
-        </if>
+        #{path},
+        #{modelId},
         #{createTime}
     </sql>
 
@@ -84,7 +58,7 @@
         <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
             select last_insert_id()
         </selectKey>
-        insert into cms_topic(<include refid="key"/>) values (<include refid="val"/>)
+        insert into cms_channel(<include refid="key"/>) values (<include refid="val"/>)
     </insert>
 
     <update id="update">
