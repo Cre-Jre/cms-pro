@@ -247,3 +247,21 @@ create table cms_model
     is_delete          tinyint(1) default '1'  not null comment '是否已删除 0:删除 1正常'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 comment 'CMS模型表';
+
+-- ----------------------------
+-- Table structure for cms_model_item  模型项表
+-- ----------------------------
+create table cms_model_item
+(
+    create_time      timestamp               not null default CURRENT_TIMESTAMP,
+    update_time      timestamp               not null default '0000-00-00 00:00:00',
+    id               int                     not null auto_increment primary key,
+    model_id         int                     not null,
+    field            varchar(50)             not null comment '字段',
+    label            varchar(100)            not null comment '名称',
+    data_type        int        default '1'  not null comment '数据类型',
+    is_channel_model tinyint(1) default '1'  not null comment '是否栏目模型项',
+    required         tinyint(1) default '1'  not null comment '是否必填项 1:必填 2:非必填',
+    is_delete         tinyint(1) default '1'  not null comment '是否已删除 1正常 2:删除',
+    is_single        tinyint(1) default '2'  not null comment '是否独占一行 1:是 2:否'
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 comment 'CMS模型项表';
