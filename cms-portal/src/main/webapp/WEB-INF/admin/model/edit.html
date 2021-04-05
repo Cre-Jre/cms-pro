@@ -1,0 +1,40 @@
+<#import "/layout/backend/main.ftl" as main>
+<#import "/layout/backend/form.ftl" as form>
+<@main.layout>
+    <@form.form>
+        <input type="hidden" name="id" value="${data.id!}"/>
+        <@form.item>
+            <@form.inline label="模型名称" required=true>
+                <input type="text" name="name" class="layui-input" value="${data.name!}"  lay-verify="required">
+            </@form.inline>
+            <@form.inline label="是否有内容">
+                <#if data.hasContent?string("1","0")=="1">
+                    <input type="radio" name="hasContent" autocomplete="off" title="是" value="1" checked>
+                    <input type="radio" name="hasContent" autocomplete="off" title="否" value="0">
+                <#else>
+                    <input type="radio" name="hasContent" autocomplete="off" title="是" value="1">
+                    <input type="radio" name="hasContent" autocomplete="off" title="否" value="0" checked>
+                </#if>
+            </@form.inline>
+        </@form.item>
+        <@form.item class="borderTopDashedLine">
+            <@form.inline label="栏目模板前缀">
+                <input type="text" name="tplChannelPrefix" class="layui-input" value="${data.tplChannelPrefix!}">
+            </@form.inline>
+            <@form.inline label="内容模板前缀">
+                <input type="text" name="tplContentPrefix" class="layui-input" value="${data.tplContentPrefix!}">
+            </@form.inline>
+        </@form.item>
+        <@form.item class="borderTopDashedLine">
+            <@form.inline label="排列顺序">
+                <input type="number" name="priority" class="layui-input" value="${data.priority!}">
+            </@form.inline>
+        </@form.item>
+        <@form.submit></@form.submit>
+    </@form.form>
+</@main.layout>
+<script type="application/javascript">
+    LayUtil.form.init(function(inner){
+
+    });
+</script>

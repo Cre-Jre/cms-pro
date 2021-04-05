@@ -37,7 +37,7 @@ public class CmsModelServiceImpl implements CmsModelService {
 
     @Override
     public CmsModelDto getById(Integer id) {
-        return null;
+        return CmsModelConverter.CONVERTER.entityToDto(cmsModelMapper.selectById(id));
     }
 
     @Override

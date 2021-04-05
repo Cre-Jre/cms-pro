@@ -100,8 +100,9 @@
         <include refid="baseField"/>
         from cms_model
         <where>
+            is_delete = 1
             <if test="criteria.name!=null and criteria.name!=''">
-                name like concat ('%',#{criteria.name},'%')
+                and name like concat ('%',#{criteria.name},'%')
             </if>
         </where>
         order by priority asc,create_time desc
@@ -110,7 +111,7 @@
     <select id="selectById" resultMap="baseResultMap">
         select
         <include refid="baseField"/>
-        from cms_role where id = #{id}
+        from cms_model where id = #{id}
     </select>
 
 </mapper>
