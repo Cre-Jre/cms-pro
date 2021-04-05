@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+
 @Controller
 @RequestMapping("model")
 public class ModelController {
@@ -61,5 +63,11 @@ public class ModelController {
     @ResponseBody
     public Result<Page<CmsModelDto>> doPage(CmsModelDto dto){
         return Result.success(cmsModelService.getPage(dto));
+    }
+
+    @PostMapping("list.do")
+    @ResponseBody
+    public Result doList(CmsModelDto cmsModelDto){
+        return Result.success((ArrayList)cmsModelService.list(cmsModelDto));
     }
 }

@@ -2,16 +2,15 @@
 <#import "/layout/backend/form.ftl" as form>
 
 <@main.layout>
-    <@form.form>
-        <@form.headSearch>
-            <div class="layui-inline">
-                <input type="text" name="name" class="layui-input" placeholder="名称">
-            </div>
-        </@form.headSearch>
-    </@form.form>
-    <table id="dataGrid" class="layui-table" lay-filter="dataGrid"></table>
+    <div class="layui-card">
+        <button class="layui-btn layui-btn-normal" id="add" style="display:block;"><i class="layui-icon layui-icon-add-1"></i>添加栏目</button>
+        <div class="layui-card-body">
+            <table id="dataGrid" lay-filter="dataGrid"></table>
+        </div>
+    </div>
 </@main.layout>
-
+<link rel="stylesheet" href="${basePath}/admin/plugin/dropdown.css">
+<script type="application/javascript" src="${basePath}/admin/plugin/dropdown.js"></script>
 <script>
     LayUtil.dataGrid.init({
         cellMinWidth: 80
@@ -25,16 +24,16 @@
             ,{field:'all', title: '是否所有权限', templet:function(data){
                     return data.all?"是":"否"
                 }}
-            ,{templet: '#rightTemplate', align: 'center', title: '操作'}
         ]]
         ,toolbar:"#toolbar"
-    })
+    });
+    core.http({url: ADMIN_PATH + "/model/list.do", autoComplete: false}, function (data) {
+        new dropdown("#add", data.data, function (id, obj) {
+            window.location.href = ADMIN_PATH + "/channel/add.do?modelId="+obj.id;
+        });
+    });
 </script>
 <script type="text/html" id="rightTemplate">
     <a class="layui-btn layui-btn-primary layui-btn-xs" href="edit.do?id={{d.id}}">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
-<script type="text/html" id="toolbar">
-    <a class="layui-btn layui-btn-sm layui-bg-blue" href="add.do"><i class="layui-icon layui-icon-add-1"></i>添加</a>
-    <a class="layui-btn layui-btn-sm" onclick="javascript:window.location.reload()"><i class="layui-icon layui-icon-refresh-3"></i>刷新</a>
 </script>

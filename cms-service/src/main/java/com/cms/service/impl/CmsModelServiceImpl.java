@@ -14,6 +14,8 @@ import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CmsModelServiceImpl implements CmsModelService {
 
@@ -47,5 +49,11 @@ public class CmsModelServiceImpl implements CmsModelService {
         com.github.pagehelper.Page<CmsModelEntity> page = PageHelper.startPage(pageInfo.getPageCurrent(), pageInfo.getPageSize()).
                 doSelectPage(() -> cmsModelMapper.selectBySearchProvider(of));
         return new Page<>(page.getTotal(),CmsModelConverter.CONVERTER.entityToDto(page.getResult()));
+    }
+
+    @Override
+    public List<CmsModelDto> list(CmsModelDto cmsModelDto) {
+        SearchProvider of = SearchProvider.of(CmsModelConverter.CONVERTER.dtoToEntity(cmsModelDto));
+        return CmsModelConverter.CONVERTER.entityToDto(cmsModelMapper.selectBySearchProvider(of));
     }
 }
