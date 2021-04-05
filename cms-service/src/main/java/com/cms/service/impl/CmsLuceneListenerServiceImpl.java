@@ -102,13 +102,27 @@ public class CmsLuceneListenerServiceImpl implements CmsContentListenerService {
         IKAnalyzer ikAnalyzer = new IKAnalyzer();
         MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Version.LUCENE_46, fields, ikAnalyzer);
         Query query = multiFieldQueryParser.parse("中秋");
-        TopDocs topDocs = indexSearcher.search(query, 10);
+//        TopDocs topDocs = indexSearcher.search(query, 10);
+        int pageSize = 2;
+        int pageCurrent = 2;
+        ScoreDoc lastDoc = null;
+        TopDocs topDocs = null;
+        while(pageCurrent>0){
+            topDocs = indexSearcher.searchAfter(lastDoc, query, pageSize);
+            if(topDocs.scoreDocs.length==0){
+                break;
+            }
+            lastDoc = topDocs.scoreDocs[topDocs.scoreDocs.length-1];
+            --pageCurrent;
+        }
         for(ScoreDoc doc:topDocs.scoreDocs){
             int docId = doc.doc;
             Document document = indexSearcher.doc(docId);
             System.out.println(document.get("title"));
             System.out.println(document.get("content"));
         }
+        //总条数   第5页的数据   那么会依次查  第1 第2 第3 第4
+        int totalHits = topDocs.totalHits;
         directoryReader.close();
         fsDirectory.close();
     }
