@@ -32,6 +32,7 @@ public class ModelItemController {
         model.addAttribute("modelName",modelName);
         model.addAttribute("channelModel",channelModel);
         model.addAttribute("defaultModelItem",defaultChannelModelItemList());
+        model.addAttribute("checkedModelItem",cmsModelItemService.getByModelIdAndChannelModel(modelId,channelModel));
         return UtilsTemplate.adminTemplate("model","itemIndex");
     }
 

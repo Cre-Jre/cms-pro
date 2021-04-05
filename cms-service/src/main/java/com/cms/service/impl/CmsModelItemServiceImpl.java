@@ -45,4 +45,9 @@ public class CmsModelItemServiceImpl implements CmsModelItemService {
     public void batchInsert(List<CmsModelItemDto> list) {
         cmsModelItemMapper.batchInsert(CmsModelItemConverter.CONVERTER.dtoToEntity(list));
     }
+
+    @Override
+    public List<CmsModelItemDto> getByModelIdAndChannelModel(Integer modelId, Boolean channelModel) {
+        return CmsModelItemConverter.CONVERTER.entityToDto(cmsModelItemMapper.selectByModelIdAndChannelModel(modelId,channelModel));
+    }
 }

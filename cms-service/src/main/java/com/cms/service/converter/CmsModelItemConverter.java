@@ -17,4 +17,7 @@ public interface CmsModelItemConverter {
     CmsModelItemEntity dtoToEntity(CmsModelItemDto dto);
 
     List<CmsModelItemEntity> dtoToEntity(List<CmsModelItemDto> dto);
+
+    List<CmsModelItemDto> entityToDto(List<CmsModelItemEntity> entity);
+
 }

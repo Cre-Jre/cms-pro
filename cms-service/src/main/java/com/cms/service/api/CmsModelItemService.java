@@ -13,4 +13,12 @@ public interface CmsModelItemService extends BaseService<CmsModelItemDto,Integer
      */
     void batchInsert(List<CmsModelItemDto> list);
 
+    /**
+     * 根据模型id和是否栏目模型进行查询
+     * @param modelId           模型id
+     * @param channelModel      是否栏目模型
+     * @return
+     */
+    List<CmsModelItemDto> getByModelIdAndChannelModel(Integer modelId,Boolean channelModel);
+
 }

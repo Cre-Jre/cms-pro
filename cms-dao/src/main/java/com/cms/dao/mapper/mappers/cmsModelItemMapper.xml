@@ -4,10 +4,13 @@
 
     <sql id="baseField">
         id,
-        name,
-        is_all,
-        status,
-        priority
+        label,
+        field,
+        data_type,
+        is_single,
+        required,
+        is_channel_model,
+        model_id
     </sql>
 
     <sql id="key">
@@ -58,12 +61,15 @@
         </if>
     </sql>
 
-    <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsRoleEntity">
+    <resultMap id="baseResultMap" type="com.cms.dao.entity.CmsModelItemEntity">
         <id property="id" column="id"/>
-        <result property="priority" column="priority"/>
-        <result property="all" column="is_all"/>
-        <result property="status" column="status"/>
-        <result property="name" column="name"/>
+        <result property="label" column="label"/>
+        <result property="field" column="field"/>
+        <result property="dataType" column="data_type"/>
+        <result property="single" column="is_single"/>
+        <result property="required" column="required"/>
+        <result property="channelModel" column="is_channel_model"/>
+        <result property="modelId" column="model_id"/>
     </resultMap>
 
     <insert id="batchInsert">
@@ -88,41 +94,12 @@
         </foreach>
     </insert>
 
-    <insert id="save">
-        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
-            select last_insert_id()
-        </selectKey>
-        insert into cms_role (<include refid="key"/>) values (<include refid="value"/>)
-    </insert>
 
-    <delete id="deleteById">
-        delete from cms_role where id = #{id}
-    </delete>
-
-    <update id="update">
-        update cms_role
-        <trim prefix="set" suffixOverrides=",">
-            <include refid="updateField"/>
-        </trim>
-        where id = #{id}
-    </update>
-
-    <select id="selectBySearchProvider" parameterType="SearchProvider" resultMap="baseResultMap">
+    <select id="selectByModelIdAndChannelModel" resultMap="baseResultMap">
         select
         <include refid="baseField"/>
-        from cms_role
-        <where>
-            <if test="criteria.name!=null and criteria.name!=''">
-                name like concat ('%',#{criteria.name},'%')
-            </if>
-        </where>
-        order by priority asc,create_time desc
-    </select>
-
-    <select id="selectById" resultMap="baseResultMap">
-        select
-        <include refid="baseField"/>
-        from cms_role where id = #{id}
+        from cms_model_item
+        where model_id = #{modelId} and is_channel_model = #{channelModel} and is_delete = 1
     </select>
 
 </mapper>
