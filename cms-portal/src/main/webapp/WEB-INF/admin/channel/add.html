@@ -3,19 +3,19 @@
 <link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_tree.css">
 <link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
 <@main.layout>
-    <@form.form>
-        <input type="hidden" name="modelId" value="1"/>
-        <@form.item>
-            <@form.inline label="名称" required=true>
-                <input name="name" class="layui-input" type="text" lay-verify="required" maxlength="15">
-            </@form.inline>
-            <@form.inline label="路径" required=true>
-                <input name="path" class="layui-input" type="text" lay-verify="required" maxlength="15">
-            </@form.inline>
-        </@form.item>
+    <@form.layoutForm>
+        <input type="hidden" name="modelId" value="${modelId!}"/>
+    <#--        <@form.item>-->
+    <#--            <@form.inline label="名称" required=true>-->
+    <#--                <input name="name" class="layui-input" type="text" lay-verify="required" maxlength="15">-->
+    <#--            </@form.inline>-->
+    <#--            <@form.inline label="路径" required=true>-->
+    <#--                <input name="path" class="layui-input" type="text" lay-verify="required" maxlength="15">-->
+    <#--            </@form.inline>-->
+    <#--        </@form.item>-->
 
-        <@form.submit></@form.submit>
-    </@form.form>
+
+    </@form.layoutForm>
 </@main.layout>
 <script>
     LayUtil.form.init(function(){

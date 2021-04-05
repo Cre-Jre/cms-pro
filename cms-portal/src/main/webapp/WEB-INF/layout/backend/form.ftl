@@ -116,3 +116,37 @@ list 数据
         </div>
     </div>
 </#macro>
+<#--内容等模型页面使用    -->
+<#macro layoutForm>
+    <form class="layui-form layout-form-flex"  id="layoutForm" method="post" style="margin:15px 50px 15px 0;">
+        <#nested>
+    </form>
+</#macro>
+<#--内容等模型页面使用   项 -->
+<#macro layoutItem label="" flex="50" required=false className="" style="">
+    <div class="form-item flex-item-${flex} ${className}" style="${style}">
+        <label class="form-item-label <#if required>label-required</#if>">${label}</label>
+        <div class="form-item-content">
+            <#nested>
+        </div>
+    </div>
+</#macro>
+<#macro layoutSubmit>
+    <div class="form-item flex-item-50">
+        <label class="form-item-label"></label>
+        <div class="form-item-content">
+            <#nested>
+        </div>
+    </div>
+    <div class="form-item flex-item-50">
+        <label class="form-item-label"></label>
+        <div class="form-item-content">
+            <p class="flex-align-right pt50">
+                <button class="layui-btn layui-btn-sm layui-btn-primary" type="reset">重置</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal" type="button" lay-submit lay-filter="go">
+                    提交
+                </button>
+            </p>
+        </div>
+    </div>
+</#macro>
