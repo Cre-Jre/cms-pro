@@ -43,6 +43,13 @@ public class ModelController {
         return UtilsTemplate.adminTemplate("model","edit");
     }
 
+    @PostMapping("edit.do")
+    @ResponseBody
+    public Result<String> doEdit(CmsModelDto dto){
+        cmsModelService.update(dto);
+        return Result.success();
+    }
+
     @PostMapping("page.do")
     @ResponseBody
     public Result<Page<CmsModelDto>> doPage(CmsModelDto dto){

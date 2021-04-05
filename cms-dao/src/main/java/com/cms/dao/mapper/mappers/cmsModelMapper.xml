@@ -59,11 +59,14 @@
         <if test="priority!=null">
             priority = #{priority},
         </if>
-        <if test="all!=null">
-            is_all = #{all},
+        <if test="tplChannelPrefix!=null and tplChannelPrefix!=''">
+            tpl_channel_prefix = #{tplChannelPrefix},
         </if>
-        <if test="status!=null">
-            status= #{status},
+        <if test="tplContentPrefix!=null and tplContentPrefix!=''">
+            tpl_content_prefix = #{tplContentPrefix},
+        </if>
+        <if test="hasContent!=null">
+            has_content = #{hasContent},
         </if>
     </sql>
 
@@ -88,7 +91,7 @@
     </delete>
 
     <update id="update">
-        update cms_role
+        update cms_model
         <trim prefix="set" suffixOverrides=",">
             <include refid="updateField"/>
         </trim>

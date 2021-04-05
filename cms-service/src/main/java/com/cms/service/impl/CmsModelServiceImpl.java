@@ -32,7 +32,7 @@ public class CmsModelServiceImpl implements CmsModelService {
 
     @Override
     public void update(CmsModelDto dto) {
-
+        cmsModelMapper.update(CmsModelConverter.CONVERTER.dtoToEntity(dto));
     }
 
     @Override
