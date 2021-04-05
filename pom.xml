@@ -317,6 +317,27 @@
             <artifactId>commons-fileupload</artifactId>
             <version>${commonsFileupload}</version>
         </dependency>
+        <!--lucene依赖包 -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>${luceneVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-common</artifactId>
+            <version>${luceneVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>${luceneVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-codecs</artifactId>
+            <version>${luceneVersion}</version>
+        </dependency>
     </dependencies>
     <build>
         <resources>
