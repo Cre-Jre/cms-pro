@@ -138,3 +138,17 @@ img[src=""], img:not([src]) {
     top:0;
 }
 /*图片上传相关*/
+
+/*模型项相关自定义颜色*/
+.color4184b7{
+    color:#4184b7;
+}
+.color4184b7:hover{
+    color:#4184b7;
+}
+.blue{
+    color:#1276c3;
+}
+.red{
+    color:red;
+}
