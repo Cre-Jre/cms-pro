@@ -1,5 +1,6 @@
 package com.cms.portal.freemarker.directive;
 
+import com.cms.contex.utils.UtilsDirective;
 import com.cms.service.api.CmsFriendLinkService;
 import com.cms.service.dto.CmsFriendLinkDto;
 import freemarker.core.Environment;
@@ -19,8 +20,7 @@ public class CmsFriendLinkDirective implements TemplateDirectiveModel {
     @Override
     public void execute(Environment environment, Map map, TemplateModel[] templateModels, TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
         List<CmsFriendLinkDto> list = cmsFriendLinkService.getList(new CmsFriendLinkDto());
-        DefaultObjectWrapper defaultObjectWrapper = new DefaultObjectWrapper(Configuration.VERSION_2_3_23);
-        environment.setVariable("result",defaultObjectWrapper.wrap(list));
+        environment.setVariable("result", UtilsDirective.DEFAULT_OBJECT_WRAPPER.wrap(list));
         templateDirectiveBody.render(environment.getOut());
     }
 }
