@@ -1,0 +1,36 @@
+.sui-dropdown {
+    display: inline-block;
+    position:absolute;
+    z-index:99999;
+}
+
+.sui-dropdown-menu {
+    padding: 10px 0;
+    margin: 5px 0;
+    background-color: #fff;
+    border: 1px solid #ebeef5;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+}
+
+.sui-menu-list {
+    list-style: none;
+    line-height: 36px;
+    padding: 0 20px;
+    margin: 0;
+    font-size: 14px;
+    color: #606266;
+    cursor: pointer;
+    outline: 0;
+}
+
+.sui-menu-list:not(.is-disabled):hover {
+    background-color: #ecf5ff;
+    color: #66b1ff;
+}
+.layui-card #add, .sui-dropdown {
+    margin-left: 15px;
+}
+.layui-card {
+    box-shadow: none !important;
+}

@@ -5,25 +5,42 @@
 <@main.layout>
     <@form.layoutForm>
         <input type="hidden" name="modelId" value="${modelId!}"/>
-    <#--        <@form.item>-->
-    <#--            <@form.inline label="名称" required=true>-->
-    <#--                <input name="name" class="layui-input" type="text" lay-verify="required" maxlength="15">-->
-    <#--            </@form.inline>-->
-    <#--            <@form.inline label="路径" required=true>-->
-    <#--                <input name="path" class="layui-input" type="text" lay-verify="required" maxlength="15">-->
-    <#--            </@form.inline>-->
-    <#--        </@form.item>-->
+        <@form.layoutItem label="上级栏目" required=true>
+            <ul id="channelName"></ul>
+        </@form.layoutItem>
+        <@form.layoutItem label="栏目模型" required=true>
+            <input type="text" autocomplete="off" class="layui-input" value="${modelName!}" disabled>
+        </@form.layoutItem>
+        <#list modelItem as item>
+        <#--非独占一行-->
+            <#if item.single.getOrdinal()==2>
+                <#if item.field=="name">
+                    <@form.layoutItem label="${item.label}" required=true>
+                        <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                    </@form.layoutItem>
+                <#elseif item.field=="path">
+                    <@form.layoutItem label="${item.label}" required=true>
+                        <input type="text" name="path" lay-verify="required" autocomplete="off" class="layui-input">
+                    </@form.layoutItem>
+                </#if>
+            <#--占据一行   -->
+            <#else>
 
-
+            </#if>
+        </#list>
     </@form.layoutForm>
 </@main.layout>
 <script>
-    LayUtil.form.init(function(){
+    LayUtil.form.init(function () {
 
     })
-    <#--let dtreeInner = LayUtil.tree.init({-->
-    <#--    url:"${adminPath}/role/permission.do",-->
-    <#--    method: "post",-->
-    <#--    checkbar:true-->
-    <#--});-->
+
+    //下拉树形
+    LayUtil.selectTree.init({
+        elem: '#channelName',
+        url: ADMIN_PATH + "/channel/tree.do",
+        method: "post",
+        title: "name",
+        request: {orderBy: "parentId=asc"}
+    });
 </script>

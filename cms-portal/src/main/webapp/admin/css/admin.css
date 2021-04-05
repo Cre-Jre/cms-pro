@@ -152,3 +152,33 @@ img[src=""], img:not([src]) {
 .red{
     color:red;
 }
+/*新模型样式*/
+.flex-item-50 {
+    width: 50%;
+}
+.form-item {
+    margin-bottom: 0;
+}
+.form-item-content {
+    margin-left: 162px;
+    line-height: 32px;
+    position: relative;
+    font-size: 14px;
+}
+.form-item-label {
+    width: 162px;
+    line-height: 32px;
+    font-size: 14px;
+    color: #606266;
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    box-sizing: border-box;
+    padding: 0 32px 0 0;
+}
+.layout-form-flex {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 26px 0;
+    margin: 0 50px;
+}
