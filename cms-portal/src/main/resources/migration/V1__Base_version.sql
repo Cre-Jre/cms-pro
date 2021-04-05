@@ -181,3 +181,69 @@ create table cms_topic
     tpl_content varchar(100) null comment '专题模板'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 comment 'CMS专题表';
+INSERT INTO cms_topic (create_time, update_time, id, name, keywords, description, title_img, content_img, tpl_content) VALUES ('2020-08-24 20:46:32', '2020-08-27 20:17:14', 1, '互联网升级', '互联网', '互联网升级大会启动', '/temp/280d522a-e85f-11ea-b974-a7a5685eea18.jpg', '/temp/3986966b-e85f-11ea-b974-512c6dab6de5.jpg', '/front/default/topic/topic.html');
+
+-- ----------------------------
+-- Table structure for cms_channel  栏目表
+-- ----------------------------
+create table cms_channel
+(
+    create_time timestamp    not null default CURRENT_TIMESTAMP,
+    update_time timestamp    not null default '0000-00-00 00:00:00',
+    id          int auto_increment primary key,
+    name        varchar(32)  null comment '名称',
+    keyword     varchar(255) null comment '关键字',
+    description varchar(255) null comment '描述',
+    path        varchar(128) null comment '访问路径',
+    model_id    int          not null comment '模型ID',
+    priority    int          null comment '排列顺序',
+    parent_id   int          not null default 0 comment '父栏目ID',
+    is_delete   tinyint(1)            default '1' not null comment '是否已删除 0:删除 1正常'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 comment '栏目表';
+
+-- ----------------------------
+-- Table structure for cms_content  CMS内容表
+-- ----------------------------
+create table cms_content
+(
+    create_time timestamp    not null default CURRENT_TIMESTAMP,
+    update_time timestamp    not null default '0000-00-00 00:00:00',
+    id          int auto_increment primary key,
+    channel_id  int          not null comment '栏目ID',
+    user_id     int          not null comment '用户id',
+    model_id    int          not null comment '模型id',
+    title       varchar(100) null comment '标题',
+    author      varchar(50)  null comment '作者',
+    description varchar(255) null comment '描述'
+) ENGINE = InnoDB
+  CHARSET = utf8 comment 'CMS内容表';
+
+-- ----------------------------
+-- Table structure for cms_content_txt  CMS内容文本表
+-- ----------------------------
+create table cms_content_txt
+(
+    create_time timestamp not null default CURRENT_TIMESTAMP,
+    update_time timestamp not null default '0000-00-00 00:00:00',
+    content_id  int       not null comment '内容id',
+    content     longtext  not null comment '文章内容'
+) ENGINE = InnoDB
+  CHARSET = utf8 comment 'CMS内容文本表';
+
+-- ----------------------------
+-- Table structure for cms_model  模型表
+-- ----------------------------
+create table cms_model
+(
+    create_time        timestamp               not null default CURRENT_TIMESTAMP,
+    update_time        timestamp               not null default '0000-00-00 00:00:00',
+    id                 int                     not null auto_increment primary key,
+    name               varchar(100)            not null comment '名称',
+    tpl_channel_prefix varchar(20)             null comment '栏目模板前缀',
+    tpl_content_prefix varchar(20)             null comment '内容模板前缀',
+    priority           int        default '10' not null comment '排列顺序',
+    has_content        tinyint(1) default '1'  not null comment '是否有内容',
+    is_delete          tinyint(1) default '1'  not null comment '是否已删除 0:删除 1正常'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 comment 'CMS模型表';
