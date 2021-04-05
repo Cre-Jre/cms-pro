@@ -27,7 +27,7 @@ public class CmsModelServiceImpl implements CmsModelService {
 
     @Override
     public void deleteById(Integer id) {
-
+        cmsModelMapper.deleteById(id);
     }
 
     @Override

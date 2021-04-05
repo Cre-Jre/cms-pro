@@ -37,6 +37,13 @@ public class ModelController {
         return Result.success();
     }
 
+    @PostMapping("delete.do")
+    @ResponseBody
+    public Result<String> doDelete(Integer id){
+        cmsModelService.deleteById(id);
+        return Result.success();
+    }
+
     @GetMapping("edit.do")
     public String toEdit(Integer id, Model model){
         model.addAttribute("data",cmsModelService.getById(id));

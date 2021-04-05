@@ -86,9 +86,9 @@
         insert into cms_model (<include refid="key"/>) values (<include refid="value"/>)
     </insert>
 
-    <delete id="deleteById">
-        delete from cms_role where id = #{id}
-    </delete>
+    <update id="deleteById">
+        update cms_model set is_delete = 0 where id = #{id}
+    </update>
 
     <update id="update">
         update cms_model
