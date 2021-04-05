@@ -56,7 +56,7 @@ CREATE TABLE cms_site
     keywords        varchar(255) not null default '' comment '站点关键字',
     static_dir      varchar(50)  not null default '' comment '静态页存放目录',
     static_suffix   tinyint               default 0 not null comment '静态页后缀',
-    tpl_index          varchar(255)                not null default '' comment '首页模板路径',
+    tpl_index       varchar(255) not null default '' comment '首页模板路径',
     is_static_index char                  default 0 not null comment '是否静态化首页 0:否 1:是',
     description     varchar(255) not null default '' comment '站点描述'
 ) ENGINE = InnoDB
@@ -181,7 +181,10 @@ create table cms_topic
     tpl_content varchar(100) null comment '专题模板'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 comment 'CMS专题表';
-INSERT INTO cms_topic (create_time, update_time, id, name, keywords, description, title_img, content_img, tpl_content) VALUES ('2020-08-24 20:46:32', '2020-08-27 20:17:14', 1, '互联网升级', '互联网', '互联网升级大会启动', '/temp/280d522a-e85f-11ea-b974-a7a5685eea18.jpg', '/temp/3986966b-e85f-11ea-b974-512c6dab6de5.jpg', '/front/default/topic/topic.html');
+INSERT INTO cms_topic (create_time, update_time, id, name, keywords, description, title_img, content_img, tpl_content)
+VALUES ('2020-08-24 20:46:32', '2020-08-27 20:17:14', 1, '互联网升级', '互联网', '互联网升级大会启动',
+        '/temp/280d522a-e85f-11ea-b974-a7a5685eea18.jpg', '/temp/3986966b-e85f-11ea-b974-512c6dab6de5.jpg',
+        '/front/default/topic/topic.html');
 
 -- ----------------------------
 -- Table structure for cms_channel  栏目表
@@ -247,21 +250,24 @@ create table cms_model
     is_delete          tinyint(1) default '1'  not null comment '是否已删除 0:删除 1正常'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 comment 'CMS模型表';
+INSERT INTO cms_model (create_time, update_time, id, name, tpl_channel_prefix, tpl_content_prefix, priority, has_content, is_delete)
+VALUES ('2020-10-03 11:15:53', null, 1, '新闻', 'news', 'news', 10, 1, 1);
 
 -- ----------------------------
 -- Table structure for cms_model_item  模型项表
 -- ----------------------------
 create table cms_model_item
 (
-    create_time      timestamp               not null default CURRENT_TIMESTAMP,
-    update_time      timestamp               not null default '0000-00-00 00:00:00',
-    id               int                     not null auto_increment primary key,
-    model_id         int                     not null,
-    field            varchar(50)             not null comment '字段',
-    label            varchar(100)            not null comment '名称',
-    data_type        int        default '1'  not null comment '数据类型',
-    is_channel_model tinyint(1) default '1'  not null comment '是否栏目模型项',
-    required         tinyint(1) default '1'  not null comment '是否必填项 1:必填 2:非必填',
-    is_delete         tinyint(1) default '1'  not null comment '是否已删除 1正常 2:删除',
-    is_single        tinyint(1) default '2'  not null comment '是否独占一行 1:是 2:否'
-) ENGINE = InnoDB DEFAULT CHARSET = utf8 comment 'CMS模型项表';
+    create_time      timestamp              not null default CURRENT_TIMESTAMP,
+    update_time      timestamp              not null default '0000-00-00 00:00:00',
+    id               int                    not null auto_increment primary key,
+    model_id         int                    not null,
+    field            varchar(50)            not null comment '字段',
+    label            varchar(100)           not null comment '名称',
+    data_type        int        default '1' not null comment '数据类型',
+    is_channel_model tinyint(1) default '1' not null comment '是否栏目模型项',
+    required         tinyint(1) default '1' not null comment '是否必填项 1:必填 2:非必填',
+    is_delete        tinyint(1) default '1' not null comment '是否已删除 1正常 2:删除',
+    is_single        tinyint(1) default '2' not null comment '是否独占一行 1:是 2:否'
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 comment 'CMS模型项表'
