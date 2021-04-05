@@ -6,7 +6,9 @@ import com.cms.contex.utils.UtilsTemplate;
 import com.cms.core.annotation.DoLog;
 import com.cms.core.annotation.DoValid;
 import com.cms.dao.enums.StaticWebSuffixEnum;
+import com.cms.service.api.CmsContentListenerService;
 import com.cms.service.api.CmsSiteService;
+import com.cms.service.dto.CmsContentDto;
 import com.cms.service.dto.CmsSiteDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,9 +30,17 @@ public class SiteController {
     private CmsSiteService cmsSiteService;
     @Autowired
     private UtilsServletContext utilsServletContext;
+    @Autowired
+    private CmsContentListenerService cmsContentListenerService;
 
     @GetMapping("index.do")
     public String toIndex(Model model) {
+        CmsContentDto cmsContentDto = new CmsContentDto();
+        cmsContentDto.setId(1);
+        cmsContentDto.setTitle("前端项目发布成功");
+        cmsContentDto.setContent("前端工程工具");
+        cmsContentListenerService.add(cmsContentDto);
+
         model.addAttribute("data", cmsSiteService.get());
         model.addAttribute("staticWebSuffix", StaticWebSuffixEnum.values());
         model.addAttribute("tplIndex",utilsServletContext.getTplRelativePath("index","index"));
