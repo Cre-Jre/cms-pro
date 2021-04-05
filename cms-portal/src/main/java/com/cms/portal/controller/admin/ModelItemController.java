@@ -1,21 +1,30 @@
 package com.cms.portal.controller.admin;
 
+import com.cms.contex.foundation.Result;
 import com.cms.contex.utils.UtilsTemplate;
 import com.cms.dao.enums.ModelItemDataTypeEnum;
 import com.cms.dao.enums.ModelItemRequiredEnum;
 import com.cms.dao.enums.ModelItemSingleEnum;
+import com.cms.service.api.CmsModelItemService;
 import com.cms.service.dto.CmsModelItemDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("modelItem")
 public class ModelItemController {
+
+    @Autowired
+    private CmsModelItemService cmsModelItemService;
 
     @GetMapping("index.do")
     public String toIndex(Integer modelId, Boolean channelModel, String modelName, Model model){
@@ -38,5 +47,17 @@ public class ModelItemController {
                 CmsModelItemDto.of("path", ModelItemDataTypeEnum.STRING,"∑√Œ ¬∑æ∂",
                         ModelItemSingleEnum.NO, ModelItemRequiredEnum.YES)
         );
+    }
+
+    @PostMapping("defaultSetting.do")
+    @ResponseBody
+    public Result<String> doDefaultSetting(String[] defaultField,Integer modelId,Boolean channelModel){
+        List<CmsModelItemDto> defaultModelItemList = defaultChannelModelItemList();
+        List<String> selectModelItemList = Arrays.asList(defaultField);
+        cmsModelItemService.batchInsert(defaultModelItemList.stream().filter(x->selectModelItemList.contains(x.getField())).peek(y->{
+            y.setModelId(modelId);
+            y.setChannelModel(channelModel);
+        }).collect(Collectors.toList()));
+        return Result.success();
     }
 }

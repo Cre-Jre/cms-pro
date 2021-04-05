@@ -22,8 +22,8 @@
     </form>
     <p class="p20">系统默认字段<span class="red">(标红字段为必选字段)</span></p>
     <form class="layui-form" id="defaultItemForm">
-        <input type="hidden" name="id" value="${modelId}">
-        <input type="hidden" name="isChannelModel" value="${channelModel?string('1','0')}">
+        <input type="hidden" name="modelId" value="${modelId}">
+        <input type="hidden" name="channelModel" value="${channelModel?string('1','0')}">
         <a class="layui-btn layui-btn-sm layui-bg-blue" lay-submit lay-filter="addDefaultFieldHandler"><i class="layui-icon layui-icon-add-1" ></i>添加选中的默认字段</a>
         <table class="layui-table" lay-even="" lay-skin="nob">
             <colgroup>
@@ -75,7 +75,16 @@
 </@main.layout>
 <script>
     LayUtil.form.init(function (inner,form ) {
-
+        //添加选中的默认字段
+        inner.submit(function(obj){
+            if ($("input:checked", "#defaultItemTbody").length < 1) {
+                core.prompt.alert("请先选择要添加的默认字段",{shadeClose: false});
+                return
+            }
+            core.http({url:"defaultSetting.do", data:$(obj.form).serialize(), goBack:false},function(){
+                refresh()
+            });
+        },"addDefaultFieldHandler");
     });
 
 
