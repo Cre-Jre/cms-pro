@@ -21,12 +21,14 @@ public class ModelItemController {
     public String toIndex(Integer modelId, Boolean channelModel, String modelName, Model model){
         model.addAttribute("modelId",modelId);
         model.addAttribute("modelName",modelName);
+        model.addAttribute("channelModel",channelModel);
+        model.addAttribute("defaultModelItem",defaultChannelModelItemList());
         return UtilsTemplate.adminTemplate("model","itemIndex");
     }
 
 
     /**
-     * 获取默认栏目模型
+     * 获取默认栏目模型项
      * @return
      */
     private List<CmsModelItemDto> defaultChannelModelItemList(){

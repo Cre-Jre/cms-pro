@@ -1,11 +1,82 @@
 <#import "/layout/backend/modelItemMain.ftl" as main>
 <@main.layout title="当前栏目模型:<span class='blue'>${modelName}</span>&nbsp;<span class='red'>(标红字段为必选字段,无法删除,未勾选独占一行的字段的个数必须是2的倍数,否则后台栏目页会乱)</span>">
+    <#assign requiredChannelName="name" requiredChannelPath="path">
+    <style>
+        .layui-table th, td {
+            text-align: center;
+        }
+
+        .layui-table tr {
+            height: 40px;
+        }
+
+        .layui-table td, .layui-table th {
+            padding: 0;
+        }
+    </style>
     <form class="layui-form">
         <a class="layui-btn layui-btn-sm layui-bg-blue" href="${adminPath}/modelItem/add.do?channelModel=1&modelId=${modelId}">
             <i class="layui-icon layui-icon-add-1"></i>添加</a>
         <a class="layui-btn layui-btn-sm layui-bg-red" onclick="remove()">
             <i class="layui-icon layui-icon-delete"></i>批量删除</a>
     </form>
-
-
+    <p class="p20">系统默认字段<span class="red">(标红字段为必选字段)</span></p>
+    <form class="layui-form" id="defaultItemForm">
+        <input type="hidden" name="id" value="${modelId}">
+        <input type="hidden" name="isChannelModel" value="${channelModel?string('1','0')}">
+        <a class="layui-btn layui-btn-sm layui-bg-blue" lay-submit lay-filter="addDefaultFieldHandler"><i class="layui-icon layui-icon-add-1" ></i>添加选中的默认字段</a>
+        <table class="layui-table" lay-even="" lay-skin="nob">
+            <colgroup>
+                <col width="70">
+                <col width="200">
+                <col width="100">
+                <col width="300">
+                <col width="100">
+                <col width="100">
+                <col width="180">
+            </colgroup>
+            <thead>
+            <tr>
+                <th><input id="defaultItemId" type="checkbox" lay-skin="primary" lay-filter="checkAllDefaultItem"/></th>
+                <th>字段</th>
+                <th>数据类型</th>
+                <th>名称</th>
+                <th>独占一行</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="defaultItemTbody">
+            <#list defaultModelItem as item>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="defaultField" lay-skin="primary"  value="${item.field}" lay-filter="defaultFieldFilter"
+                                <#if (item.field==requiredChannelName) || (item.field==requiredChannelPath)> checked="checked" class="defaultDisabledItem" <#else> class="modelItem"</#if>/>
+                    </td>
+                    <td>
+                        <div>
+                            <#if (item.field==requiredChannelName) || (item.field==requiredChannelPath)>
+                                <span class="red">${item.field!}</span>
+                            <#else>
+                                ${item.field!}
+                            </#if>
+                        </div>
+                    </td>
+                    <td>${item.dataType.label}</td>
+                    <td>${item.label!}</td>
+                    <td>
+                        ${item.single}
+                    </td>
+                    <td></td>
+                </tr>
+            </#list>
+            </tbody>
+        </table>
+    </form>
 </@main.layout>
+<script>
+    LayUtil.form.init(function (inner,form ) {
+
+    });
+
+
+</script>
