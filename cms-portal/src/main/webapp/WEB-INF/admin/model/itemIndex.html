@@ -1,6 +1,11 @@
 <#import "/layout/backend/modelItemMain.ftl" as main>
 <@main.layout title="当前栏目模型:<span class='blue'>${modelName}</span>&nbsp;<span class='red'>(标红字段为必选字段,无法删除,未勾选独占一行的字段的个数必须是2的倍数,否则后台栏目页会乱)</span>">
-
+    <form class="layui-form">
+        <a class="layui-btn layui-btn-sm layui-bg-blue" href="${adminPath}/modelItem/add.do?channelModel=1&modelId=${modelId}">
+            <i class="layui-icon layui-icon-add-1"></i>添加</a>
+        <a class="layui-btn layui-btn-sm layui-bg-red" onclick="remove()">
+            <i class="layui-icon layui-icon-delete"></i>批量删除</a>
+    </form>
 
 
 </@main.layout>

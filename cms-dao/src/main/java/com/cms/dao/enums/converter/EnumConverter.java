@@ -69,6 +69,16 @@ public class EnumConverter {
     }
 
     /**
+     * 用于将entity中int类型转换为TaskExecutionCycleUnitEnum枚举类型
+     *
+     * @param status
+     * @return
+     */
+    public static ModelItemDataTypeEnum toModelItemDataTypeEnum(int status) {
+        return (ModelItemDataTypeEnum) converter(ModelItemDataTypeEnum.values(), status);
+    }
+
+    /**
      * 通用枚举转换器 统一循环枚举比对
      *
      * @param enums
