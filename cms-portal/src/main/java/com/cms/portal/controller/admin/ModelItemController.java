@@ -52,6 +52,25 @@ public class ModelItemController {
         );
     }
 
+    /**
+     * 默认内容模型
+     * @return
+     */
+    private List<CmsModelItemDto> defaultContentModelItemList(){
+        return Arrays.asList(
+                CmsModelItemDto.of("channelId", ModelItemDataTypeEnum.SELECT,"栏目",
+                        ModelItemSingleEnum.NO, ModelItemRequiredEnum.YES),
+                CmsModelItemDto.of("titleImg", ModelItemDataTypeEnum.SELECT,"标题图",
+                        ModelItemSingleEnum.NO, ModelItemRequiredEnum.NO),
+                CmsModelItemDto.of("description", ModelItemDataTypeEnum.SELECT,"摘要",
+                        ModelItemSingleEnum.YES, ModelItemRequiredEnum.NO),
+                CmsModelItemDto.of("title", ModelItemDataTypeEnum.SELECT,"标题",
+                        ModelItemSingleEnum.YES, ModelItemRequiredEnum.YES),
+                CmsModelItemDto.of("txt", ModelItemDataTypeEnum.SELECT,"内容",
+                        ModelItemSingleEnum.YES, ModelItemRequiredEnum.NO)
+        );
+    }
+
     @PostMapping("defaultSetting.do")
     @ResponseBody
     public Result<String> doDefaultSetting(String[] defaultField,Integer modelId,Boolean channelModel){

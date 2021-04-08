@@ -204,6 +204,7 @@ create table cms_channel
     is_delete   tinyint(1)            default '1' not null comment '是否已删除 0:删除 1正常'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 comment '栏目表';
+INSERT INTO cms_channel (create_time, update_time, id, name, keyword, description, path, model_id, priority, parent_id, is_delete) VALUES ('2020-10-08 21:07:08', null, 1, '新闻', null, null, 'news', 1, null, 0, 1);
 
 -- ----------------------------
 -- Table structure for cms_content  CMS内容表
