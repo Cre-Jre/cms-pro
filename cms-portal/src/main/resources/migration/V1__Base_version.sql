@@ -237,6 +237,17 @@ create table cms_content_txt
   CHARSET = utf8 comment 'CMS内容文本表';
 
 -- ----------------------------
+-- Table structure for cms_content_topic  CMS专题内容关联表 有组合主键
+-- ----------------------------
+create table cms_content_topic
+(
+    content_id int not null,
+    topic_id   int not null,
+    primary key (content_id, topic_id)
+) ENGINE = InnoDB
+  CHARSET = utf8 comment 'CMS专题内容关联表';
+
+-- ----------------------------
 -- Table structure for cms_model  模型表
 -- ----------------------------
 create table cms_model

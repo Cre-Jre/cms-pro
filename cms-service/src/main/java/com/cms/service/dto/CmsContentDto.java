@@ -15,4 +15,5 @@ public class CmsContentDto extends BaseDto<Integer> {
     private String description;
     private String titleImg;
     private String content;
+    private Integer topicId;
 }
