@@ -156,8 +156,12 @@ img[src=""], img:not([src]) {
 .flex-item-50 {
     width: 50%;
 }
+.flex-item-100 {
+    width: 100%;
+}
 .form-item {
     margin-bottom: 0;
+    padding: 15px 0;
 }
 .form-item-content {
     margin-left: 162px;

@@ -46,9 +46,9 @@ public class UploadController {
             File filePath = new File(tmpDir, fileName);
             file.transferTo(filePath);
         } catch (IOException e) {
-           log.error("文件上传失败=[{}]",e.getMessage());
-           return Result.failed("上传文件失败,请重新上传");
+            log.error("文件上传失败=[{}]",e.getMessage());
+            return Result.failed("上传文件失败,请重新上传");
         }
-        return Result.success(tomcatDir+"/"+fileName);
+        return Result.success(200,tomcatDir+"/"+fileName,tomcatDir+"/"+fileName);
     }
 }

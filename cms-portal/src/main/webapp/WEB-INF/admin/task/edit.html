@@ -19,14 +19,14 @@
             </@form.inline>
         </@form.item>
         <@form.item>
-            <#assign cmsTaskInlineExecutionCycleInlineStyle="display:none;"/>
-            <#if data.taskExecutionType.getOrdinal()==0>
-                <#assign cmsTaskInlineExecutionCycleInlineStyle=""/>
-            </#if>
-            <@form.inline full=true className="cmsTaskInline cmsTaskInlineExecutionCycle" label="执行周期" inlineStyle="${cmsTaskInlineExecutionCycleInlineStyle}">
-                <@form.select list=taskExecutionCycle name="intervalUnit" enum=true showDefaultOption=false filter="executionCycleFilter" value="${data.intervalUnit.getOrdinal()}"></@form.select>
-                <div id="cmsTaskExecutionCycleWrapper">
-                    <#if data.intervalUnit.getOrdinal()==0>
+        <#assign cmsTaskInlineExecutionCycleInlineStyle="display:none;"/>
+        <#if data.taskExecutionType.getOrdinal()==0>
+            <#assign cmsTaskInlineExecutionCycleInlineStyle=""/>
+        </#if>
+        <@form.inline full=true className="cmsTaskInline cmsTaskInlineExecutionCycle" label="执行周期" inlineStyle="${cmsTaskInlineExecutionCycleInlineStyle}">
+            <@form.select list=taskExecutionCycle name="intervalUnit" enum=true showDefaultOption=false filter="executionCycleFilter" value="${data.intervalUnit.getOrdinal()}"></@form.select>
+            <div id="cmsTaskExecutionCycleWrapper">
+                <#if data.intervalUnit.getOrdinal()==0>
                         <div class="cmsTaskCycle cmsTaskCycleIntervalMinute">
                             <div class="cms-task-input-inline">
                                 <span class="cms-task-unit-left">每隔</span>
@@ -34,65 +34,65 @@
                                 <span class="cms-task-unit">分钟</span>
                             </div>
                         </div>
-                    <#elseif data.intervalUnit.getOrdinal()==1>
-                        <div class="cmsTaskCycle cmsTaskCycleIntervalHour">
-                            <div class="cms-task-input-inline">
-                                <span class="cms-task-unit-left">每隔</span>
-                                <input type="number" name="intervalHour" class="layui-input" value="${data.intervalHour!}" style="width: 100px;">
-                                <span class="cms-task-unit">小时</span>
-                            </div>
+                <#elseif data.intervalUnit.getOrdinal()==1>
+                    <div class="cmsTaskCycle cmsTaskCycleIntervalHour">
+                        <div class="cms-task-input-inline">
+                            <span class="cms-task-unit-left">每隔</span>
+                            <input type="number" name="intervalHour" class="layui-input" value="${data.intervalHour!}" style="width: 100px;">
+                            <span class="cms-task-unit">小时</span>
                         </div>
-                    <#elseif data.intervalUnit.getOrdinal()==2>
-                        <div class="cmsTaskCycle cmsTaskCycleDay">
-                            <div class="cms-task-input-inline">
-                                <input type="number" name="hour" class="layui-input" value="${data.hour!}" style="width: 100px;">
-                                <span class="cms-task-unit">点</span>
-                            </div>
-                            <div class="cms-task-input-inline">
-                                <input type="number" name="minute" class="layui-input" value="${data.minute!}" style="width: 100px;">
-                                <span class="cms-task-unit">分</span>
-                            </div>
+                    </div>
+                <#elseif data.intervalUnit.getOrdinal()==2>
+                    <div class="cmsTaskCycle cmsTaskCycleDay">
+                        <div class="cms-task-input-inline">
+                            <input type="number" name="hour" class="layui-input" value="${data.hour!}" style="width: 100px;">
+                            <span class="cms-task-unit">点</span>
                         </div>
-                    <#elseif data.intervalUnit.getOrdinal()==3>
-                        <div class="cmsTaskCycle cmsTaskCycleWeek">
-                            <div class="cms-task-input-inline">
-                                <span class="cms-task-unit-left">星期</span>
-                                <input type="number" name="dayOfWeek" class="layui-input" value="${data.dayOfWeek!}" style="width: 60px;">
-                            </div>
-                            <div class="cms-task-input-inline">
-                                <input type="number" name="hour" class="layui-input" value="${data.hour!}" style="width: 60px;">
-                                <span class="cms-task-unit">点</span>
-                            </div>
-                            <div class="cms-task-input-inline">
-                                <input type="number" name="minute" class="layui-input" value="${data.minute!}" style="width: 60px;">
-                                <span class="cms-task-unit">分</span>
-                            </div>
+                        <div class="cms-task-input-inline">
+                            <input type="number" name="minute" class="layui-input" value="${data.minute!}" style="width: 100px;">
+                            <span class="cms-task-unit">分</span>
                         </div>
-                    <#else>
-                        <div class="cmsTaskCycle cmsTaskCycleMonth">
-                            <div class="cms-task-input-inline">
-                                <input type="number" name="dayOfMonth" class="layui-input" value="${data.dayOfMonth!}" style="width: 60px;">
-                                <span class="cms-task-unit">号</span>
-                            </div>
-                            <div class="cms-task-input-inline">
-                                <input type="number" name="hour" class="layui-input" value="${data.hour!}" style="width: 60px;">
-                                <span class="cms-task-unit">点</span>
-                            </div>
-                            <div class="cms-task-input-inline">
-                                <input type="number" name="minute" class="layui-input" value="${data.minute!}" style="width: 60px;">
-                                <span class="cms-task-unit">分</span>
-                            </div>
+                    </div>
+                <#elseif data.intervalUnit.getOrdinal()==3>
+                    <div class="cmsTaskCycle cmsTaskCycleWeek">
+                        <div class="cms-task-input-inline">
+                            <span class="cms-task-unit-left">星期</span>
+                            <input type="number" name="dayOfWeek" class="layui-input" value="${data.dayOfWeek!}" style="width: 60px;">
                         </div>
-                    </#if>
-                </div>
-            </@form.inline>
-            <#assign cmsTaskInlinecronExpressionInlineStyle="display:none;"/>
-            <#if data.taskExecutionType.getOrdinal()==1>
-                <#assign cmsTaskInlinecronExpressionInlineStyle=""/>
-            </#if>
-            <@form.inline full=true className="cmsTaskInline cmsTaskInlinecronExpression" label="cron表达式" inlineStyle="${cmsTaskInlinecronExpressionInlineStyle}">
-                <input type="text" name="cronExpression" class="layui-input" value="${data.cronExpression!}">
-            </@form.inline>
+                        <div class="cms-task-input-inline">
+                            <input type="number" name="hour" class="layui-input" value="${data.hour!}" style="width: 60px;">
+                            <span class="cms-task-unit">点</span>
+                        </div>
+                        <div class="cms-task-input-inline">
+                            <input type="number" name="minute" class="layui-input" value="${data.minute!}" style="width: 60px;">
+                            <span class="cms-task-unit">分</span>
+                        </div>
+                    </div>
+                <#else>
+                    <div class="cmsTaskCycle cmsTaskCycleMonth">
+                        <div class="cms-task-input-inline">
+                            <input type="number" name="dayOfMonth" class="layui-input" value="${data.dayOfMonth!}" style="width: 60px;">
+                            <span class="cms-task-unit">号</span>
+                        </div>
+                        <div class="cms-task-input-inline">
+                            <input type="number" name="hour" class="layui-input" value="${data.hour!}" style="width: 60px;">
+                            <span class="cms-task-unit">点</span>
+                        </div>
+                        <div class="cms-task-input-inline">
+                            <input type="number" name="minute" class="layui-input" value="${data.minute!}" style="width: 60px;">
+                            <span class="cms-task-unit">分</span>
+                        </div>
+                    </div>
+                </#if>
+            </div>
+        </@form.inline>
+        <#assign cmsTaskInlinecronExpressionInlineStyle="display:none;"/>
+        <#if data.taskExecutionType.getOrdinal()==1>
+            <#assign cmsTaskInlinecronExpressionInlineStyle=""/>
+        </#if>
+        <@form.inline full=true className="cmsTaskInline cmsTaskInlinecronExpression" label="cron表达式" inlineStyle="${cmsTaskInlinecronExpressionInlineStyle}">
+            <input type="text" name="cronExpression" class="layui-input" value="${data.cronExpression!}">
+        </@form.inline>
         </@form.item>
         <@form.item>
             <@form.inline label="状态" required=true>

@@ -1,6 +1,7 @@
 <#import "/layout/backend/main.ftl" as main>
 <#import "/layout/backend/form.ftl" as form>
-
+<link rel="stylesheet" href="${basePath}/admin/plugin/photoviewer.css">
+<script src="${basePath}/admin/plugin/photoviewer.min.js" charset="utf-8"></script>
 <@main.layout>
     <@form.layoutForm>
         <input type="hidden" name="modelId" value="${modelId!}"/>
@@ -10,12 +11,45 @@
         <@form.layoutItem label="专题" required=true>
             <ul id="tree"></ul>
         </@form.layoutItem>
+        <#list modelItem as item>
+        <#--非独占一行-->
+            <#if item.single.getOrdinal()==2>
+                <#if item.field="titleImg">
+                    <@form.layoutItem label="${item.label}">
+                        <@form.imageUpload name="ext.titleImg" className="titleImg"></@form.imageUpload>
+                    </@form.layoutItem>
+                </#if>
+            <#--占据一行   -->
+            <#else>
+                <#if item.field=="title">
+                    <@form.layoutItem label="${item.label}" flex="100" required=true>
+                        <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                    </@form.layoutItem>
+                <#elseif item.field=="description">
+                    <@form.layoutItem label="${item.label}" flex="100">
+                        <textarea type="textarea" name="ext.description" class="layui-input" style="height:100px"></textarea>
+                    </@form.layoutItem>
+                <#elseif item.field=="txt">
+                    <@form.layoutItem label="${item.label}" flex="100">
+                        <span id="editor"></span>
+                    </@form.layoutItem>
+                </#if>
+            </#if>
+        </#list>
         <@form.layoutSubmit></@form.layoutSubmit>
     </@form.layoutForm>
 </@main.layout>
 <link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_select_tree.css">
 <link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
+<script src="${basePath}/admin/js/ckeditor/ckeditor.js" charset="utf-8"></script>
+
 <script>
+    //如果有编辑器
+    if($("#editor").length){
+        CKEDITOR.replace('editor');
+    }
+    LayUtil.imageUpload.init({elem:".titleImg"},PhotoViewer);
+
     LayUtil.form.init(function () {
 
     })

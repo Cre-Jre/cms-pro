@@ -19,9 +19,9 @@
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <div class="layui-card">
-                    <div class="layui-card-header">
-                        <h5>${title}</h5>
-                    </div>
+                        <div class="layui-card-header">
+                            <h5>${title}</h5>
+                        </div>
                     <div class="layui-card-body">
                         <div class="layui-row">
                             <#nested>

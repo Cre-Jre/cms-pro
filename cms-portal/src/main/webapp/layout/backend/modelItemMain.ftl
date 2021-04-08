@@ -23,7 +23,7 @@
                         <h5>${title}</h5>
                     </div>
                     <div class="layui-card-body">
-                        <div class="layui-row">
+                        <div class="layui-row" style="margin:20px 0;">
                             <#nested>
                         </div>
                     </div>
