@@ -57,4 +57,10 @@ public class CmsTopicServiceImpl implements CmsTopicService {
         SearchProvider of = SearchProvider.of(CmsTopicConverter.CONVERTER.dtoToEntity(cmsTopicDto),new SearchProvider.Inner(count));
         return CmsTopicConverter.CONVERTER.entityToDto(cmsTopicMapper.selectBySearchProvider(of));
     }
+
+    @Override
+    public List<CmsTopicDto> getList(CmsTopicDto cmsTopicDto) {
+        SearchProvider of = SearchProvider.of(CmsTopicConverter.CONVERTER.dtoToEntity(cmsTopicDto));
+        return CmsTopicConverter.CONVERTER.entityToDto(cmsTopicMapper.selectBySearchProvider(of));
+    }
 }

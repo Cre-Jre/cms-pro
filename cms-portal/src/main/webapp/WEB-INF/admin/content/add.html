@@ -8,7 +8,7 @@
             <ul id="channelName"></ul>
         </@form.layoutItem>
         <@form.layoutItem label="专题" required=true>
-            <input type="text" autocomplete="off" class="layui-input" value="${modelName!}" disabled>
+            <ul id="tree"></ul>
         </@form.layoutItem>
         <@form.layoutSubmit></@form.layoutSubmit>
     </@form.layoutForm>
@@ -27,5 +27,17 @@
         method: "post",
         title: "name",
         request: {orderBy: "parentId=asc"}
+    },function(selectTree, channelTree){
+        //专题下拉
+        selectTree.render({
+            elem: '#tree',
+            url: ADMIN_PATH + "/topic/list.do",
+            method: "post",
+            title: "name"
+        }, function (topicTree) {
+            topicTree.on("node('tree')", function (obj) {
+                $("#topicId").val(obj.param.nodeId);
+            });
+        });
     });
 </script>

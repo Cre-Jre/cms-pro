@@ -12,4 +12,12 @@ public interface CmsTopicService extends BaseService<CmsTopicDto,Integer> {
      * @return              list
      */
     List<CmsTopicDto> getListByTag(int count);
+
+    /**
+     * 获取列表
+     * @param cmsTopicDto
+     * @return
+     */
+    List<CmsTopicDto> getList(CmsTopicDto cmsTopicDto);
+
 }

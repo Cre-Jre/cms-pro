@@ -450,6 +450,11 @@ LayUtil.prototype = {
                     (callback instanceof Function) && callback(that,that.dtree);
                 });
                 return this;
+            },
+            render:function(config,callback){
+                let option = $.extend({}, LayUtil.selectTreeOption, config);
+                this.dtree.renderSelect(option);
+                (callback instanceof Function) && callback(this.dtree);
             }
         };
         LayUtil.selectTree = new Inner();

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("topic")
@@ -70,5 +71,11 @@ public class TopicController {
     @ResponseBody
     public Result<Page<CmsTopicDto>> doPage(CmsTopicDto dto){
         return Result.success(cmsTopicService.getPage(dto));
+    }
+
+    @PostMapping("list.do")
+    @ResponseBody
+    public Result doList(CmsTopicDto dto){
+        return Result.success((ArrayList)cmsTopicService.getList(dto));
     }
 }

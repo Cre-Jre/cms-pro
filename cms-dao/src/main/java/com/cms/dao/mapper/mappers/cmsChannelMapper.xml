@@ -70,7 +70,7 @@
 
     <select id="selectBySearchProvider" parameterType="SearchProvider" resultMap="baseResultMap">
         select <include refid="baseColumn"/>
-        from cms_topic
+        from cms_channel
         <where>
             <if test="criteria.name!=null and criteria.name!=''">
                 name like concat ('%',#{criteria.name},'%')
