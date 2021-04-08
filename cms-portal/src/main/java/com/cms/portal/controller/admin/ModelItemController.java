@@ -40,14 +40,14 @@ public class ModelItemController {
 
 
     /**
-     * »ñÈ¡Ä¬ÈÏÀ¸Ä¿Ä£ĞÍÏî
+     * è·å–é»˜è®¤æ ç›®æ¨¡å‹é¡¹
      * @return
      */
     private List<CmsModelItemDto> defaultChannelModelItemList(){
         return Arrays.asList(
-                CmsModelItemDto.of("name", ModelItemDataTypeEnum.STRING,"À¸Ä¿Ãû³Æ",
+                CmsModelItemDto.of("name", ModelItemDataTypeEnum.STRING,"æ ç›®åç§°",
                         ModelItemSingleEnum.NO, ModelItemRequiredEnum.YES),
-                CmsModelItemDto.of("path", ModelItemDataTypeEnum.STRING,"·ÃÎÊÂ·¾¶",
+                CmsModelItemDto.of("path", ModelItemDataTypeEnum.STRING,"è®¿é—®è·¯å¾„",
                         ModelItemSingleEnum.NO, ModelItemRequiredEnum.YES)
         );
     }

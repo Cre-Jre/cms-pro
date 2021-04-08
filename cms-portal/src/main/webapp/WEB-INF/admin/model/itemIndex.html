@@ -1,5 +1,5 @@
 <#import "/layout/backend/modelItemMain.ftl" as main>
-<@main.layout title="��ǰ��Ŀģ��:<span class='blue'>${modelName}</span>&nbsp;<span class='red'>(����ֶ�Ϊ��ѡ�ֶ�,�޷�ɾ��,δ��ѡ��ռһ�е��ֶεĸ���������2�ı���,�����̨��Ŀҳ����)</span>">
+<@main.layout title="当前栏目模型:<span class='blue'>${modelName}</span>&nbsp;<span class='red'>(标红字段为必选字段,无法删除,未勾选独占一行的字段的个数必须是2的倍数,否则后台栏目页会乱)</span>">
     <#assign requiredChannelName="name" requiredChannelPath="path">
     <style>
         .layui-table th, td {
@@ -16,9 +16,9 @@
     </style>
     <form class="layui-form">
         <a class="layui-btn layui-btn-sm layui-bg-blue" href="${adminPath}/modelItem/add.do?channelModel=1&modelId=${modelId}">
-            <i class="layui-icon layui-icon-add-1"></i>����</a>
+            <i class="layui-icon layui-icon-add-1"></i>添加</a>
         <a class="layui-btn layui-btn-sm layui-bg-red" onclick="remove()">
-            <i class="layui-icon layui-icon-delete"></i>����ɾ��</a>
+            <i class="layui-icon layui-icon-delete"></i>批量删除</a>
         <table class="layui-table" lay-even="" lay-skin="nob">
             <colgroup>
                 <col width="70">
@@ -32,11 +32,11 @@
             <thead>
             <tr>
                 <th><input id="checkedItemId" type="checkbox" lay-skin="primary" lay-filter="selectAddedItem"/></th>
-                <th>�ֶ�</th>
-                <th>��������</th>
-                <th>����</th>
-                <th>��ռһ��</th>
-                <th>����</th>
+                <th>字段</th>
+                <th>数据类型</th>
+                <th>名称</th>
+                <th>独占一行</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody id="selectedItemTbody">
@@ -61,11 +61,11 @@
                         ${item.single.label}
                     </td>
                     <td>
-                        <a class="layui-btn layui-btn-xs layui-bg-green" href="edit.do?id=${item.id}"><i class="layui-icon layui-icon-edit"></i>�޸�</a>
+                        <a class="layui-btn layui-btn-xs layui-bg-green" href="edit.do?id=${item.id}"><i class="layui-icon layui-icon-edit"></i>修改</a>
                         <#if (item.field==requiredChannelName) || (item.field==requiredChannelPath) || (item.field==requiredContentChannelId) || (item.field==requiredContentTitle)>
-                            <a class="layui-btn layui-btn-xs layui-bg-red" style="visibility: hidden;"><i class="layui-icon layui-icon-refresh-3">�޸�</i></a>
+                            <a class="layui-btn layui-btn-xs layui-bg-red" style="visibility: hidden;"><i class="layui-icon layui-icon-refresh-3">修改</i></a>
                         <#else>
-                            <a class="layui-btn layui-btn-xs layui-bg-red" onclick="del(${item.id})"><i class="layui-icon layui-icon-delete"></i>ɾ��</a>
+                            <a class="layui-btn layui-btn-xs layui-bg-red" onclick="del(${item.id})"><i class="layui-icon layui-icon-delete"></i>删除</a>
                         </#if>
                     </td>
                 </tr>
@@ -73,11 +73,11 @@
             </tbody>
         </table>
     </form>
-    <p class="p20">ϵͳĬ���ֶ�<span class="red">(����ֶ�Ϊ��ѡ�ֶ�)</span></p>
+    <p class="p20">系统默认字段<span class="red">(标红字段为必选字段)</span></p>
     <form class="layui-form" id="defaultItemForm">
         <input type="hidden" name="modelId" value="${modelId}">
         <input type="hidden" name="channelModel" value="${channelModel?string('1','0')}">
-        <a class="layui-btn layui-btn-sm layui-bg-blue" lay-submit lay-filter="addDefaultFieldHandler"><i class="layui-icon layui-icon-add-1" ></i>����ѡ�е�Ĭ���ֶ�</a>
+        <a class="layui-btn layui-btn-sm layui-bg-blue" lay-submit lay-filter="addDefaultFieldHandler"><i class="layui-icon layui-icon-add-1" ></i>添加选中的默认字段</a>
         <table class="layui-table" lay-even="" lay-skin="nob">
             <colgroup>
                 <col width="70">
@@ -91,11 +91,11 @@
             <thead>
             <tr>
                 <th><input id="defaultItemId" type="checkbox" lay-skin="primary" lay-filter="checkAllDefaultItem"/></th>
-                <th>�ֶ�</th>
-                <th>��������</th>
-                <th>����</th>
-                <th>��ռһ��</th>
-                <th>����</th>
+                <th>字段</th>
+                <th>数据类型</th>
+                <th>名称</th>
+                <th>独占一行</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody id="defaultItemTbody">
@@ -128,10 +128,10 @@
 </@main.layout>
 <script>
     LayUtil.form.init(function (inner,form ) {
-        //����ѡ�е�Ĭ���ֶ�
+        //添加选中的默认字段
         inner.submit(function(obj){
             if ($("input:checked", "#defaultItemTbody").length < 1) {
-                core.prompt.alert("����ѡ��Ҫ���ӵ�Ĭ���ֶ�",{shadeClose: false});
+                core.prompt.alert("请先选择要添加的默认字段",{shadeClose: false});
                 return
             }
             core.http({url:"defaultSetting.do", data:$(obj.form).serialize(), goBack:false},function(){

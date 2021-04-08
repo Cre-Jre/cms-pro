@@ -142,7 +142,7 @@
           "child": [
             {
               "title": "404页面",
-              "href": "page/404.html",
+              "href": "/admin/cms/error.do",
               "icon": "fa fa-hourglass-end",
               "target": "_self"
             }
