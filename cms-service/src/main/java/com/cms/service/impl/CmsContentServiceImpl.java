@@ -1,15 +1,36 @@
 package com.cms.service.impl;
 
 import com.cms.core.foundation.Page;
+import com.cms.dao.entity.CmsContentEntity;
+import com.cms.dao.mapper.CmsContentMapper;
+import com.cms.dao.mapper.CmsContentTxtMapper;
 import com.cms.service.api.CmsContentService;
+import com.cms.service.converter.CmsContentConverter;
+import com.cms.service.converter.CmsContentTxtConverter;
 import com.cms.service.dto.CmsContentDto;
+import com.cms.service.dto.CmsContentTxtDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CmsContentServiceImpl implements CmsContentService {
+
+    @Autowired
+    private CmsContentMapper cmsContentMapper;
+    @Autowired
+    private CmsContentTxtMapper cmsContentTxtMapper;
+
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(CmsContentDto dto) {
-
+        CmsContentEntity cmsContentEntity = CmsContentConverter.CONVERTER.dtoToEntity(dto);
+        cmsContentMapper.save(cmsContentEntity);
+        Integer id = cmsContentEntity.getId();
+        CmsContentTxtDto cmsContentTxtDto = new CmsContentTxtDto();
+        cmsContentTxtDto.setContentId(id);
+        cmsContentTxtDto.setContent(dto.getContent());
+        cmsContentTxtMapper.save(CmsContentTxtConverter.CONVERTER.dtoToEntity(cmsContentTxtDto));
     }
 
     @Override

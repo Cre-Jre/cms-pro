@@ -10,7 +10,7 @@ public class CmsContentDto extends BaseDto<Integer> {
     private String title;
     private Integer channelId;
     private Integer userId;
-    private Integer moduleId;
+    private Integer modelId;
     private String author;
     private String description;
     private String titleImg;
