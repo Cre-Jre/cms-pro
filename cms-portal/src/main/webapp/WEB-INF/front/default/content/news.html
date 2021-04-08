@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>cms</title>
+<meta content="" http-equiv="keywords"/>
+<meta content="" http-equiv="description"/>
+<script src="${basePath}/common/js/jq.js"></script>
+<link type="text/css" rel="stylesheet" href="${basePath}/common/css/index.css"/>
+<head>
+<body>
+<header class="header rel">
+    <div class="header-jf"></div>
+    <div class="container clearfix">
+        <nav class="nav">
+            <ul class="menu">
+                <li class="on"><a href="http://localhost:8080/news/index.jhtml">新闻</a></li>
+            </ul>
+        </nav>
+        <div class="header-r">
+            <div class="search">
+                <form action="/search.jspx" target="_blank" name="searchForm" id="searchForm">
+                    <input type="text" name="q" value="" maxlength="50" autocomplete="off" class="searchCon"
+                           style="width:202px;">
+                    <input type="hidden" name="token" id="token" value=""/>
+                    <input type="button" value="" class="searchMenu" onclick="query()">
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="main container clearfix">
+    <section class="content_w850">
+        <h1>${title}</h1>
+        <div class="content-inf">发布时间：${time}</div>
+        <div class="content-txt">
+            ${content}
+        </div>
+        <!-- 分页 -->
+        <div class="pagebar"></div>
+        <div class="reward"><a href="/content/reward.jspx?contentId=130"></a></div>
+    </section>
+</div>
+</body>
+</html>

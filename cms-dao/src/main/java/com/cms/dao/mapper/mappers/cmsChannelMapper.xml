@@ -6,7 +6,8 @@
     <sql id="baseColumn">
         create_time,
         id,
-        name
+        name,
+        path
     </sql>
 
     <sql id="key">
@@ -47,6 +48,7 @@
         <id property="id" column="id"/>
         <result property="createTime" column="create_time"/>
         <result property="name" column="name"/>
+        <result property="path" column="path"/>
     </resultMap>
 
     <insert id="save">
@@ -84,7 +86,7 @@
 
     <select id="selectById" resultMap="baseResultMap">
         select <include refid="baseColumn"/>
-        from cms_topic
+        from cms_channel
         where id = #{id}
     </select>
 </mapper>

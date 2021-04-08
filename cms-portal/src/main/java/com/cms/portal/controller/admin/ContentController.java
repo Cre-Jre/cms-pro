@@ -42,6 +42,7 @@ public class ContentController {
         CmsUserDto cmsUserDto = (CmsUserDto) UtilsShiro.getSubject().getPrincipal();
         cmsContentDto.setUserId(cmsUserDto.getId());
         cmsContentService.save(cmsContentDto);
+        cmsContentService.afterOperationStatus(cmsContentDto);
         return Result.success();
     }
 }

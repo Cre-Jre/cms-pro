@@ -6,6 +6,7 @@ import com.cms.core.exception.BusinessException;
 import com.cms.dao.enums.StaticWebSuffixEnum;
 import com.cms.service.api.CmsSiteService;
 import com.cms.service.api.CmsStaticPageService;
+import com.cms.service.dto.CmsContentDto;
 import com.cms.service.dto.CmsSiteDto;
 import com.google.common.collect.Maps;
 import freemarker.template.Configuration;
@@ -82,5 +83,10 @@ public class CmsStaticPageServiceImpl implements CmsStaticPageService {
         String contextPath = request.getContextPath();
         File file = new File(utilsServletContext.getRealPath(contextPath + "/" + staticDir + "/index" + StaticWebSuffixEnum.HTML.getLabel()));
         return file.delete();
+    }
+
+    @Override
+    public void staticContent(CmsContentDto cmsContentDto, Configuration configuration) {
+
     }
 }
