@@ -52,7 +52,7 @@ public class ChannelController {
     @PostMapping("tree.do")
     @ResponseBody
     public Result doTree(){
-        return Result.success(new ArrayList<>());
+        return Result.success((ArrayList)cmsChannelService.getList(new CmsChannelDto()));
     }
 
 }

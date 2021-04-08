@@ -3,7 +3,7 @@
 
 <@main.layout>
     <div class="layui-card">
-        <button class="layui-btn layui-btn-normal" id="add" style="display:block;"><i class="layui-icon layui-icon-add-1"></i>添加栏目</button>
+        <button class="layui-btn layui-btn-normal" id="add" style="display:block;"><i class="layui-icon layui-icon-add-1"></i>添加内容</button>
         <div class="layui-card-body">
             <table id="dataGrid" lay-filter="dataGrid"></table>
         </div>
@@ -29,7 +29,7 @@
     });
     core.http({url: ADMIN_PATH + "/model/list.do", autoComplete: false}, function (data) {
         new dropdown("#add", data.data, function (id, obj) {
-            window.location.href = ADMIN_PATH + "/channel/add.do?modelId="+obj.id;
+            window.location.href = ADMIN_PATH + "/content/add.do?modelId="+obj.id;
         });
     });
 </script>

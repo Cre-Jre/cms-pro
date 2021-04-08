@@ -25,7 +25,7 @@
           "child": [
             {
               "title": "内容管理",
-              "href": "page/welcome-1.html",
+              "href": "content/index.do",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },

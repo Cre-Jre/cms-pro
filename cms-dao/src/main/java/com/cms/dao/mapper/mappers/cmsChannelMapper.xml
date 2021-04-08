@@ -6,12 +6,7 @@
     <sql id="baseColumn">
         create_time,
         id,
-        name,
-        keywords,
-        description,
-        title_img,
-        content_img,
-        tpl_content
+        name
     </sql>
 
     <sql id="key">

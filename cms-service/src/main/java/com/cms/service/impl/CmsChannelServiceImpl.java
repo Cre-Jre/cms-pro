@@ -1,12 +1,15 @@
 package com.cms.service.impl;
 
 import com.cms.core.foundation.Page;
+import com.cms.core.foundation.SearchProvider;
 import com.cms.dao.mapper.CmsChannelMapper;
 import com.cms.service.api.CmsChannelService;
 import com.cms.service.converter.CmsChannelConverter;
 import com.cms.service.dto.CmsChannelDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CmsChannelServiceImpl implements CmsChannelService {
@@ -37,5 +40,10 @@ public class CmsChannelServiceImpl implements CmsChannelService {
     @Override
     public Page<CmsChannelDto> getPage(CmsChannelDto dto) {
         return null;
+    }
+
+    @Override
+    public List<CmsChannelDto> getList(CmsChannelDto cmsChannelDto) {
+        return CmsChannelConverter.CONVERTER.entityToDto(cmsChannelMapper.selectBySearchProvider(SearchProvider.of(CmsChannelConverter.CONVERTER.dtoToEntity(cmsChannelDto))));
     }
 }
