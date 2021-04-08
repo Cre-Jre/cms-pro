@@ -34,7 +34,7 @@ public class CmsChannelServiceImpl implements CmsChannelService {
 
     @Override
     public CmsChannelDto getById(Integer id) {
-        return null;
+        return CmsChannelConverter.CONVERTER.entityToDto(cmsChannelMapper.selectById(id));
     }
 
     @Override
