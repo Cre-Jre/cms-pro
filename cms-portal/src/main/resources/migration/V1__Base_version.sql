@@ -218,6 +218,7 @@ create table cms_content
     user_id     int          not null comment '用户id',
     model_id    int          not null comment '模型id',
     title       varchar(100) null comment '标题',
+    title_img          varchar(100) null comment '标题图片',
     author      varchar(50)  null comment '作者',
     description varchar(255) null comment '描述'
 ) ENGINE = InnoDB

@@ -8,5 +8,10 @@ import lombok.Setter;
 @Setter
 public class CmsContentEntity extends BaseEntity<Integer> {
     private String title;
-    private String content;
+    private Integer channelId;
+    private Integer userId;
+    private Integer moduleId;
+    private String author;
+    private String description;
+    private String titleImg;
 }

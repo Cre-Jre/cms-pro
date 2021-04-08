@@ -5,6 +5,9 @@
 <@main.layout>
     <@form.layoutForm>
         <input type="hidden" name="modelId" value="${modelId!}"/>
+        <input type="hidden" name="channelId" id="channelId">
+        <input type="hidden" name="topicId" id="topicId">
+
         <@form.layoutItem label="上级栏目" required=true>
             <ul id="channelName"></ul>
         </@form.layoutItem>
@@ -16,18 +19,18 @@
             <#if item.single.getOrdinal()==2>
                 <#if item.field="titleImg">
                     <@form.layoutItem label="${item.label}">
-                        <@form.imageUpload name="ext.titleImg" className="titleImg"></@form.imageUpload>
+                        <@form.imageUpload name="titleImg" className="titleImg"></@form.imageUpload>
                     </@form.layoutItem>
                 </#if>
             <#--占据一行   -->
             <#else>
                 <#if item.field=="title">
                     <@form.layoutItem label="${item.label}" flex="100" required=true>
-                        <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                        <input type="text" name="title" lay-verify="required" autocomplete="off" class="layui-input">
                     </@form.layoutItem>
                 <#elseif item.field=="description">
                     <@form.layoutItem label="${item.label}" flex="100">
-                        <textarea type="textarea" name="ext.description" class="layui-input" style="height:100px"></textarea>
+                        <textarea type="textarea" name="description" class="layui-input" style="height:100px"></textarea>
                     </@form.layoutItem>
                 <#elseif item.field=="txt">
                     <@form.layoutItem label="${item.label}" flex="100">
@@ -50,8 +53,14 @@
     }
     LayUtil.imageUpload.init({elem:".titleImg"},PhotoViewer);
 
-    LayUtil.form.init(function () {
-
+    LayUtil.form.init(function (inner) {
+        inner.submit(function (form) {
+            //如果有编辑器
+            if($("#editor").length){
+                form.field["content"]=CKEDITOR.instances.editor.getData();
+            }
+            core.http({url: OPERATION_URL, data: form.field})
+        });
     })
 
     //下拉树形
@@ -62,6 +71,9 @@
         title: "name",
         request: {orderBy: "parentId=asc"}
     },function(selectTree, channelTree){
+        channelTree.on("node('channelName')", function (obj) {
+            $("#channelId").val(obj.param.nodeId);
+        });
         //专题下拉
         selectTree.render({
             elem: '#tree',
