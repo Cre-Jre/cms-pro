@@ -1,0 +1,47 @@
+<#import "/layout/backend/main.ftl" as main>
+<#import "/layout/backend/form.ftl" as form>
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/dtree_tree.css">
+<link rel="stylesheet" href="${basePath}/admin/layui/layui_ext/dtree/font/dtreefont.css">
+<@main.layout>
+    <@form.layoutForm>
+        <input type="hidden" name="modelId" value="${modelId!}"/>
+        <@form.layoutItem label="上级栏目" required=true>
+            <ul id="channelName"></ul>
+        </@form.layoutItem>
+        <@form.layoutItem label="栏目模型" required=true>
+            <input type="text" autocomplete="off" class="layui-input" value="${modelName!}" disabled>
+        </@form.layoutItem>
+        <#list modelItem as item>
+        <#--非独占一行-->
+            <#if item.single.getOrdinal()==2>
+                <#if item.field=="name">
+                    <@form.layoutItem label="${item.label}" required=true>
+                        <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                    </@form.layoutItem>
+                <#elseif item.field=="path">
+                    <@form.layoutItem label="${item.label}" required=true>
+                        <input type="text" name="path" lay-verify="required" autocomplete="off" class="layui-input">
+                    </@form.layoutItem>
+                </#if>
+            <#--占据一行   -->
+            <#else>
+
+            </#if>
+        </#list>
+        <@form.layoutSubmit></@form.layoutSubmit>
+    </@form.layoutForm>
+</@main.layout>
+<script>
+    LayUtil.form.init(function () {
+
+    })
+
+    //下拉树形
+    LayUtil.selectTree.init({
+        elem: '#channelName',
+        url: ADMIN_PATH + "/channel/tree.do",
+        method: "post",
+        title: "name",
+        request: {orderBy: "parentId=asc"}
+    });
+</script>

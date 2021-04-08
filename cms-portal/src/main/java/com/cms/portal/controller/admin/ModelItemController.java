@@ -7,6 +7,7 @@ import com.cms.dao.enums.ModelItemRequiredEnum;
 import com.cms.dao.enums.ModelItemSingleEnum;
 import com.cms.service.api.CmsModelItemService;
 import com.cms.service.dto.CmsModelItemDto;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,8 @@ public class ModelItemController {
         model.addAttribute("channelModel",channelModel);
         List<CmsModelItemDto> checkedModelItemList = cmsModelItemService.getByModelIdAndChannelModel(modelId, channelModel);
         List<String> checkedModelItem = checkedModelItemList.stream().map(CmsModelItemDto::getField).collect(Collectors.toList());
-        model.addAttribute("defaultModelItem",defaultChannelModelItemList().stream().filter(x->!checkedModelItem.contains(x.getField())).collect(Collectors.toList()));
+        List<CmsModelItemDto> defaultModelItemList = BooleanUtils.isTrue(channelModel) ? defaultChannelModelItemList() : defaultContentModelItemList();
+        model.addAttribute("defaultModelItem",defaultModelItemList.stream().filter(x->!checkedModelItem.contains(x.getField())).collect(Collectors.toList()));
         model.addAttribute("checkedModelItem",checkedModelItemList);
         return UtilsTemplate.adminTemplate("model","itemIndex");
     }
@@ -74,7 +76,7 @@ public class ModelItemController {
     @PostMapping("defaultSetting.do")
     @ResponseBody
     public Result<String> doDefaultSetting(String[] defaultField,Integer modelId,Boolean channelModel){
-        List<CmsModelItemDto> defaultModelItemList = defaultChannelModelItemList();
+        List<CmsModelItemDto> defaultModelItemList = BooleanUtils.isTrue(channelModel) ? defaultChannelModelItemList() : defaultContentModelItemList();
         List<String> selectModelItemList = Arrays.asList(defaultField);
         cmsModelItemService.batchInsert(defaultModelItemList.stream().filter(x->selectModelItemList.contains(x.getField())).peek(y->{
             y.setModelId(modelId);
