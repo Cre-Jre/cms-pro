@@ -170,4 +170,52 @@ public class UtilsHttp {
         }
     }
 
+    /**
+     * 构建前端url信息
+     */
+    public static class FrontUrlInfo{
+        /**
+         * 当前页
+         */
+        private int pageCurrent;
+        /**
+         * 前缀
+         */
+        private String prefix;
+        /**
+         * 后缀
+         */
+        private String suffix;
+
+        public int getPageCurrent() {
+            return pageCurrent;
+        }
+
+        public void setPageCurrent(int pageCurrent) {
+            this.pageCurrent = pageCurrent;
+        }
+
+        public String getPrefix() {
+            return prefix;
+        }
+
+        public void setPrefix(String prefix) {
+            this.prefix = prefix;
+        }
+
+        public String getSuffix() {
+            return suffix;
+        }
+
+        public void setSuffix(String suffix) {
+            this.suffix = suffix;
+        }
+
+        public FrontUrlInfo(int pageCurrent, String prefix, String suffix) {
+            this.pageCurrent = pageCurrent;
+            this.prefix = prefix;
+            this.suffix = suffix;
+        }
+    }
+
 }
