@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="${basePath}/common/js/jq.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text" name="content" value="${oldq!}" maxlength="50" autocomplete="off" class="searchCon"
+           style="width:202px;">
+    <button type="submit" @click="doPage(1)">提交</button>
+
+    <el-pagination
+            v-show="show"
+            layout="prev, pager, next"
+            @current-change="handleSizeChange"
+            :page-size="2"
+            :total="total">
+    </el-pagination>
+</div>
+
+</body>
+</html>
+<script>
+    new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                show:false,
+                currentPage:2,
+                page: 5,
+                total:1
+            }
+        },
+        methods: {
+            handleSizeChange(val){
+                this.doPage(val)
+            },
+            doPage(pageCurrent){
+                let that = this;
+                $.ajax({
+                    url:"${basePath}/search.jspx",
+                    method:"post",
+                    data:{
+                        content:"母亲",
+                        pageCurrent:pageCurrent
+                    },
+                    contentType:"application/x-www-form-urlencoded",
+                    dataType:"json",
+                    success:function(data){
+                        that.total = data.data.pageCount;
+                        that.show = true
+                    }
+                })
+            }
+        }
+    })
+
+</script>

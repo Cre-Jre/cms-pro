@@ -1,9 +1,14 @@
 package com.cms.portal.controller.front;
 
+import com.cms.contex.foundation.Result;
+import com.cms.contex.utils.UtilsHttp;
 import com.cms.contex.utils.UtilsServletContext;
 import com.cms.contex.utils.UtilsTemplate;
+import com.cms.core.foundation.Page;
 import com.cms.dao.enums.StaticWebSuffixEnum;
+import com.cms.service.api.CmsContentListenerService;
 import com.cms.service.api.CmsSiteService;
+import com.cms.service.dto.CmsContentDto;
 import com.cms.service.dto.CmsSiteDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
@@ -12,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +34,8 @@ public class DynamicPageController {
     private CmsSiteService cmsSiteService;
     @Autowired
     private UtilsServletContext utilsServletContext;
+    @Autowired
+    private CmsContentListenerService cmsContentListenerService;
 
     @GetMapping("index.shtml")
     public String index(HttpServletRequest request, HttpServletResponse response, Model model){
@@ -57,5 +66,23 @@ public class DynamicPageController {
             return BooleanUtils.isTrue(FileUtil.canReadFile(new File(utilsServletContext.getRealPath(staticDir+"/index"+ StaticWebSuffixEnum.HTML.getLabel()))));
         }
         return false;
+    }
+
+    @GetMapping("search.shtml")
+    public String toSearch(Model model){
+        model.addAttribute("basePath",utilsServletContext.getContextPath());
+        return UtilsTemplate.frontTemplate("search","index");
+    }
+
+    @PostMapping("search.jspx")
+    @ResponseBody
+    public Result<Page<CmsContentDto>> doSearch(String content){
+        UtilsHttp.Page pageInfo = UtilsHttp.getPageInfo();
+        try {
+            return Result.success(cmsContentListenerService.query(content,pageInfo.getPageCurrent()));
+        } catch (Exception e) {
+            log.error("搜索查询异常=[{}]",e.getMessage());
+        }
+        return Result.success();
     }
 }

@@ -3,6 +3,7 @@ package com.cms.portal.controller.admin;
 import com.cms.contex.foundation.Result;
 import com.cms.contex.utils.UtilsShiro;
 import com.cms.contex.utils.UtilsTemplate;
+import com.cms.service.api.CmsContentListenerService;
 import com.cms.service.api.CmsContentService;
 import com.cms.service.api.CmsModelItemService;
 import com.cms.service.dto.CmsContentDto;
@@ -23,6 +24,8 @@ public class ContentController {
     private CmsContentService cmsContentService;
     @Autowired
     private CmsModelItemService cmsModelItemService;
+    @Autowired
+    private CmsContentListenerService cmsContentListenerService;
 
     @GetMapping("index.do")
     public String toIndex(){
@@ -43,6 +46,7 @@ public class ContentController {
         cmsContentDto.setUserId(cmsUserDto.getId());
         cmsContentService.save(cmsContentDto);
         cmsContentService.afterOperationStatus(cmsContentDto);
+        cmsContentListenerService.add(cmsContentDto);
         return Result.success();
     }
 }

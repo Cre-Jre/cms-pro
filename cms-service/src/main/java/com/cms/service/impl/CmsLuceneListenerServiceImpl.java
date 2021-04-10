@@ -1,8 +1,10 @@
 package com.cms.service.impl;
 
 import com.cms.contex.utils.UtilsServletContext;
+import com.cms.core.foundation.Page;
 import com.cms.service.api.CmsContentListenerService;
 import com.cms.service.dto.CmsContentDto;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
@@ -25,6 +27,8 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -94,8 +98,45 @@ public class CmsLuceneListenerServiceImpl implements CmsContentListenerService {
         return document;
     }
 
+    @Override
+    public Page<CmsContentDto> query(String content, int pageCurrent) throws Exception {
+        FSDirectory fsDirectory = FSDirectory.open(new File(utilsServletContext.getRealPath(PATH_LUCENE)));
+        DirectoryReader directoryReader = DirectoryReader.open(fsDirectory);
+        IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
+        String[] fields = {"title","content"};
+        IKAnalyzer ikAnalyzer = new IKAnalyzer();
+        MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Version.LUCENE_46, fields, ikAnalyzer);
+        Query query = multiFieldQueryParser.parse(content);
+        int pageSize = 2;
+        ScoreDoc lastDoc = null;
+        TopDocs topDocs = null;
+        List<CmsContentDto> list = Lists.newArrayList();
+        while(pageCurrent>0){
+            topDocs = indexSearcher.searchAfter(lastDoc, query, pageSize);
+            if(topDocs.scoreDocs.length==0){
+                break;
+            }
+            lastDoc = topDocs.scoreDocs[topDocs.scoreDocs.length-1];
+            --pageCurrent;
+        }
+        for(ScoreDoc doc:topDocs.scoreDocs){
+            int docId = doc.doc;
+            Document document = indexSearcher.doc(docId);
+            CmsContentDto cmsContentDto = new CmsContentDto();
+            cmsContentDto.setTitle(document.get("title"));
+            cmsContentDto.setContent(document.get("content"));
+            list.add(cmsContentDto);
+        }
+        //总条数   第5页的数据   那么会依次查  第1 第2 第3 第4
+        int totalHits = topDocs.totalHits;
+        Page<CmsContentDto> page = new Page<>((long) totalHits, (totalHits > 0) ? (totalHits - 1) / pageSize + 1 : 0, list);
+        directoryReader.close();
+        fsDirectory.close();
+        return page;
+    }
+
     public static void main(String[] args) throws IOException, ParseException {
-        FSDirectory fsDirectory = FSDirectory.open(new File("D:\\workSpace\\cms-pro\\cms-portal\\target\\cms-portal\\WEB-INF\\lucene"));
+        FSDirectory fsDirectory = FSDirectory.open(new File("D:\\project\\cms-pro\\out\\WEB-INF\\lucene"));
         DirectoryReader directoryReader = DirectoryReader.open(fsDirectory);
         IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
         String[] fields = {"title","content"};
