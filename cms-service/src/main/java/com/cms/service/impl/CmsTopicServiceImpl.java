@@ -48,7 +48,7 @@ public class CmsTopicServiceImpl implements CmsTopicService {
         SearchProvider of = SearchProvider.of(CmsTopicConverter.CONVERTER.dtoToEntity(dto));
         com.github.pagehelper.Page<CmsTopicEntity> page = PageHelper.startPage(pageInfo.getPageCurrent(), pageInfo.getPageSize()).
                 doSelectPage(() -> cmsTopicMapper.selectBySearchProvider(of));
-        return new Page<>(page.getTotal(),CmsTopicConverter.CONVERTER.entityToDto(page.getResult()));
+        return new Page<>(page.getTotal(),page.getPages(),CmsTopicConverter.CONVERTER.entityToDto(page.getResult()));
     }
 
     @Override

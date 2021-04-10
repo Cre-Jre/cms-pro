@@ -26,7 +26,7 @@ public class TopicController {
     @GetMapping("index*.jspx")
     public String toIndex(ModelMap map){
         UtilsFront.assignPageInfo(map);
-        return UtilsTemplate.frontTemplate("topic","topic");
+        return UtilsTemplate.frontTemplate("topic","index");
     }
 
     @GetMapping("{id}.jspx")
