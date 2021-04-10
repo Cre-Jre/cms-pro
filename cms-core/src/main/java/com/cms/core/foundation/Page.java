@@ -8,6 +8,11 @@ public class Page<T> implements Serializable {
      * 分页条数
      */
     private Long pageCount;
+
+    /**
+     * 总页数
+     */
+    private Integer pages;
     /**
      * 内容
      */
@@ -16,6 +21,12 @@ public class Page<T> implements Serializable {
     public Page(Long pageCount, List<T> content) {
         this.pageCount = pageCount;
         this.content = content;
+    }
+
+    public Page(Long pageCount,Integer pages, List<T> content) {
+        this.pageCount = pageCount;
+        this.content = content;
+        this.pages = pages;
     }
 
     public Long getPageCount() {
@@ -32,5 +43,13 @@ public class Page<T> implements Serializable {
 
     public void setContent(List<T> content) {
         this.content = content;
+    }
+
+    public Integer getPages() {
+        return pages;
+    }
+
+    public void setPages(Integer pages) {
+        this.pages = pages;
     }
 }

@@ -1,0 +1,86 @@
+<style>
+    a {
+        text-decoration: none;
+        color: #333;
+        cursor: pointer;
+    }
+    .page-large {
+        margin: 40px 0 20px;
+        text-align: center;
+    }
+    .page-large .prev-page {
+        background: url("/front/images/small-prev-page.png") center center no-repeat;
+    }
+    .page-large .next-page {
+        background: url("/front/images/small-next-page.png") center center no-repeat;
+    }
+    .page-large a {
+        min-width: 34px;
+        height: 34px;
+        display: inline-block;
+        border: 1px solid #d5d5d5;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        line-height: 34px;
+        text-align: center;
+        float: left;
+        text-indent: 0;
+        color: #666666;
+        font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0 3px;
+    }
+    .page-large a.on {
+        border: 1px solid #ef3838;
+        background: #ef3838;
+        color: #fff;
+    }
+</style>
+[#assign beginNum = 1/]
+[#assign endNum = totalPage/]
+[#--上一页--]
+[#assign previousPage=pageCurrent-1/]
+[#--下一页--]
+[#assign nextPage=pageCurrent+1/]
+[#if totalPage>10]
+    [#assign beginNum=pageCurrent-5/]
+    [#assign endNum=pageCurrent+4/]
+    [#if beginNum<1]
+        [#assign beginNum=1/]
+        [#assign endNum = beginNum +9/]
+    [/#if]
+    [#if endNum>totalPage]
+        [#assign endNum = totalPage/]
+    [/#if]
+[/#if]
+<div class="page-large">
+    <div style="display:inline-block;">
+        [#if pageCurrent>1]
+            [#if pageCurrent==2]
+                <a href="#" class="prev-page" onclick="location.href='${prefix}${suffix}'"></a>
+            [#else]
+                <a href="#" class="prev-page" onclick="location.href='${prefix}_${previousPage}${suffix}'"></a>
+            [/#if]
+        [/#if]
+        [#list beginNum..endNum as p]
+            [#if pageCurrent==p]
+                [#if p==1]
+                    <a class="Num on" href="#" onclick="location.href='${prefix}${suffix}'">${p}</a>
+                [#else]
+                    <a class="Num on" href="#" onclick="location.href='${prefix}_${p}${suffix}'">${p}</a>
+                [/#if]
+            [#else]
+                [#if p==1]
+                    <a class="Num" href="#" onclick="location.href='${prefix}${suffix}'">${p}</a>
+                [#else]
+                    <a class="Num" href="#" onclick="location.href='${prefix}_${p}${suffix}'">${p}</a>
+                [/#if]
+            [/#if]
+        [/#list]
+        [#if pageCurrent<totalPage]
+            <a class="next-page" href="#" onclick="location.href='${prefix}_${nextPage}${suffix}'"></a>
+        [/#if]
+    </div>
+</div>

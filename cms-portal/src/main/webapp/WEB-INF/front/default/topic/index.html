@@ -1,0 +1,77 @@
+<style>
+    .main {
+        padding: 32px 0 50px;
+        position: relative;
+    }
+    .container {
+        width: 1200px;
+        margin: 0 auto;
+    }
+    .content_w850 {
+        width: 850px;
+        float: left;
+    }
+    .content_w850 h1 {
+        color: #1f1f1f;
+        font-size: 24px;
+        font-weight: normal;
+    }
+    .content-txt {
+        margin-top: 45px;
+        color: #202020;
+        font-size: 16px;
+        line-height: 30px;
+        padding-bottom: 40px;
+    }
+    .topic-item {
+        width: 100%;
+        padding: 20px 0;
+        border-bottom: 1px dotted #e3e3e3;
+    }
+    .topic-item-img {
+        float: left;
+    }
+    .topic-item-img img {
+        width: 310px;
+        height: 100px;
+        margin-right: 20px;
+    }
+    .topic-item-title {
+        font-size: 16px;
+        color: #1a1a1a;
+        font-weight: 600;
+    }
+    .topic-item-des {
+        font-size: 14px;
+        color: #333333;
+        line-height: 20px;
+        margin-top: 10px;
+    }
+    .clearfix:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: ".";
+        clear: both;
+        height: 0;
+    }
+</style>
+
+
+<div class="main container clearfix">
+    <section class="content_w850">
+        <h1>专题专栏</h1>
+        <div class="content-txt">
+            [@cms_topic_page]
+                [#list result as t]
+                    <div class="topic-item clearfix">
+                        <div class="topic-item-img"><a href="${basePath}/topic/${t.id}.jspx" target="_blank"><img src="${t.titleImg!}"></a></div>
+                        <div class="topic-item-title"><a href="${basePath}/topic/${t.id}.jspx" target="_blank">${t.name!}</a></div>
+                        <div class="topic-item-des">${t.description!}</div>
+                    </div>
+                [/#list]
+                [#include "../include/page.html"]
+            [/@cms_topic_page]
+        </div>
+    </section>
+</div>
