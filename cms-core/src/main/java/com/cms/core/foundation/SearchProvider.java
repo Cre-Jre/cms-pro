@@ -71,7 +71,7 @@ public class SearchProvider<T extends BaseEntity> {
 
         /**
          * 专题id
-         * @param count
+         * @param topicId
          */
         private Integer topicId;
 

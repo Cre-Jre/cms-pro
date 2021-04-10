@@ -47,6 +47,8 @@
 
     <bean id="cmsTopicDirective" class="com.cms.portal.freemarker.directive.CmsTopicDirective"/>
 
+    <bean id="cmsContentListDirective" class="com.cms.portal.freemarker.directive.ContentListDirective"/>
+
     <!--freemarker的配置-->
     <bean id="freeMarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <!--freemarker模板路径位置-->
@@ -67,6 +69,7 @@
                 <entry key="shiro" value-ref="shiroTags"/>
                 <entry key="cms_friend_link_directive" value-ref="cmsFriendLinkDirective"/>
                 <entry key="cms_topic_list" value-ref="cmsTopicDirective"/>
+                <entry key="cms_content_list" value-ref="cmsContentListDirective"/>
             </map>
         </property>
     </bean>

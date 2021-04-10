@@ -79,6 +79,7 @@
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="createTime" column="create_time"/>
+        <result property="channelId" column="channel_id"/>
         <result property="titleImg" column="title_img"/>
         <association property="contentTxt" javaType="com.cms.dao.entity.CmsContentTxtEntity">
             <result column="content" property="content"/>
