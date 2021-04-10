@@ -69,9 +69,21 @@ public class SearchProvider<T extends BaseEntity> {
          */
         private Integer count;
 
+        /**
+         * 专题id
+         * @param count
+         */
+        private Integer topicId;
+
         public Inner(Integer count) {
             this.count = count;
         }
+
+        public Inner(Integer count,Integer topicId) {
+            this.count = count;
+            this.topicId = topicId;
+        }
+
 
         public Integer getCount() {
             return count;
@@ -79,6 +91,14 @@ public class SearchProvider<T extends BaseEntity> {
 
         public void setCount(Integer count) {
             this.count = count;
+        }
+
+        public Integer getTopicId() {
+            return topicId;
+        }
+
+        public void setTopicId(Integer topicId) {
+            this.topicId = topicId;
         }
     }
 

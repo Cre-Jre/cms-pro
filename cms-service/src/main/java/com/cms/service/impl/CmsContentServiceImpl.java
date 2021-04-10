@@ -2,6 +2,7 @@ package com.cms.service.impl;
 
 import com.cms.contex.utils.UtilsHttp;
 import com.cms.core.foundation.Page;
+import com.cms.core.foundation.SearchProvider;
 import com.cms.dao.entity.CmsContentEntity;
 import com.cms.dao.mapper.CmsContentMapper;
 import com.cms.dao.mapper.CmsContentTopicMapper;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+
+import java.util.List;
 
 @Service
 public class CmsContentServiceImpl implements CmsContentService {
@@ -79,5 +82,10 @@ public class CmsContentServiceImpl implements CmsContentService {
         WebApplicationContext webApplicationContext = UtilsHttp.getWebApplicationContext(UtilsHttp.getRequest());
         FreeMarkerConfigurer freeMarkerConfigurer = webApplicationContext.getBean(FreeMarkerConfigurer.class);
         cmsStaticPageService.staticContent(cmsContentDto,freeMarkerConfigurer.getConfiguration());
+    }
+
+    @Override
+    public List<CmsContentDto> getListByDirective(SearchProvider.Inner inner) {
+        return CmsContentConverter.CONVERTER.entityToDto(cmsContentMapper.getListByDirective(inner));
     }
 }

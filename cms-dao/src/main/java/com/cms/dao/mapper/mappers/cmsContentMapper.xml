@@ -75,6 +75,17 @@
         <result property="administrator" column="is_super"/>
     </resultMap>
 
+    <resultMap id="getListByDirectiveResultMap" type="com.cms.dao.entity.CmsContentEntity">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="createTime" column="create_time"/>
+        <result property="titleImg" column="title_img"/>
+        <association property="contentTxt" javaType="com.cms.dao.entity.CmsContentTxtEntity">
+            <result column="content" property="content"/>
+        </association>
+        <association property="cmsChannel" select="com.cms.dao.mapper.CmsChannelMapper.selectById" column="channel_id"/>
+    </resultMap>
+
     <insert id="save">
         <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
             select last_insert_id()
@@ -90,26 +101,6 @@
         where id = #{id}
     </update>
 
-    <update id="updateLoginCount">
-        update cms_user
-        set login_count = login_count + 1
-        where id = #{id}
-    </update>
-
-    <update id="deleteById">
-        update cms_user
-        set is_delete = 0
-        where id = #{id}
-    </update>
-
-    <select id="getByUsername"  resultMap="baseResultMap">
-        select <include refid="baseColumn"/> from cms_user a where username = #{username} and is_delete = 1
-    </select>
-
-    <select id="getByEmail"  resultMap="baseResultMap">
-        select <include refid="baseColumn"/> from cms_user a where email = #{email} and is_delete = 1
-    </select>
-
     <select id="selectBySearchProvider" parameterType="SearchProvider" resultMap="baseResultMap">
         select
         <include refid="baseColumn"/>,c.name as roleName
@@ -124,8 +115,18 @@
         order by id desc
     </select>
 
-    <select id="selectById"  resultMap="baseResultMap">
-        select <include refid="baseColumn"/> from cms_user a where id = #{id} and is_delete = 1
+    <select id="getListByDirective"  resultMap="getListByDirectiveResultMap"  flushCache="true">
+        select a.id,a.channel_id,a.title,a.create_time,a.title_img,c.content from cms_content a
+        left join cms_content_topic b on a.id = b.content_id
+        left join cms_content_txt c on a.id = c.content_id
+        <where>
+            <if test="topicId!=null">
+                and b.topic_id=#{topicId}
+            </if>
+        </where>
+        <if test="count!=null">
+            limit #{count}
+        </if>
     </select>
 
 </mapper>

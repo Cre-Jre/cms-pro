@@ -14,4 +14,7 @@ public class CmsContentEntity extends BaseEntity<Integer> {
     private String author;
     private String description;
     private String titleImg;
+
+    private CmsChannelEntity cmsChannel;
+    private CmsContentTxtEntity contentTxt;
 }

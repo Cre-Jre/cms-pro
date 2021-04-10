@@ -57,7 +57,7 @@
                     <div class="home-jczt">
                         [@cms_topic_list count='3']
                             [#list result as t]
-                                <a href="" target="_blank"><img src="${t.titleImg!}" width="290px" height="94px"></a>
+                                <a href="/topic/${t.id}.jspx" target="_blank"><img src="${t.titleImg!}" width="290px" height="94px"></a>
                             [/#list]
                         [/@cms_topic_list]
                     </div>
@@ -89,7 +89,7 @@
         <ul>
             [@cms_friend_link_directive]
                 [#list  result as item]
-                    <li><a href="${item.url!}" rel="nofollow" target="_blank">${item.name!}</a></li>
+                   <li><a href="${item.url!}" rel="nofollow" target="_blank">${item.name!}</a></li>
                 [/#list]
             [/@cms_friend_link_directive]
         </ul>

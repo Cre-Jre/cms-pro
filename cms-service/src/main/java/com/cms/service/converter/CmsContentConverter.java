@@ -5,6 +5,8 @@ import com.cms.service.dto.CmsContentDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface CmsContentConverter {
     CmsContentConverter CONVERTER = Mappers.getMapper(CmsContentConverter.class);
@@ -13,4 +15,5 @@ public interface CmsContentConverter {
 
     CmsContentEntity dtoToEntity(CmsContentDto dto);
 
+    List<CmsContentDto> entityToDto(List<CmsContentEntity> entities);
 }
