@@ -9,13 +9,13 @@ import java.util.List;
 public interface CmsContentService extends BaseService<CmsContentDto,Integer> {
 
     /**
-     * 内容后置操作
+     * 鍐呭鍚庣疆鎿嶄綔
      * @param cmsContentDto
      */
     void afterOperationStatus(CmsContentDto cmsContentDto);
 
     /**
-     * 根据指令获取内容列表
+     * 鏍规嵁鎸囦护鑾峰彇鍐呭鍒楄〃
      * @param inner
      * @return
      */

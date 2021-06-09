@@ -8,7 +8,7 @@ import java.util.List;
 public interface CmsModelService extends BaseService<CmsModelDto,Integer> {
 
     /**
-     * 获取列表数据
+     * 鑾峰彇鍒楄〃鏁版嵁
      * @param cmsModelDto
      * @return
      */

@@ -8,15 +8,15 @@ import java.util.List;
 public interface CmsModelItemService extends BaseService<CmsModelItemDto,Integer> {
 
     /**
-     * ÅúÁ¿²åÈë
+     * æ‰¹é‡æ’å…¥
      * @param list
      */
     void batchInsert(List<CmsModelItemDto> list);
 
     /**
-     * ¸ù¾İÄ£ĞÍidºÍÊÇ·ñÀ¸Ä¿Ä£ĞÍ½øĞĞ²éÑ¯
-     * @param modelId           Ä£ĞÍid
-     * @param channelModel      ÊÇ·ñÀ¸Ä¿Ä£ĞÍ
+     * æ ¹æ®æ¨¡å‹idå’Œæ˜¯å¦æ ç›®æ¨¡å‹è¿›è¡ŒæŸ¥è¯¢
+     * @param modelId           æ¨¡å‹id
+     * @param channelModel      æ˜¯å¦æ ç›®æ¨¡å‹
      * @return
      */
     List<CmsModelItemDto> getByModelIdAndChannelModel(Integer modelId,Boolean channelModel);

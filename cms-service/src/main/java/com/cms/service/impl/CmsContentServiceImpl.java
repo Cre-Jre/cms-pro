@@ -38,11 +38,11 @@ public class CmsContentServiceImpl implements CmsContentService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(CmsContentDto dto) {
-        //content±í
+        //contentè¡¨
         CmsContentEntity cmsContentEntity = CmsContentConverter.CONVERTER.dtoToEntity(dto);
         cmsContentMapper.save(cmsContentEntity);
 
-        //content_txt±í
+        //content_txtè¡¨
         Integer id = cmsContentEntity.getId();
         dto.setId(id);
         CmsContentTxtDto cmsContentTxtDto = new CmsContentTxtDto();
@@ -50,7 +50,7 @@ public class CmsContentServiceImpl implements CmsContentService {
         cmsContentTxtDto.setContent(dto.getContent());
         cmsContentTxtMapper.save(CmsContentTxtConverter.CONVERTER.dtoToEntity(cmsContentTxtDto));
 
-        //content_topic±í
+        //content_topicè¡¨
         CmsContentTopicDto cmsContentTopicDto = new CmsContentTopicDto();
         cmsContentTopicDto.setContentId(id);
         cmsContentTopicDto.setTopicId(dto.getTopicId());

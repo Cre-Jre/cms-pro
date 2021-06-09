@@ -19,8 +19,8 @@ public class UnificationExceptionHandler {
 
     /**
      * 方法参数异常处理
-     * @param exception
-     * @return
+     * @param exception  ConstraintViolationException
+     * @return           Result
      */
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseBody

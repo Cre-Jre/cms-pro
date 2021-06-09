@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 @Getter
 @Setter
 public class CmsUserFilter extends UserFilter {
-    private String  adminLoginUrl;
+    private String adminLoginUrl;
     private String adminPrefix;
 
     @Override
@@ -20,7 +20,7 @@ public class CmsUserFilter extends UserFilter {
         HttpServletRequest request = (HttpServletRequest) req;
         this.saveRequest(request);
         String requestURI = request.getRequestURI();
-        WebUtils.issueRedirect(request,response,(requestURI.startsWith(adminPrefix))? adminLoginUrl : this.getLoginUrl());
+        WebUtils.issueRedirect(request, response, (requestURI.startsWith(adminPrefix)) ? adminLoginUrl : this.getLoginUrl());
         return false;
     }
 }

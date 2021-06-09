@@ -26,16 +26,16 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        HandlerMethod handler1 = (HandlerMethod) handler;
-        DoLog doLog = handler1.getMethodAnnotation(DoLog.class);
-        Optional.ofNullable(doLog).ifPresent(x->{
-            String requestURI = request.getRequestURI();
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        DoLog doLog = handlerMethod.getMethodAnnotation(DoLog.class);
+        Optional.ofNullable(doLog).ifPresent(x -> {
+            String url = request.getRequestURI();
             String ip = UtilsHttp.getRemoteAddress();
             String content = doLog.content();
-            threadPoolTaskExecutor.execute(()->{
+            threadPoolTaskExecutor.execute(() -> {
                 Subject subject = UtilsShiro.getSubject();
                 CmsUserDto cmsUserDto = (CmsUserDto) subject.getPrincipal();
-                cmsLogService.save(CmsLogDto.of(cmsUserDto.getId(),cmsUserDto.getUsername(),ip,requestURI,content));
+                cmsLogService.save(CmsLogDto.of(cmsUserDto.getId(), cmsUserDto.getUsername(), ip, url, content));
             });
         });
         super.postHandle(request, response, handler, modelAndView);

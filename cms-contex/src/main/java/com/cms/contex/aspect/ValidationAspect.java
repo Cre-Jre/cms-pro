@@ -13,7 +13,7 @@ import org.springframework.validation.BindingResult;
 @Aspect
 //aop的实现
 public class ValidationAspect {
-    //定义为切入点
+
     @Pointcut("@annotation(com.cms.core.annotation.DoValid)")
     public void pointcut(){
     }

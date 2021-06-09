@@ -47,8 +47,8 @@ public class TopicController {
 
     @PostMapping("delete.do")
     @ResponseBody
-    @DoLog(content = "É¾³ý×¨Ìâ")
-    public Result<String> doDelete(@NotNull(message = "ÇëÊäÈëid") Integer id){
+    @DoLog(content = "åˆ é™¤ä¸“é¢˜")
+    public Result<String> doDelete(@NotNull(message = "è¯·è¾“å…¥id") Integer id){
         cmsTopicService.deleteById(id);
         return Result.success();
     }

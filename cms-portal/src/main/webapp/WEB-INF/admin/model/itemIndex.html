@@ -15,10 +15,10 @@
         }
     </style>
     <form class="layui-form">
-    <a class="layui-btn layui-btn-sm layui-bg-blue" href="${adminPath}/modelItem/add.do?channelModel=1&modelId=${modelId}">
-        <i class="layui-icon layui-icon-add-1"></i>添加</a>
-    <a class="layui-btn layui-btn-sm layui-bg-red" onclick="remove()">
-        <i class="layui-icon layui-icon-delete"></i>批量删除</a>
+        <a class="layui-btn layui-btn-sm layui-bg-blue" href="${adminPath}/modelItem/add.do?channelModel=1&modelId=${modelId}">
+            <i class="layui-icon layui-icon-add-1"></i>添加</a>
+        <a class="layui-btn layui-btn-sm layui-bg-red" onclick="remove()">
+            <i class="layui-icon layui-icon-delete"></i>批量删除</a>
         <table class="layui-table" lay-even="" lay-skin="nob">
             <colgroup>
                 <col width="70">
@@ -72,7 +72,7 @@
             </#list>
             </tbody>
         </table>
-</form>
+    </form>
     <p class="p20">系统默认字段<span class="red">(标红字段为必选字段)</span></p>
     <form class="layui-form" id="defaultItemForm">
         <input type="hidden" name="modelId" value="${modelId}">

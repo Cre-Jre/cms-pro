@@ -25,51 +25,51 @@ let core={
         //load: 加载loading autoComplete：自动完成  goBack自动回退
         let opt={load:true,autoComplete:true,goBack:true},loadHandler,loadTime,
             options ={
-                url:"",
-                method:"post",
-                contentType:"application/x-www-form-urlencoded",
-                dataType:"json",
-                beforeSend:function(){
-                    this.load &&  ((loadTime = new Date().getTime()) && (loadHandler = LayUtil.layer.init(function(inner,layer){
-                        inner.loading(0,{shade:0.1})
-                    })))
-                },
-                success:function(res){
-                    //处理loading 加载
-                    if(this.load && loadHandler){
-                        let time = 0;
-                        if(new Date().getTime()-loadTime<500){
-                            time = 500;
-                        }
-                        setTimeout(function(){
-                            loadHandler.closeLoading();
-                        },time)
+            url:"",
+            method:"post",
+            contentType:"application/x-www-form-urlencoded",
+            dataType:"json",
+            beforeSend:function(){
+                this.load &&  ((loadTime = new Date().getTime()) && (loadHandler = LayUtil.layer.init(function(inner,layer){
+                    inner.loading(0,{shade:0.1})
+                })))
+            },
+            success:function(res){
+                //处理loading 加载
+                if(this.load && loadHandler){
+                    let time = 0;
+                    if(new Date().getTime()-loadTime<500){
+                        time = 500;
                     }
-                    let that = this,handler;
-                    //延时
                     setTimeout(function(){
-                        //判断请求接口
-                        switch(res.restCode){
-                            case CONSTANT.HTTP.ERROR:
-                                core.prompt.alert(res.restInfo);
-                                break;
-                            case CONSTANT.HTTP.SUCCESS:
-                                if(that.autoComplete){
-                                    if(that.goBack){
-                                        handler=function(){
-                                            //后退刷新
-                                            window.location.href = document.referrer;
-                                        };
-                                    }
-                                    core.prompt.msg(res.restInfo,{shade:0.3,time:1200},handler);
-                                }
-                                break;
-                        }
-                        //处理自定义回调
-                        (callback instanceof Function) && callback(res)
-                    },600)
+                        loadHandler.closeLoading();
+                    },time)
                 }
-            };
+                let that = this,handler;
+                //延时
+                setTimeout(function(){
+                    //判断请求接口
+                    switch(res.restCode){
+                        case CONSTANT.HTTP.ERROR:
+                            core.prompt.alert(res.restInfo);
+                            break;
+                        case CONSTANT.HTTP.SUCCESS:
+                            if(that.autoComplete){
+                                if(that.goBack){
+                                    handler=function(){
+                                        //后退刷新
+                                        window.location.href = document.referrer;
+                                    };
+                                }
+                                core.prompt.msg(res.restInfo,{shade:0.3,time:1200},handler);
+                            }
+                            break;
+                    }
+                    //处理自定义回调
+                    (callback instanceof Function) && callback(res)
+                },600)
+            }
+        };
         Object.assign(opt,options,option);
         this.cancel=$.ajax(opt);
     },
@@ -113,25 +113,25 @@ let core={
 };
 
 const  CONSTANT = {
-    //http相关
-    HTTP:{
-        SUCCESS:200,
-        ERROR:500
-    },
-    //正则相关
-    REGEXP:{
-        //用户名正则
-        USERNAME: /^(?![_]+$)\w{5,10}$/,
-        //密码正则
-        PASSWORD: /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{7,15}$/
-    },
-    //文件相关配置
-    FILE: {
+  //http相关
+  HTTP:{
+      SUCCESS:200,
+      ERROR:500
+  },
+  //正则相关
+  REGEXP:{
+      //用户名正则
+      USERNAME: /^(?![_]+$)\w{5,10}$/,
+      //密码正则
+      PASSWORD: /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{7,15}$/
+  },
+  //文件相关配置
+  FILE: {
         //文件上传路径
         FILE_URL: ADMIN_PATH + "/upload/file.do",
         //文件上传最大KB 单位 KB 不支持ie8/9
         FILE_UPLOAD_MAX_SIZE: 1000
-    }
+  }
 
 
 };
@@ -302,17 +302,17 @@ LayUtil.prototype = {
             init:function(callback){
                 let that =this;
                 layui.use('form',function(){
-                    that.form = layui.form;
-                    that.form.render();
-                    if(callback instanceof Function){
-                        //自动提交 如果返回undefined
-                        let autoOperation = callback(that,that.form);
-                        if(autoOperation === undefined){
-                            (OPERATION_URL!==undefined && !core.String.isEmpty(OPERATION_URL)) && that.submit(function(data){
-                                core.http({url:OPERATION_URL,data:data.field});
-                            })
+                        that.form = layui.form;
+                        that.form.render();
+                        if(callback instanceof Function){
+                            //自动提交 如果返回undefined
+                            let autoOperation = callback(that,that.form);
+                            if(autoOperation === undefined){
+                                (OPERATION_URL!==undefined && !core.String.isEmpty(OPERATION_URL)) && that.submit(function(data){
+                                    core.http({url:OPERATION_URL,data:data.field});
+                                })
+                            }
                         }
-                    }
                 });
                 return this;
             },

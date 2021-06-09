@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface DoLog {
     /**
-     * 日志内容
+     * 日志的内容
      * @return
      */
     String content();

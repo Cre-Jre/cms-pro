@@ -46,7 +46,7 @@ public class CmsTaskServiceImpl implements CmsTaskService {
     private CmsTaskMapper cmsTaskMapper;
 
     /**
-     * ²ßÂÔmap
+     * ç­–ç•¥map
      * @param dto
      */
     private static final Map<TaskExecutionCycleUnitEnum, TaskCronExpressionStrategy> TASK_CRON_EXPRESSION = new HashMap<TaskExecutionCycleUnitEnum, TaskCronExpressionStrategy>(){{
@@ -58,7 +58,7 @@ public class CmsTaskServiceImpl implements CmsTaskService {
     }};
 
     /**
-     * Ö´ĞĞ¾ßÌåÈÎÎñµÄjob Map
+     * æ‰§è¡Œå…·ä½“ä»»åŠ¡çš„job Map
      * @param dto
      */
     private static final Map<TaskStaticTypeEnum,Class<? extends QuartzJobBean>> TASK_JOB_CLASS_MAP = new HashMap<TaskStaticTypeEnum,Class<? extends QuartzJobBean>>(){{
@@ -78,7 +78,7 @@ public class CmsTaskServiceImpl implements CmsTaskService {
     public void startTask(CmsTaskDto cmsTaskDto){
         TaskExecutionTypeEnum taskExecutionType = cmsTaskDto.getTaskExecutionType();
         String cronExpression = Objects.equals(taskExecutionType, TaskExecutionTypeEnum.EXECUTION_MODE) ? cmsTaskDto.getCronExpression() : TASK_CRON_EXPRESSION.get(cmsTaskDto.getIntervalUnit()).buildCronExpress(cmsTaskDto);
-        log.info("cronExpression±í´ïÊ½=[{}]",cronExpression);
+        log.info("cronExpressionè¡¨è¾¾å¼=[{}]",cronExpression);
         if(StringUtils.contains(cronExpression,"null")){
             return;
         }
@@ -94,7 +94,7 @@ public class CmsTaskServiceImpl implements CmsTaskService {
             cronTriggerFactoryBean.afterPropertiesSet();
             scheduler.scheduleJob(jobDetailFactoryBean.getObject(),cronTriggerFactoryBean.getObject());
         } catch (Exception e) {
-            log.error("Ö´ĞĞ¶¨Ê±ÈÎÎñÊ§°Ü,message=[{}]",e.getMessage());
+            log.error("æ‰§è¡Œå®šæ—¶ä»»åŠ¡å¤±è´¥,message=[{}]",e.getMessage());
             throw new BusinessException(e.getMessage());
         }
     }
@@ -108,10 +108,10 @@ public class CmsTaskServiceImpl implements CmsTaskService {
     public void deleteById(Integer id) {
         CmsTaskDto cmsTaskDto = getById(id);
         if(Objects.isNull(cmsTaskDto)){
-            throw new BusinessException("µ±Ç°ÈÎÎñ²»´æÔÚ");
+            throw new BusinessException("å½“å‰ä»»åŠ¡ä¸å­˜åœ¨");
         }
         if(!deleteJob(cmsTaskDto.getCode()))         {
-            throw new BusinessException("µ±Ç°ÈÎÎñÎŞ·¨É¾³ı,ÇëÁªÏµ¹ÜÀíÔ±");
+            throw new BusinessException("å½“å‰ä»»åŠ¡æ— æ³•åˆ é™¤,è¯·è”ç³»ç®¡ç†å‘˜");
         }
         cmsTaskMapper.deleteById(id);
     }
@@ -120,7 +120,7 @@ public class CmsTaskServiceImpl implements CmsTaskService {
     public void update(CmsTaskDto dto) {
         CmsTaskDto cmsTaskDto = getById(dto.getId());
         if(Objects.isNull(cmsTaskDto)){
-            throw new BusinessException("µ±Ç°ÈÎÎñ²»´æÔÚ");
+            throw new BusinessException("å½“å‰ä»»åŠ¡ä¸å­˜åœ¨");
         }
         deleteJob(cmsTaskDto.getCode());
         dto.setCode(UtilsString.uuid());
@@ -129,16 +129,16 @@ public class CmsTaskServiceImpl implements CmsTaskService {
     }
 
     /**
-     * É¾³ıÄ³¸öÖ¸¶¨Ãû³ÆµÄjob
-     * @param jobName           jobÃû³Æ
+     * åˆ é™¤æŸä¸ªæŒ‡å®šåç§°çš„job
+     * @param jobName           jobåç§°
      */
     public boolean deleteJob(String jobName){
         boolean result = false;
         try {
             result = scheduler.deleteJob(JobKey.jobKey(jobName));
-            log.info("½áÊø[{}]ÈÎÎñ,½á¹û=[{}]",jobName,result);
+            log.info("ç»“æŸ[{}]ä»»åŠ¡,ç»“æœ=[{}]",jobName,result);
         } catch (SchedulerException e) {
-            log.error("É¾³ı¶¨Ê±ÈÎÎñÊ§°Ü=[{}]",e.getMessage());
+            log.error("åˆ é™¤å®šæ—¶ä»»åŠ¡å¤±è´¥=[{}]",e.getMessage());
         }
         return result;
     }

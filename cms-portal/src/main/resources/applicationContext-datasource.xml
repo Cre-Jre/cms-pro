@@ -40,7 +40,7 @@
                         <value>dialect=mysql</value>
                     </property>
                 </bean>
-                <bean id="baseInterceptor" class="com.cms.contex.interceptor.BaseInterceptor"></bean>
+                <bean id="baseInterceptor" class="com.cms.contex.interceptor.BaseInterceptor"/>
             </array>
         </property>
     </bean>
@@ -95,7 +95,6 @@
     <!--  使用@Transactional进行声明式事务管理需要声明下面这行  -->
     <tx:annotation-driven proxy-target-class="true"/>
 
-    <!--配置flyway-->
     <!--配置flyway-->
     <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate" depends-on="dataSource">
         <property name="dataSource" ref="dataSource"/>

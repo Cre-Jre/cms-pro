@@ -11,7 +11,7 @@ public class IndexStaticJob extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext){
-      log.info("执行首页静态化");
+        log.info("执行首页静态化");
         Scheduler scheduler = jobExecutionContext.getScheduler();
         try {
             SchedulerContext context = scheduler.getContext();

@@ -63,6 +63,8 @@
         <mybatisEhcacheVersion>1.1.0</mybatisEhcacheVersion>
         <luceneVersion>4.6.1</luceneVersion>
         <fasterxmlUuidVersion>3.1.4</fasterxmlUuidVersion>
+        <junitVersion>4.12</junitVersion>
+        <mockitoVersion>2.28.2</mockitoVersion>
     </properties>
 
     <dependencies>
@@ -227,6 +229,22 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
             <version>${shiroVersion}</version>
+        </dependency>
+        <!-- shiro-freemarker-tags start -->
+        <dependency>
+            <groupId>net.mingsoft</groupId>
+            <artifactId>shiro-freemarker-tags</artifactId>
+            <version>1.0.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.shiro</groupId>
+                    <artifactId>shiro-all</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.freemarker</groupId>
+                    <artifactId>freemarker</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

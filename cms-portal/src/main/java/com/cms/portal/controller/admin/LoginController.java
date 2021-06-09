@@ -17,8 +17,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
-
 
 @Controller
 @Slf4j
@@ -39,7 +39,7 @@ public class LoginController {
     }
 
     @GetMapping("captcha.do")
-    public void doCaptcha(HttpServletResponse response) {
+    public void doCaptcha(HttpServletResponse response){
         String text = captchaProducer.createText();
         // sessionId + "image_captcha"
         redisTemplate.opsForValue().set(UtilsShiro.getSession().getId() + ConstantsPool.IMAGE_CAPTCHA_SUFFIX, text, 60, TimeUnit.SECONDS);
@@ -62,4 +62,3 @@ public class LoginController {
         return UtilsTemplate.adminTemplate("error");
     }
 }
-

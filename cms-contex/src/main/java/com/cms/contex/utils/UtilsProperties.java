@@ -4,10 +4,6 @@ import org.springframework.context.EmbeddedValueResolverAware;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringValueResolver;
 
-/**
- * 个人微信: 15254124776
- * 个人qq:  2301887641
- */
 @Component
 public class UtilsProperties implements EmbeddedValueResolverAware {
 

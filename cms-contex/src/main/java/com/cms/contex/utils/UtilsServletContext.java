@@ -23,9 +23,7 @@ public class UtilsServletContext implements ServletContextAware {
     }
 
     /**
-     * 获取servlet容器中的真实路径 格式如下:
-     * E:\project\java-cms\cms-portal\src\main\webapp\
-     * D:\apache-tomcat-9.0.26\webapps\ROOT\
+     * 获取servlet容器中的真实路径
      *
      * @param path 传入的路径
      * @return 容器路径

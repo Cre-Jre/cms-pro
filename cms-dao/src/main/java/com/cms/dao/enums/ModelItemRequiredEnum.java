@@ -7,7 +7,7 @@ import lombok.Getter;
 public enum ModelItemRequiredEnum implements BaseEnum {
     /**
      * 是否必填
-      */
+     */
     YES(1,"是"),
     NO(2,"否");
 

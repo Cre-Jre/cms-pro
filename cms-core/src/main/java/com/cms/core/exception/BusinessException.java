@@ -23,4 +23,5 @@ public class BusinessException extends BaseException {
     public BusinessException(BaseEnum enums, String msg) {
         super(enums.getOrdinal(), msg);
     }
+
 }

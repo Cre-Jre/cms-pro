@@ -106,7 +106,7 @@ public class CmsStaticPageServiceImpl implements CmsStaticPageService {
         StaticWebSuffixEnum staticSuffix = cmsSite.getStaticSuffix();
         //模板路径
         String templatePath = "/front/default/content/news.html";
-        //输出目录   20201112
+        //输出目录
         String outputPath = staticDir+"/"+cmsChannelDto.getPath()+ LocalDate.now().format(DateTimeFormatter.ofPattern("/yyyyMMdd"))+"/"+
                 cmsContentDto.getId()+staticSuffix.getLabel();
         log.info("staticContent---outPutPath=[{}]",outputPath);

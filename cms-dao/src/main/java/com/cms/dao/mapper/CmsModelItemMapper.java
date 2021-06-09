@@ -9,7 +9,7 @@ import java.util.List;
 public interface CmsModelItemMapper extends BaseMapper<CmsModelItemEntity, Integer> {
 
     /**
-     * ¸ù¾İÄ£ĞÍidºÍÄ£ĞÍÀàĞÍ½øĞĞ²éÑ¯
+     * æ ¹æ®æ¨¡å‹idå’Œæ¨¡å‹ç±»å‹è¿›è¡ŒæŸ¥è¯¢
      * @param modelId
      * @param channelModel
      * @return

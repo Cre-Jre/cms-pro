@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CmsLogServiceImpl implements CmsLogService {
+
     @Autowired
     private CmsLogMapper cmsLogMapper;
 

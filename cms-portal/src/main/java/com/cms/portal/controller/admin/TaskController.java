@@ -42,7 +42,7 @@ public class TaskController {
 
     @PostMapping("delete.do")
     @ResponseBody
-    @DoLog(content = "É¾³ıÈÎÎñ")
+    @DoLog(content = "åˆ é™¤ä»»åŠ¡")
     public Result<String> doDelete(Integer id){
         cmsTaskService.deleteById(id);
         return Result.success();

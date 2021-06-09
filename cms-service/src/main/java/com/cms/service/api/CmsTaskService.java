@@ -8,13 +8,13 @@ import java.util.List;
 public interface CmsTaskService extends BaseService<CmsTaskDto,Integer> {
 
     /**
-     * 执行任务
+     * 鎵ц浠诲姟
      * @param cmsTaskDto    dto
      */
     void startTask(CmsTaskDto cmsTaskDto);
 
     /**
-     * 获取列表
+     * 鑾峰彇鍒楄〃
      * @return      list
      */
     List<CmsTaskDto> getList();

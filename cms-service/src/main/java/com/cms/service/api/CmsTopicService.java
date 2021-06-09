@@ -7,14 +7,14 @@ import java.util.List;
 
 public interface CmsTopicService extends BaseService<CmsTopicDto,Integer> {
     /**
-     * 根据页面参数查询
-     * @param count        条数
+     * 鏍规嵁椤甸潰鍙傛暟鏌ヨ
+     * @param count        鏉℃暟
      * @return              list
      */
     List<CmsTopicDto> getListByTag(int count);
 
     /**
-     * 获取列表
+     * 鑾峰彇鍒楄〃
      * @param cmsTopicDto
      * @return
      */

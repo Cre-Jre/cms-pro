@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CmsFriendLinkService extends BaseService<CmsFriendLinkDto,Integer> {
     /**
-     * 获取友情链接列表数据
+     * 鑾峰彇鍙嬫儏閾炬帴鍒楄〃鏁版嵁
      * @param cmsFriendLinkDto
      * @return
      */
